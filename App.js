@@ -1,13 +1,17 @@
 // App.js
 import React from "react";
 import { DatabaseProvider } from "./context/DataContext";
-import HomeScreen from "./screens/HomeScreen.js";
+import HomeScreen from "./src/screens/HomeScreen.js";
+import EnterUserInput from "./src/screens/EnterUserInput.js";
+import { View } from "react-native";
 
 const App = () => {
   return (
-    <DatabaseProvider>
-      <HomeScreen />
-    </DatabaseProvider>
+    <View className="w-[100%]">
+      <DatabaseProvider>
+        <EnterUserInput />
+      </DatabaseProvider>
+    </View>
   );
 };
 

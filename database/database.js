@@ -10,31 +10,23 @@ export const initDatabase = async () => {
   // Please note that `execAsync()` does not escape parameters and may lead to SQL injection.
   await db.execAsync(`
     PRAGMA journal_mode = WAL;
-    CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY NOT NULL, value TEXT NOT NULL, intValue INTEGER);
-    INSERT INTO test (value, intValue) VALUES ('test1', 123);
-    INSERT INTO test (value, intValue) VALUES ('test2', 456);
-    INSERT INTO test (value, intValue) VALUES ('test3', 789);
+    CREATE TABLE IF NOT EXISTS user (name TEXT, weight INTEGER, height INTEGER );
+   
     `);
 
-  // `runAsync()` is useful when you want to execute some write operations.
-  const result = await db.runAsync(
-    "INSERT INTO test (value, intValue) VALUES (?, ?)",
-    "aaa",
-    100
-  );
   // `getFirstAsync()` is useful when you want to get a single row from the database.
-  const firstRow = await db.getFirstAsync("SELECT * FROM test");
-  console.log(firstRow.id, firstRow.value, firstRow.intValue);
+  const firstRow = await db.getFirstAsync("SELECT * FROM user");
+  // console.log(firstRow.id, firstRow.value, firstRow.intValue);
 
   // `getAllAsync()` is useful when you want to get all results as an array of objects.
   const allRows = await db.getAllAsync("SELECT * FROM test");
   for (const row of allRows) {
-    console.log(row.id, row.value, row.intValue);
+    // console.log(row.id, row.value, row.intValue);
   }
 
   // `getEachAsync()` is useful when you want to iterate SQLite query cursor.
   for await (const row of db.getEachAsync("SELECT * FROM test")) {
-    console.log(row.id, row.value, row.intValue);
+    // console.log(row.id, row.value, row.intValue);
   }
 };
 
@@ -55,43 +47,28 @@ export const createTable = () => {
   });
 };
 
-export const insertUser = (name, age) => {
-  return new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "INSERT INTO Users (name, age) VALUES (?,?)",
-        [name, age],
-        (tx, results) => {
-          console.log("User inserted successfully");
-          resolve(results);
-        },
-        (error) => {
-          console.log("Error inserting user " + error.message);
-          reject(error);
-        }
-      );
-    });
-  });
+export const insertUser = async (name, weight, height) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  await db.runAsync("DELETE FROM user");
+  const result = await db.runAsync(
+    "INSERT INTO user (name, weight,height) VALUES (?, ?,?)",
+    `${name}`,
+    `${weight}`,
+    `${height}`
+  );
+  console.log(result);
+  return result;
 };
 
-export const getUsers = () => {
-  return new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "SELECT * FROM Users",
-        [],
-        (tx, results) => {
-          let users = [];
-          for (let i = 0; i < results.rows.length; i++) {
-            users.push(results.rows.item(i));
-          }
-          resolve(users);
-        },
-        (error) => {
-          console.log("Error getting users " + error.message);
-          reject(error);
-        }
-      );
-    });
-  });
+export const getUserInfo = async () => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const user = await db.getFirstAsync("SELECT * FROM user");
+  return user;
+};
+
+export const getTable = async (table) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync(`SELECT * FROM ${table}`);
+  console.log(data);
+  return data;
 };
