@@ -9,7 +9,6 @@ const App = () => {
   return (
     <View className="w-[100%]">
       <DatabaseProvider>
-        <EnterUserInput />
       </DatabaseProvider>
     </View>
   );
