@@ -1,28 +1,29 @@
-import { router } from "expo-router";
-import { useEffect } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { router, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { getUserInfo } from "../database/database";
-
+import Homescreen from "../src/screens/Homescreen.js";
+import EnterUserInput from "../src/screens/EnterUserInput.js";
 export default function Page() {
-  async function getUser() {
-    const user = await getUserInfo();
-    console.log(user);
-  }
+  const router = useRouter();
+  const [user, setUser] = useState("");
   useEffect(() => {
+    async function getUser() {
+      const user = await getUserInfo();
+      setUser(1);
+    }
     getUser();
   }, []);
+  console.log(user);
+
   return (
-    <View style={styles.container}>
-      <View style={styles.main}>
-        <Text style={styles.title}>Hello World</Text>
-        <Text style={styles.subtitle}>This is the first page of your app.</Text>
-      </View>
-      <TouchableOpacity onPress={()=>{
-        router.push("EnterUserInput")
-      }}>
-        <Text>Enter</Text>
-      </TouchableOpacity>
-    </View>
+    <SafeAreaView>{user ? <Homescreen /> : <EnterUserInput />}</SafeAreaView>
   );
 }
 
