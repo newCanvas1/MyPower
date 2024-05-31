@@ -14,6 +14,27 @@ export const initDatabase = async () => {
    
     `);
 
+  // `execAsync()` is useful for bulk queries when you want to execute altogether.
+  // Please note that `execAsync()` does not escape parameters and may lead to SQL injection.
+  await db.execAsync(`
+        PRAGMA journal_mode = WAL;
+        CREATE TABLE IF NOT EXISTS user (name TEXT, weight INTEGER, height INTEGER );
+       
+        `);
+  await db.execAsync(`
+        PRAGMA journal_mode = WAL;
+        CREATE TABLE IF NOT EXISTS workouts (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, duration DOUBLE,icon TEXT,description TEXT,notes TEXT,date TEXT);
+        `);
+  await db.execAsync(`
+        PRAGMA journal_mode = WAL;
+        CREATE TABLE IF NOT EXISTS exercises (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,icon TEXT,description TEXT,notes TEXT, workoutId INTEGER);
+        `);
+
+  await db.execAsync(`
+        PRAGMA journal_mode = WAL;
+        CREATE TABLE IF NOT EXISTS sets (id INTEGER PRIMARY KEY AUTOINCREMENT,  exerciseId INTEGER, reps INTEGER,weight DOUBLE,type TEXT);
+        `);
+
   // `getFirstAsync()` is useful when you want to get a single row from the database.
   const firstRow = await db.getFirstAsync("SELECT * FROM user");
   // console.log(firstRow.id, firstRow.value, firstRow.intValue);
@@ -30,22 +51,6 @@ export const initDatabase = async () => {
   }
 };
 
-export const createTable = () => {
-  db.transaction((tx) => {
-    tx.executeSql(
-      `CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age INTEGER);`,
-      [],
-      () => {
-        console.log("Table created successfully");
-        resolve();
-      },
-      (error) => {
-        console.log("Error creating table " + error.message);
-        reject(error);
-      }
-    );
-  });
-};
 
 export const insertUser = async (name, weight, height) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
@@ -59,7 +64,62 @@ export const insertUser = async (name, weight, height) => {
   console.log(result);
   return result;
 };
+// insert workout
+export const insertWorkout = async (
+  name,
+  duration,
+  icon,
+  description,
+  notes,
+  date
+) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const result = await db.runAsync(
+    "INSERT INTO workouts (name, duration,icon,description,notes,date) VALUES (?, ?,?,?,?,?)",
+    `${name}`,
+    `${duration}`,
+    `${icon}`,
+    `${description}`,
+    `${notes}`,
+    `${date}`
+  );
+  console.log(result);
+  return result;
+};
+// insert exercise
+export const insertExercise = async (
+  name,
+  icon,
+  description,
+  notes,
+  workoutId
+) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const result = await db.runAsync(
+    "INSERT INTO exercises (name, icon,description,notes,workoutId) VALUES (?, ?,?,?,?)",
+    `${name}`,
+    `${icon}`,
+    `${description}`,
+    `${notes}`,
+    `${workoutId}`
+  );
+  console.log(result);
+  return result;
+};
+// insert reps
+export const insertSets = async (exerciseId, reps, weight, type) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
 
+  const result = await db.runAsync(
+    "INSERT INTO sets (exerciseId, reps,weight,type) VALUES (?, ?,?,?)",
+    `${exerciseId}`,
+    `${reps}`,
+    `${weight}`,
+    `${type}`
+  );
+  console.log(result);
+  return result;
+};
 export const getUserInfo = async () => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const user = await db.getFirstAsync("SELECT * FROM user");
