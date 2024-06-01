@@ -34,6 +34,11 @@ export const initDatabase = async () => {
         PRAGMA journal_mode = WAL;
         CREATE TABLE IF NOT EXISTS sets (id INTEGER PRIMARY KEY AUTOINCREMENT,  exerciseId INTEGER, reps INTEGER,weight DOUBLE,type TEXT);
         `);
+        // create plans table
+        await db.execAsync(`
+        PRAGMA journal_mode = WAL;
+        CREATE TABLE IF NOT EXISTS plans (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,icon TEXT,description TEXT);
+        `);
 
   // `getFirstAsync()` is useful when you want to get a single row from the database.
   const firstRow = await db.getFirstAsync("SELECT * FROM user");
@@ -118,6 +123,18 @@ export const insertSets = async (exerciseId, reps, weight, type) => {
     `${type}`
   );
   console.log(result);
+  return result;
+};
+
+// insert plan
+export const insertPlan = async (name, icon, description) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const result = await db.runAsync(
+    "INSERT INTO plans (name, icon,description) VALUES (?, ?,?)",
+    `${name}`,
+    `${icon}`,
+    `${description}`
+  );
   return result;
 };
 export const getUserInfo = async () => {
