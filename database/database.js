@@ -135,6 +135,7 @@ export const insertPlan = async (name, icon, description) => {
     `${icon}`,
     `${description}`
   );
+  
   return result;
 };
 export const getUserInfo = async () => {

@@ -1,26 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, FlatList } from "react-native";
 import { getTable } from "../../../../../database/database";
 import { useState, useEffect } from "react";
+import { DatabaseContext } from "../../../../../context/DataContext";
 function PlansList(props) {
-    console.log(" PlansList");
-  const [plans, setPlans] = useState([]);
+  const { plans } = useContext(DatabaseContext);
   useEffect(() => {
-    getTable("plans").then((data) => {
-      setPlans(data);
-    });
-  }, []);
+    console.log("plans", plans);
+  }, [plans]);
   return (
     <View>
       {plans.length > 0 ? (
         <FlatList
           data={plans}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View>
               <Text>{item.name}</Text>
               <Text>{item.icon}</Text>
               <Text>{item.description}</Text>
-              <Text>{item.notes}</Text>
             </View>
           )}
         />

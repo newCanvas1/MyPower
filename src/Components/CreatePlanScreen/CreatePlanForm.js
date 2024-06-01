@@ -1,18 +1,18 @@
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { styles } from "../../styles/styles";
-import { insertPlan } from "../../../database/database";
+import  {DatabaseContext}  from "../../../context/DataContext";
 function CreatePlanForm(props) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-
+  const { addPlan } = useContext(DatabaseContext);
   const router = useRouter();
   function goBack() {
     router.dismiss();
   }
   async function createPlan() {
-    await insertPlan(name, "none", description);
+    addPlan({ name,icon:"none", description });
     router.dismiss();
   }
   return (

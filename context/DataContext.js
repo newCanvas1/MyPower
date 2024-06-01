@@ -1,51 +1,35 @@
-// DatabaseContext.js
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { initDatabase, createTable, insertUser, getUsers } from '../database/database.js';
-
-const DatabaseContext = createContext();
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { getTable, insertPlan } from "../database/database";
+export const DatabaseContext = createContext(null);
 
 export const DatabaseProvider = ({ children }) => {
-  const [dbInitialized, setDbInitialized] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [plans, setPlans] = useState([]);
 
   useEffect(() => {
-    const initializeDatabase = () => {
-      try {
-         initDatabase();
-        //  createTable();
-        // setDbInitialized(true);
-        // fetchUsers();
-      } catch (error) {
-        console.error('Error initializing database', error);
-      }
-    };
-
-    initializeDatabase();
+    getTable("plans").then((data) => {
+      setPlans(data);
+    });
   }, []);
-
-  const addUser = async (name, age) => {
-    try {
-      await insertUser(name, age);
-      fetchUsers();
-    } catch (error) {
-      console.error('Error adding user', error);
-    }
+  // add plan to database
+  const addPlan = async (plan) => {
+    const result = await insertPlan(plan.name, plan.icon, plan.description);
+    console.log(result);
+    // update plans
+    setPlans([...plans, { ...plan, id: result.lastInsertRowId }]);
   };
-
-  const fetchUsers = async () => {
-    try {
-      const usersList = await getUsers();
-      setUsers(usersList);
-    } catch (error) {
-      console.error('Error fetching users', error);
-    }
+  // delete plan from database
+  const deletePlan = async (id) => {
+    const result = await getTable("plans").then((data) => {
+      return data.filter((plan) => plan.id !== id);
+    });
+    console.log(result);
+    // update plans
+    setPlans(result);
   };
 
   return (
-    <DatabaseContext.Provider value={{ dbInitialized, users, addUser }}>
+    <DatabaseContext.Provider value={{ plans, addPlan }}>
       {children}
     </DatabaseContext.Provider>
   );
 };
-
-export const useDatabase = () => useContext(DatabaseContext);
