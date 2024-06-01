@@ -2,9 +2,11 @@ import { useRouter } from "expo-router";
 import React, { useContext, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { styles } from "../../styles/styles";
-import  {DatabaseContext}  from "../../../context/DataContext";
+import { DatabaseContext } from "../../../context/DataContext";
+import CustomPopover from "../General/CustomPopover";
 function CreatePlanForm(props) {
   const [name, setName] = useState("");
+  const [showExcercisePopover, setShowExcercisePopover] = useState(false);
   const [description, setDescription] = useState("");
   const { addPlan } = useContext(DatabaseContext);
   const router = useRouter();
@@ -12,7 +14,7 @@ function CreatePlanForm(props) {
     router.dismiss();
   }
   async function createPlan() {
-    addPlan({ name,icon:"none", description });
+    addPlan({ name, icon: "none", description });
     router.dismiss();
   }
   return (
@@ -26,6 +28,24 @@ function CreatePlanForm(props) {
         className={styles.userTextInput}
         placeholder="Description"
         onChangeText={(text) => setDescription(text)}
+      />
+      <View className="flex-row justify-between w-[80%] gap-5 mt-1">
+        <Text>Excercise</Text>
+        <TouchableOpacity
+          className="bg-green-400 rounded p-1 "
+          onPress={() => {
+            setShowExcercisePopover(true);
+          }}
+        >
+          <Text className="text-xl text-white font-bold">+</Text>
+        </TouchableOpacity>
+      </View>
+      <CustomPopover
+        popOverheight={0.8}
+        popOverwidth={0.8}
+        showPopover={showExcercisePopover}
+        setShowPopover={setShowExcercisePopover}
+        content={<Text>Excercise</Text>}
       />
       <View className="gap-5 mt-5">
         <TouchableOpacity

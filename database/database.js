@@ -34,8 +34,8 @@ export const initDatabase = async () => {
         PRAGMA journal_mode = WAL;
         CREATE TABLE IF NOT EXISTS sets (id INTEGER PRIMARY KEY AUTOINCREMENT,  exerciseId INTEGER, reps INTEGER,weight DOUBLE,type TEXT);
         `);
-        // create plans table
-        await db.execAsync(`
+  // create plans table
+  await db.execAsync(`
         PRAGMA journal_mode = WAL;
         CREATE TABLE IF NOT EXISTS plans (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,icon TEXT,description TEXT);
         `);
@@ -55,7 +55,6 @@ export const initDatabase = async () => {
     // console.log(row.id, row.value, row.intValue);
   }
 };
-
 
 export const insertUser = async (name, weight, height) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
@@ -135,8 +134,14 @@ export const insertPlan = async (name, icon, description) => {
     `${icon}`,
     `${description}`
   );
-  
+
   return result;
+};
+// delete plan
+export const deletePlanFromDatabase = async (id) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  await db.runAsync("DELETE FROM plans WHERE id = ?", `${id}`);
+  return true;
 };
 export const getUserInfo = async () => {
   const db = await SQLite.openDatabaseAsync("databaseName");
@@ -147,6 +152,6 @@ export const getUserInfo = async () => {
 export const getTable = async (table) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const data = await db.getAllAsync(`SELECT * FROM ${table}`);
-  console.log(data);
+
   return data;
 };
