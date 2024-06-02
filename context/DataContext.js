@@ -4,15 +4,21 @@ import {
   insertPlan,
   deletePlan,
   deletePlanFromDatabase,
+  insertExercise,
 } from "../database/database";
 export const DatabaseContext = createContext(null);
 
 export const DatabaseProvider = ({ children }) => {
   const [plans, setPlans] = useState([]);
+  const [exercises, setExercises] = useState([]);
+  const [excerciseToAdd, setExcerciseToAdd] = useState([]);
 
   useEffect(() => {
     getTable("plans").then((data) => {
       setPlans(data);
+    });
+    getTable("exercises").then((data) => {
+      setExercises(data);
     });
   }, []);
   // add plan to database
@@ -28,8 +34,30 @@ export const DatabaseProvider = ({ children }) => {
     if (deleted) setPlans(plans.filter((plan) => plan.id !== id));
   };
 
+  // add excercise to database
+  const addExercise = async (exercise) => {
+    const result = await insertExercise(
+      exercise.name,
+      exercise.icon,
+      exercise.description,
+      exercise.notes
+    );
+    // update exercises
+    setExercises([...exercises, { ...exercise, id: result.lastInsertRowId }]);
+  };
+
   return (
-    <DatabaseContext.Provider value={{ plans, addPlan, deletePlan }}>
+    <DatabaseContext.Provider
+      value={{
+        plans,
+        addPlan,
+        deletePlan,
+        exercises,
+        addExercise,
+        excerciseToAdd,
+        setExcerciseToAdd,
+      }}
+    >
       {children}
     </DatabaseContext.Provider>
   );

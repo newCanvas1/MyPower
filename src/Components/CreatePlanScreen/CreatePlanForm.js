@@ -1,14 +1,22 @@
 import { useRouter } from "expo-router";
 import React, { useContext, useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { styles } from "../../styles/styles";
 import { DatabaseContext } from "../../../context/DataContext";
 import CustomPopover from "../General/CustomPopover";
+import ExcercisePopover from "./ExcercisePopover";
+import ExcercisesList from "./ExcercisesList";
 function CreatePlanForm(props) {
   const [name, setName] = useState("");
   const [showExcercisePopover, setShowExcercisePopover] = useState(false);
   const [description, setDescription] = useState("");
-  const { addPlan } = useContext(DatabaseContext);
+  const { addPlan, excerciseToAdd } = useContext(DatabaseContext);
   const router = useRouter();
   function goBack() {
     router.dismiss();
@@ -40,12 +48,14 @@ function CreatePlanForm(props) {
           <Text className="text-xl text-white font-bold">+</Text>
         </TouchableOpacity>
       </View>
+      <ExcercisesList />
+
       <CustomPopover
         popOverheight={0.8}
         popOverwidth={0.8}
         showPopover={showExcercisePopover}
         setShowPopover={setShowExcercisePopover}
-        content={<Text>Excercise</Text>}
+        content={<ExcercisePopover />}
       />
       <View className="gap-5 mt-5">
         <TouchableOpacity

@@ -91,23 +91,15 @@ export const insertWorkout = async (
   return result;
 };
 // insert exercise
-export const insertExercise = async (
-  name,
-  icon,
-  description,
-  notes,
-  workoutId
-) => {
+export const insertExercise = async (name, icon, description, notes) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const result = await db.runAsync(
-    "INSERT INTO exercises (name, icon,description,notes,workoutId) VALUES (?, ?,?,?,?)",
+    "INSERT INTO exercises (name, icon,description,notes) VALUES (?,?,?,?)",
     `${name}`,
     `${icon}`,
     `${description}`,
-    `${notes}`,
-    `${workoutId}`
+    `${notes}`
   );
-  console.log(result);
   return result;
 };
 // insert reps
