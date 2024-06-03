@@ -25,7 +25,7 @@ function ExcercisesList() {
   // get the item from exercises by id
   const items = [];
   for (let i = 0; i < excerciseToAdd.length; i++) {
-    items.push(exercises.find((item) => item.id === excerciseToAdd[i]));
+    items.push(exercises.find((item) => item.exerciseId === excerciseToAdd[i]));
   }
   return (
     <View className="w-[80%] bg-gray-400 rounded p-1 self-center h-60 ">

@@ -6,11 +6,9 @@ import { DatabaseContext } from "../../../context/DataContext";
 
 const ExcrecisesDropdown = () => {
   const [selected, setSelected] = useState([]);
-  const { exercises, setExcerciseToAdd, excerciseToAdd } = useContext(DatabaseContext);
-  useEffect(() => {
-    console.log(selected);
-  
-  }, [exercises]);
+  const { exercises, setExcerciseToAdd, excerciseToAdd } =
+    useContext(DatabaseContext);
+  useEffect(() => {}, [exercises]);
   console.log(excerciseToAdd);
   const renderItem = (item) => {
     return (
@@ -20,11 +18,10 @@ const ExcrecisesDropdown = () => {
       </View>
     );
   };
-
+console.log(exercises);
   return (
     <View style={styles.container}>
       <MultiSelect
-      
         style={styles.dropdown}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
@@ -32,11 +29,10 @@ const ExcrecisesDropdown = () => {
         iconStyle={styles.iconStyle}
         data={exercises}
         labelField="name"
-        valueField="id"
+        valueField="exerciseId"
         placeholder="Select Excercise"
         value={selected}
         search
-        
         searchPlaceholder="Search..."
         onChange={(item) => {
           setSelected(item);

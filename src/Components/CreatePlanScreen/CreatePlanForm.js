@@ -12,17 +12,20 @@ import { DatabaseContext } from "../../../context/DataContext";
 import CustomPopover from "../General/CustomPopover";
 import ExcercisePopover from "./ExcercisePopover";
 import ExcercisesList from "./ExcercisesList";
+import ColorPicker from "./ColorPicker";
 function CreatePlanForm(props) {
   const [name, setName] = useState("");
   const [showExcercisePopover, setShowExcercisePopover] = useState(false);
   const [description, setDescription] = useState("");
-  const { addPlan, excerciseToAdd } = useContext(DatabaseContext);
+  const [color, setColor] = useState("");
+  const { addPlan, setExcerciseToAdd } = useContext(DatabaseContext);
   const router = useRouter();
   function goBack() {
     router.dismiss();
+    setExcerciseToAdd([]);
   }
   async function createPlan() {
-    addPlan({ name, icon: "none", description });
+    addPlan({ name, icon: "none", description ,color});
     router.dismiss();
   }
   return (
@@ -37,6 +40,8 @@ function CreatePlanForm(props) {
         placeholder="Description"
         onChangeText={(text) => setDescription(text)}
       />
+            <ColorPicker setColor={setColor} />
+
       <View className="flex-row justify-between w-[80%] gap-5 mt-1">
         <Text>Excercise</Text>
         <TouchableOpacity

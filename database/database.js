@@ -3,8 +3,21 @@ import * as SQLite from "expo-sqlite";
 
 let db;
 
-export const initDatabase = async () => {
+async function resetDatabase() {
   const db = await SQLite.openDatabaseAsync("databaseName");
+  await db.execAsync(`
+        PRAGMA journal_mode = WAL;
+        DROP TABLE IF EXISTS workouts;
+        DROP TABLE IF EXISTS exercises;
+        DROP TABLE IF EXISTS sets;
+        DROP TABLE IF EXISTS plans;
+        DROP TABLE IF EXISTS PlansExercises;
+        `);
+}
+export const initDatabase = async () => {
+  // resetDatabase()
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  // drop the excercises table
 
   // `execAsync()` is useful for bulk queries when you want to execute altogether.
   // Please note that `execAsync()` does not escape parameters and may lead to SQL injection.
@@ -27,7 +40,7 @@ export const initDatabase = async () => {
         `);
   await db.execAsync(`
         PRAGMA journal_mode = WAL;
-        CREATE TABLE IF NOT EXISTS exercises (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,icon TEXT,description TEXT,notes TEXT, workoutId INTEGER);
+        CREATE TABLE IF NOT EXISTS exercises (exerciseId INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,icon TEXT,description TEXT,notes TEXT, workoutId INTEGER);
         `);
 
   await db.execAsync(`
@@ -37,9 +50,15 @@ export const initDatabase = async () => {
   // create plans table
   await db.execAsync(`
         PRAGMA journal_mode = WAL;
-        CREATE TABLE IF NOT EXISTS plans (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,icon TEXT,description TEXT);
+        CREATE TABLE IF NOT EXISTS plans (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,icon TEXT,description TEXT,color TEXT);
         `);
 
+  // create PlansExercises table
+  await db.execAsync(`
+        PRAGMA journal_mode = WAL;
+        CREATE TABLE IF NOT EXISTS PlansExercises (id INTEGER PRIMARY KEY AUTOINCREMENT,planId INTEGER,exerciseId INTEGER);
+        `);
+  console.log("Database created");
   // `getFirstAsync()` is useful when you want to get a single row from the database.
   const firstRow = await db.getFirstAsync("SELECT * FROM user");
   // console.log(firstRow.id, firstRow.value, firstRow.intValue);
@@ -102,6 +121,15 @@ export const insertExercise = async (name, icon, description, notes) => {
   );
   return result;
 };
+export const insertPlanExcercise = async (planId, exerciseId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const result = await db.runAsync(
+    "INSERT INTO PlansExercises (planId, exerciseId) VALUES (?,?)",
+    `${planId}`,
+    `${exerciseId}`
+  );
+  return result;
+};
 // insert reps
 export const insertSets = async (exerciseId, reps, weight, type) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
@@ -118,13 +146,14 @@ export const insertSets = async (exerciseId, reps, weight, type) => {
 };
 
 // insert plan
-export const insertPlan = async (name, icon, description) => {
+export const insertPlan = async (name, icon, description,color) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const result = await db.runAsync(
-    "INSERT INTO plans (name, icon,description) VALUES (?, ?,?)",
+    "INSERT INTO plans (name, icon,description,color) VALUES (?, ?,?,?)",
     `${name}`,
     `${icon}`,
-    `${description}`
+    `${description}`,
+    `${color}`
   );
 
   return result;
@@ -146,4 +175,30 @@ export const getTable = async (table) => {
   const data = await db.getAllAsync(`SELECT * FROM ${table}`);
 
   return data;
+};
+
+// get plansExcercise and join with excercises
+export const getPlansExercise = async (planId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+
+  const data = await db.getAllAsync(
+    `SELECT * FROM PlansExercises LEFT JOIN exercises ON PlansExercises.exerciseId = exercises.exerciseId WHERE PlansExercises.planId = ${planId}`
+  );
+
+  return data;
+};
+
+// delete plansExcercises row
+export const deletePlanExcerciseFromDatabase = async (id) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  await db.runAsync(`DELETE FROM PlansExercises WHERE id = ${id}`);
+  return true;
+};
+
+// delete exercise
+export const deleteExercise = async (id) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+
+  await db.runAsync("DELETE FROM exercises WHERE id = ?", `${id}`);
+  return true;
 };

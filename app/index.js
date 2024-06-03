@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { getUserInfo } from "../database/database";
+import { getUserInfo, initDatabase } from "../database/database";
 import Homescreen from "../src/screens/Homescreen.js";
 import EnterUserInput from "../src/screens/EnterUserInput.js";
 export default function Page() {
@@ -18,6 +18,7 @@ export default function Page() {
       const user = await getUserInfo();
       setUser(1);
     }
+    initDatabase();
     getUser();
   }, []);
   console.log(user);

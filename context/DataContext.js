@@ -2,9 +2,11 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import {
   getTable,
   insertPlan,
-  deletePlan,
   deletePlanFromDatabase,
   insertExercise,
+  insertPlanExcercise,
+  getPlansExercise,
+  deletePlanExcerciseFromDatabase,
 } from "../database/database";
 export const DatabaseContext = createContext(null);
 
@@ -23,8 +25,12 @@ export const DatabaseProvider = ({ children }) => {
   }, []);
   // add plan to database
   const addPlan = async (plan) => {
-    const result = await insertPlan(plan.name, plan.icon, plan.description);
+    const result = await insertPlan(plan.name, plan.icon, plan.description,plan.color);
     // update plans
+    for (const excercise of excerciseToAdd) {
+      await insertPlanExcercise(result.lastInsertRowId, excercise);
+    }
+    setExcerciseToAdd([]);
     setPlans([...plans, { ...plan, id: result.lastInsertRowId }]);
   };
 
@@ -46,6 +52,17 @@ export const DatabaseProvider = ({ children }) => {
     setExercises([...exercises, { ...exercise, id: result.lastInsertRowId }]);
   };
 
+  // get planExcercise
+  const getPlanExcercise = async (planId) => {
+    const data = await getPlansExercise(planId);
+    return data;
+  };
+  // delete planExcercise
+  const deletePlanExcercise = async (id) => {
+    const deleted = await deletePlanExcerciseFromDatabase(id);
+
+    return deleted;
+  };
   return (
     <DatabaseContext.Provider
       value={{
@@ -56,6 +73,8 @@ export const DatabaseProvider = ({ children }) => {
         addExercise,
         excerciseToAdd,
         setExcerciseToAdd,
+        getPlanExcercise,
+        deletePlanExcercise,
       }}
     >
       {children}
