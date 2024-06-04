@@ -20,7 +20,7 @@ function PlansList(props) {
           renderItem={({ item }) => <PlanItem item={item} />}
         />
       ) : (
-        <Text className="text-center text-gray-500 text-sm">
+        <Text style={{fontFamily:"appFont"}} className="text-center text-gray-500 text-sm">
           No plans found
         </Text>
       )}

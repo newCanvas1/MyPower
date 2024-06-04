@@ -10,9 +10,9 @@ function Title(props) {
   }
   return (
     <View className="flex-row items-center justify-between">
-      <Text className="text-2xl font-bold ">Plans</Text>
+      <Text style={{fontFamily:"appFont"}} className="text-2xl font-bold ">Plans</Text>
       <TouchableOpacity className={styles.addBtn} onPress={addPlan}>
-        <Text className="  text-xl text-white  ">+</Text>
+        <Text  className="text-xl text-white">+</Text>
       </TouchableOpacity>
     </View>
   );

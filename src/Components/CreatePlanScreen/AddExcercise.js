@@ -11,21 +11,25 @@ function AddExcercise({ setShowAddingExcercise }) {
   return (
     <View className="flex-col items-center justify-center h-screen">
       <TextInput
+      style={{fontFamily:"appFont"}}
         className="w-[80%] bg-gray-400 rounded p-1 self-center"
         placeholder="Name"
         onChangeText={(text) => setName(text)}
       />
       <TextInput
+        style={{fontFamily:"appFont"}}
         className="w-[80%] bg-gray-400 rounded p-1 self-center"
         placeholder="Icon"
         onChangeText={(text) => setIcon(text)}
       />
       <TextInput
+        style={{fontFamily:"appFont"}}
         className="w-[80%] bg-gray-400 rounded p-1 self-center"
         placeholder="Describtion"
         onChangeText={(text) => setDescription(text)}
       />
       <TextInput
+        style={{fontFamily:"appFont"}}
         className="w-[80%] bg-gray-400 rounded p-1 self-center"
         placeholder="Notes"
         onChangeText={(text) => setNotes(text)}
@@ -44,7 +48,7 @@ function AddExcercise({ setShowAddingExcercise }) {
             setShowAddingExcercise(false);
           }}
         >
-          <Text className="text-xl text-white font-bold">Add</Text>
+          <Text style={{fontFamily:"appFont"}}  className="text-xl text-white font-bold">Add</Text>
         </TouchableOpacity>
         <TouchableOpacity
           className="bg-red-400 rounded p-1 "
@@ -52,7 +56,7 @@ function AddExcercise({ setShowAddingExcercise }) {
             setShowAddingExcercise(false);
           }}
         >
-          <Text className="text-xl text-white font-bold">Cancel</Text>
+          <Text style={{fontFamily:"appFont"}} className="text-xl text-white font-bold">Cancel</Text>
         </TouchableOpacity>
       </View>
     </View>

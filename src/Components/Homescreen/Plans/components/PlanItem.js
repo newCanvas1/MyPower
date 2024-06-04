@@ -18,7 +18,7 @@ function PlanItem({ item }) {
         onPress={() => setShowPlanPopover(true)}
       >
         <View className="flex-row justify-between">
-          <Text className=" font-bold">{item.name}</Text>
+          <Text style={{fontFamily:"appFont"}} className=" font-bold">{item.name}</Text>
           <TouchableOpacity
             ref={tooltipRef}
             className="p-1 rounded bg-gray-400 shadow w-6 items-center"
@@ -47,13 +47,13 @@ function PlanItem({ item }) {
                   className="bg-red-500 p-1"
                   onPress={() => deletePlan(item.id)}
                 >
-                  <Text className="font-bold">Delete</Text>
+                  <Text style={{fontFamily:"appFont"}} className="font-bold">Delete</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   className="bg-green-500 p-1"
                   onPress={() => setShowTooltip(false)}
                 >
-                  <Text className="font-bold">Edit</Text>
+                  <Text style={{fontFamily:"appFont"}} className="font-bold">Edit</Text>
                 </TouchableOpacity>
               </View>
             </Popover>

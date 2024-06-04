@@ -7,8 +7,8 @@ function ExcercisesList() {
     useContext(DatabaseContext);
   const ExcerciseItem = ({ item }) => {
     return (
-      <View className="flex-row justify-between items-center border rounded border-gray-600 bg-slate-300 py-2 px-2 shadow">
-        <Text className=" font-bold ">{item.name}</Text>
+      <View className="flex-row justify-between items-center rounded  bg-green-300 py-2 px-2 shadow">
+        <Text style={{fontFamily:"appFont"}}  className=" font-bold ">{item.name}</Text>
         <TouchableOpacity
           className="bg-red-500 text-white font-bold py-2 px-2 rounded"
           onPress={() => {
@@ -31,7 +31,7 @@ function ExcercisesList() {
   return (
     <View className="w-[80%]  rounded p-1  h-60 ">
       {items.length == 0 ? (
-        <Text className=" self-center  opacity-40">Add Excercises here</Text>
+        <Text style={{fontFamily:"appFont"}}  className=" self-center  opacity-40">Add Excercises here</Text>
       ) : (
         <FlatList
           data={items}

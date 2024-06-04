@@ -12,8 +12,10 @@ function Greeting(props) {
     getUserName();
   }, []);
   return (
-    <View className="px-16">
-      <Text className=" text-4xl ">Hi {userName} ⚡️</Text>
+    <View className="px-10 py-10">
+      <Text style={{ fontFamily: "appFont" }} className=" text-4xl ">
+        Hi {userName} ⚡️
+      </Text>
     </View>
   );
 }
