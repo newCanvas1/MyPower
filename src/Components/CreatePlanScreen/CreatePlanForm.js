@@ -25,35 +25,41 @@ function CreatePlanForm(props) {
     setExcerciseToAdd([]);
   }
   async function createPlan() {
-    addPlan({ name, icon: "none", description ,color});
+    addPlan({ name, icon: "none", description, color });
     router.dismiss();
   }
   return (
     <View className="flex-col items-center justify-center  h-screen">
+      <Text className="text-xl font-bold">Create a Plan</Text>
+      <Text className="self-start ml-5">Name</Text>
       <TextInput
         className={styles.userTextInput}
         placeholder="Name"
         onChangeText={(text) => setName(text)}
       />
+      <Text className="self-start ml-5 mt-10">Description</Text>
+
       <TextInput
         className={styles.userTextInput}
         placeholder="Description"
         onChangeText={(text) => setDescription(text)}
       />
-            <ColorPicker setColor={setColor} />
+      <ColorPicker setColor={setColor} />
 
-      <View className="flex-row justify-between w-[80%] gap-5 mt-1">
-        <Text>Excercise</Text>
+      <View className="flex-row justify-between w-[100%] gap-2 mt-1 ">
+        <Text className="font-bold text-lg">Excercise</Text>
         <TouchableOpacity
-          className="bg-green-400 rounded p-1 "
+          className="bg-green-400 rounded p-1 w-7 justify-center items-center"
           onPress={() => {
             setShowExcercisePopover(true);
           }}
         >
-          <Text className="text-xl text-white font-bold">+</Text>
+          <Text className=" text-white font-bold">+</Text>
         </TouchableOpacity>
       </View>
-      <ExcercisesList />
+      <View className=" w-full mt-4 justify-center items-center ">
+        <ExcercisesList />
+      </View>
 
       <CustomPopover
         popOverheight={0.8}

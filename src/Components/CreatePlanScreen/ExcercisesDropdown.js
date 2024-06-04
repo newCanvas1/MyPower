@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import { MultiSelect } from "react-native-element-dropdown";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { DatabaseContext } from "../../../context/DataContext";
+import Icon from "react-native-vector-icons/FontAwesome5";
 
 const ExcrecisesDropdown = () => {
   const [selected, setSelected] = useState([]);
@@ -18,7 +19,7 @@ const ExcrecisesDropdown = () => {
       </View>
     );
   };
-console.log(exercises);
+  console.log(exercises);
   return (
     <View style={styles.container}>
       <MultiSelect
@@ -26,7 +27,6 @@ console.log(exercises);
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
         data={exercises}
         labelField="name"
         valueField="exerciseId"
@@ -38,14 +38,7 @@ console.log(exercises);
           setSelected(item);
           setExcerciseToAdd(item);
         }}
-        renderLeftIcon={() => (
-          <AntDesign
-            style={styles.icon}
-            color="black"
-            name="Safety"
-            size={20}
-          />
-        )}
+        renderLeftIcon={() => <Icon name="dumbbell" size={15} color="black" />}
         renderItem={renderItem}
         renderSelectedItem={(item, unSelect) => (
           <TouchableOpacity onPress={() => unSelect && unSelect(item)}>

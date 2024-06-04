@@ -1,22 +1,23 @@
 import React, { useContext, useEffect } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { DatabaseContext } from "../../../context/DataContext";
-
+import Icon from "react-native-vector-icons/AntDesign";
 function ExcercisesList() {
   const { excerciseToAdd, exercises, setExcerciseToAdd } =
     useContext(DatabaseContext);
   const ExcerciseItem = ({ item }) => {
     return (
-      <View className="flex-row justify-between">
-        <Text className="text-xl text-white font-bold">{item.name}</Text>
+      <View className="flex-row justify-between items-center border rounded border-gray-600 bg-slate-300 py-2 px-2 shadow">
+        <Text className=" font-bold ">{item.name}</Text>
         <TouchableOpacity
+          className="bg-red-500 text-white font-bold py-2 px-2 rounded"
           onPress={() => {
             setExcerciseToAdd(
-              excerciseToAdd.filter((excercise) => excercise != item.id)
+              excerciseToAdd.filter((excercise) => excercise != item.exerciseId)
             );
           }}
         >
-          <Text className="text-xl text-white font-bold">Remove</Text>
+          <Icon name="delete" size={20} color="white" />
         </TouchableOpacity>
       </View>
     );
@@ -28,11 +29,17 @@ function ExcercisesList() {
     items.push(exercises.find((item) => item.exerciseId === excerciseToAdd[i]));
   }
   return (
-    <View className="w-[80%] bg-gray-400 rounded p-1 self-center h-60 ">
-      <FlatList
-        data={items}
-        renderItem={({ item }) => <ExcerciseItem item={item} />}
-      />
+    <View className="w-[80%]  rounded p-1  h-60 ">
+      {items.length == 0 ? (
+        <Text className=" self-center  opacity-40">Add Excercises here</Text>
+      ) : (
+        <FlatList
+          data={items}
+          ItemSeparatorComponent={<View className="h-7" />}
+          renderItem={({ item }) => <ExcerciseItem item={item} />}
+          keyExtractor={(item) => item.id}
+        />
+      )}
     </View>
   );
 }

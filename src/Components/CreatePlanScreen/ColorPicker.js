@@ -1,38 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
-const colors = [
-  "bg-red-500",
-  "bg-orange-500",
-  "bg-yellow-500",
-  "bg-green-500",
-  "bg-blue-500",
-  "bg-indigo-500",
-  "bg-purple-500",
-  "bg-pink-500",
-  "bg-gray-500",
-];
+import { colors } from "../../styles/styles";
 function ColorPicker({ setColor }) {
   const [choice, setChoice] = useState(0);
+  useEffect(() => {
+    setColor(colors[0]);
+  }, []);
   return (
     <View className="items-center justify-center h-20 ">
       <FlatList
-        className=" w-full h-full  "
         ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-        contentContainerStyle={{ alignItems: "center" }}
+        contentContainerStyle={{ alignItems: "center", paddingHorizontal: 10 }}
         data={colors}
         renderItem={({ item, index }) => (
-          <TouchableOpacity
-            onPress={() => {
-              setColor(item);
-              setChoice(index);
-            }}
+          <View
+            className={`  p-[3] ${index === choice && "border-b-8 rounded "}`}
           >
-            <View
-              className={`${item}  w-[30px] h-[30px] rounded-full ${
-                index === choice && "border-2"
-              }`}
-            />
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setColor(item);
+                setChoice(index);
+              }}
+            >
+              <View className={`${item}  w-[30px] h-[30px] rounded-full `} />
+            </TouchableOpacity>
+          </View>
         )}
         keyExtractor={(item) => item}
         horizontal

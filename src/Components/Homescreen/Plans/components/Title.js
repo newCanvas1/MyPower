@@ -1,6 +1,7 @@
 import { useRouter } from "expo-router";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { styles } from "../../../../styles/styles";
 
 function Title(props) {
   const router = useRouter();
@@ -10,8 +11,8 @@ function Title(props) {
   return (
     <View className="flex-row items-center justify-between">
       <Text className="text-2xl font-bold ">Plans</Text>
-      <TouchableOpacity className="bg-green-300 rounded p-1" onPress={addPlan}>
-        <Text className="  text-xl  ">+</Text>
+      <TouchableOpacity className={styles.addBtn} onPress={addPlan}>
+        <Text className="  text-xl text-white  ">+</Text>
       </TouchableOpacity>
     </View>
   );
