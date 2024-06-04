@@ -14,7 +14,7 @@ function ColorPicker({ setColor }) {
         data={colors}
         renderItem={({ item, index }) => (
           <View
-            className={`  p-[3] ${index === choice && "border-b-8 rounded "}`}
+            className={`  p-[3] ${index === choice && "border-b-4 rounded "}`}
           >
             <TouchableOpacity
               onPress={() => {

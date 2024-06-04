@@ -25,10 +25,15 @@ export const DatabaseProvider = ({ children }) => {
   }, []);
   // add plan to database
   const addPlan = async (plan) => {
-    const result = await insertPlan(plan.name, plan.icon, plan.description,plan.color);
+    const result = await insertPlan(
+      plan.name,
+      plan.icon,
+      plan.description,
+      plan.color
+    );
     // update plans
     for (const excercise of excerciseToAdd) {
-      await insertPlanExcercise(result.lastInsertRowId, excercise);
+      await insertPlanExcercise(result.lastInsertRowId, excercise.exerciseId);
     }
     setExcerciseToAdd([]);
     setPlans([...plans, { ...plan, id: result.lastInsertRowId }]);

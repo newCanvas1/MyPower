@@ -1,6 +1,6 @@
 export const styles = {
   userTextInput:
-    " p-1 py-3  rounded-lg  w-[90%] shadow-md shadow-green-200 bg-slate-100 text-white",
+    " p-1 py-3  rounded-lg  w-[90%] shadow-md shadow-green-200 bg-slate-100 mt-2",
   addBtn: "bg-green-400 rounded p-1 w-7 justify-center items-center",
 };
 export const colors = [
