@@ -21,7 +21,7 @@ function Greeting(props) {
         style={{ fontFamily: "appFont" }}
         className={`text-4xl ${langChoice(language, "self-start", "self-end")}`}
       >
-        {langChoice(language, ENGLISH.HI, ARABIC.HI)} {userName} ⚡️
+        {langChoice(language, ENGLISH.HI, ARABIC.HI)} {userName} ⚡️👋
       </Text>
     </View>
   );

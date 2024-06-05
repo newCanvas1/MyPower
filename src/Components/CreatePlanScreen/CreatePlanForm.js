@@ -116,7 +116,7 @@ function CreatePlanForm(props) {
           <View className="bg-green-500 rounded p-1 shadow">
             <MaterialCommunityIcons
               name="weight-lifter"
-              size={30}
+              size={25}
               color="white"
             />
           </View>
