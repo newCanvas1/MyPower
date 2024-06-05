@@ -5,11 +5,13 @@ import CustomPopover from "../../../General/CustomPopover";
 import Excercises from "./Excercise/Excercises";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import Popover from "react-native-popover-view/dist/Popover";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { PopoverMode, PopoverPlacement } from "react-native-popover-view";
 function PlanItem({ item }) {
   const { deletePlan } = useContext(DatabaseContext);
   const [showPlanPopover, setShowPlanPopover] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [showEditPopover, setShowEditPopover] = useState(false);
   const tooltipRef = useRef();
   return (
     <View>
@@ -18,7 +20,9 @@ function PlanItem({ item }) {
         onPress={() => setShowPlanPopover(true)}
       >
         <View className="flex-row justify-between">
-          <Text style={{fontFamily:"appFont"}} className=" font-bold">{item.name}</Text>
+          <Text style={{ fontFamily: "appFont" }} className=" font-bold">
+            {item.name}
+          </Text>
           <TouchableOpacity
             ref={tooltipRef}
             className="p-1 rounded bg-gray-400 shadow w-6 items-center"
@@ -44,16 +48,38 @@ function PlanItem({ item }) {
             >
               <View className="flex-row">
                 <TouchableOpacity
-                  className="bg-red-500 p-1"
+                  className="bg-gray-300 p-1 flex-row items-center gap-1"
                   onPress={() => deletePlan(item.id)}
                 >
-                  <Text style={{fontFamily:"appFont"}} className="font-bold">Delete</Text>
+                  <MaterialCommunityIcons name="delete" size={15} color="red" />
+                  <Text
+                    style={{ fontFamily: "appFont" }}
+                    className="font-bold text-red-700"
+                  >
+                    Delete
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  className="bg-green-500 p-1"
-                  onPress={() => setShowTooltip(false)}
+                  className="bg-gray-300 p-1 flex-row items-center gap-1"
+                  onPress={() => {
+                    setShowTooltip(false);
+                    setTimeout(() => {
+                      setShowEditPopover(true);
+                    }, 500);
+                  }}
                 >
-                  <Text style={{fontFamily:"appFont"}} className="font-bold">Edit</Text>
+                  <MaterialCommunityIcons
+                    name="application-edit"
+                    size={15}
+                    color="green"
+                  />
+
+                  <Text
+                    style={{ fontFamily: "appFont" }}
+                    className="font-bold text-green-700"
+                  >
+                    Edit
+                  </Text>
                 </TouchableOpacity>
               </View>
             </Popover>
@@ -63,6 +89,13 @@ function PlanItem({ item }) {
       <CustomPopover
         showPopover={showPlanPopover}
         setShowPopover={setShowPlanPopover}
+        content={<Excercises planId={item.id} />}
+        popOverheight={0.8}
+        popOverwidth={0.8}
+      />
+      <CustomPopover
+        showPopover={showEditPopover}
+        setShowPopover={setShowEditPopover}
         content={<Excercises planId={item.id} />}
         popOverheight={0.8}
         popOverwidth={0.8}
