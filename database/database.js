@@ -1,9 +1,6 @@
 // database.js
 import * as SQLite from "expo-sqlite";
 import { exercises } from "../src/utility/exercises";
-
-let db;
-
 export const initDatabase = async () => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   // drop the excercises table
@@ -52,6 +49,7 @@ async function resetDatabase() {
   const db = await SQLite.openDatabaseAsync("databaseName");
   await db.execAsync(`
         PRAGMA journal_mode = WAL;
+        DROP TABLE IF EXISTS user;
         DROP TABLE IF EXISTS workouts;
         DROP TABLE IF EXISTS exercises;
         DROP TABLE IF EXISTS sets;
@@ -206,4 +204,12 @@ export const deleteExercise = async (id) => {
 
   await db.runAsync("DELETE FROM exercises WHERE id = ?", `${id}`);
   return true;
+};
+
+// check if there is a user in the database
+export const checkIfUserExists = async () => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync("SELECT * FROM user");
+
+  return data.length > 0;
 };

@@ -21,6 +21,13 @@ export const ARABIC = {
   SEARCH: "بحث",
   NO_EXERCISES: " لم يتم العثور على تمارين🧑‍💻",
   NO_PLANS: " لم يتم العثور على خطة🧑‍💻، قم بإضافة خطة 👆",
+  HEIGHT: "الطول",
+  ENTER_HEIGHT: " أدخل طولك",
+  ENTER_WEIGHT: " أدخل وزنك",
+  ENTER_YOUR_NAME: " أدخل اسمك",
+  WEIGHT: "الوزن",
+  WELCOME: " مرحبا بك 👋",
+  PLEASE_ENTER_INFO: " يرجى إدخال بياناتك 😊👇",
 };
 
 export const ENGLISH = {
@@ -47,4 +54,11 @@ export const ENGLISH = {
   SEARCH: "Search",
   NO_EXERCISES: "No exercises found🧑‍💻",
   NO_PLANS: "No plans found, add a plan 👆",
+  HEIGHT: "Height",
+  ENTER_HEIGHT: "Enter your height",
+  ENTER_WEIGHT: "Enter your weight",
+  ENTER_YOUR_NAME: "Enter your name",
+  WEIGHT: "Weight",
+  WELCOME: "Welcome  👋",
+  PLEASE_ENTER_INFO: "Please enter your info 😊👇",
 };

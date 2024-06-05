@@ -10,7 +10,7 @@ import Greeting from "../Components/Homescreen/Greeting";
 import Plans from "../Components/Homescreen/Plans/Plans";
 function Homescreen(props) {
 
-  initDatabase();
+  // initDatabase();
   return (
     <View>
       <Greeting />

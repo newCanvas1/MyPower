@@ -7,7 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { getUserInfo, initDatabase } from "../database/database";
+import {
+  checkIfUserExists,
+  getUserInfo,
+  initDatabase,
+} from "../database/database";
 import Homescreen from "../src/screens/Homescreen.js";
 import EnterUserInput from "../src/screens/EnterUserInput.js";
 export default function Page() {
@@ -15,16 +19,18 @@ export default function Page() {
   const [user, setUser] = useState("");
   useEffect(() => {
     async function getUser() {
-      const user = await getUserInfo();
-      setUser(true);
+      const isUserExists = await checkIfUserExists();
+      if (isUserExists) {
+        setUser(true);
+      } else {
+        setUser(false);
+      }
     }
     initDatabase();
     getUser();
   }, []);
 
-
   return (
-    <SafeAreaView>{user ? <Homescreen /> : <EnterUserInput />}</SafeAreaView>
+    <SafeAreaView>{user ? <Homescreen /> : <EnterUserInput setUser={setUser} />}</SafeAreaView>
   );
 }
-
