@@ -84,7 +84,7 @@ export const insertUser = async (name, weight, height) => {
     `${weight}`,
     `${height}`
   );
-  console.log(result);
+
   return result;
 };
 // insert workout
@@ -106,7 +106,7 @@ export const insertWorkout = async (
     `${notes}`,
     `${date}`
   );
-  console.log(result);
+
   return result;
 };
 // insert exercise
@@ -141,7 +141,7 @@ export const insertSets = async (exerciseId, reps, weight, type) => {
     `${weight}`,
     `${type}`
   );
-  console.log(result);
+
   return result;
 };
 

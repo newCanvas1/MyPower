@@ -4,7 +4,7 @@ import { DatabaseContext } from "../../../context/DataContext";
 
 function ExerciseItem({ exercise }) {
   const { setExcerciseToAdd, excerciseToAdd } = useContext(DatabaseContext);
-  console.log(exercise);
+
   const [count, setCount] = useState(0);
   useEffect(() => {
     for (let i = 0; i < excerciseToAdd.length; i++) {

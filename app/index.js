@@ -21,7 +21,7 @@ export default function Page() {
     initDatabase();
     getUser();
   }, []);
-  console.log(user);
+
 
   return (
     <SafeAreaView>{user ? <Homescreen /> : <EnterUserInput />}</SafeAreaView>

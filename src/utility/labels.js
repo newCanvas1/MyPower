@@ -18,6 +18,8 @@ export const ARABIC = {
   NOTES: "ملاحظات",
   HI: "مرحبا",
   CREATE_A_PLAN: "إنشاء خطة",
+  SEARCH: "بحث",
+  NO_EXERCISES: "لم يتم العثور على تمارين🧑‍💻",
 };
 
 export const ENGLISH = {
@@ -41,4 +43,6 @@ export const ENGLISH = {
   NOTES: "Notes",
   HI: "Hi",
   CREATE_A_PLAN: "Create a Plan",
+  SEARCH: "Search",
+  NO_EXERCISES: "No exercises found",
 };

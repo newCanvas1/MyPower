@@ -54,7 +54,11 @@ export const DatabaseProvider = ({ children }) => {
       exercise.notes
     );
     // update exercises
-    setExercises([...exercises, { ...exercise, id: result.lastInsertRowId }]);
+    setExercises([
+      ...exercises,
+      { ...exercise, exerciseId: result.lastInsertRowId },
+    ]);
+    return result.lastInsertRowId;
   };
 
   // get planExcercise

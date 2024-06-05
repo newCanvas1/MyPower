@@ -41,7 +41,6 @@ function ExcercisesList() {
       ),
     });
   }
-  console.log(items);
   return (
     <View className="w-[80%]  rounded p-1  h-60 ">
       {items.length == 0 ? (

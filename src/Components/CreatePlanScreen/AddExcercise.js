@@ -7,12 +7,11 @@ import { langChoice } from "../../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../utility/labels";
 import Button from "../General/Button";
 
-function AddExcercise({ setShowAddingExcercise }) {
+function AddExcercise({ setShowAddingExcercise, addExercise }) {
   const [name, setName] = useState("");
   const [icon, setIcon] = useState("");
   const [description, setDescription] = useState("");
   const [notes, setNotes] = useState("");
-  const { addExercise } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
   return (
     <View className="flex-col items-center  h-screen">
@@ -88,8 +87,8 @@ function AddExcercise({ setShowAddingExcercise }) {
       <View className="flex-col h-28 mt-10 justify-between">
         <Button
           color="green"
-          func={async () => {
-            await addExercise({
+          func={() => {
+            addExercise({
               name,
               icon,
               description,

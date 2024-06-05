@@ -10,7 +10,7 @@ const ExcrecisesDropdown = () => {
   const { exercises, setExcerciseToAdd, excerciseToAdd } =
     useContext(DatabaseContext);
   useEffect(() => {}, [exercises]);
-  console.log(excerciseToAdd);
+
   const renderItem = (item) => {
     return (
       <View style={styles.item}>
@@ -19,7 +19,7 @@ const ExcrecisesDropdown = () => {
       </View>
     );
   };
-  console.log(exercises);
+
   return (
     <View style={styles.container}>
       <MultiSelect
