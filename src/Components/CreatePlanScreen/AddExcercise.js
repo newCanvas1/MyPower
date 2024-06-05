@@ -2,6 +2,10 @@ import React, { useContext, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { DatabaseContext } from "../../../context/DataContext";
 import { styles } from "../../styles/styles";
+import { LanguageContext } from "../../../context/LanguageContext";
+import { langChoice } from "../../utility/functions/langChoice";
+import { ARABIC, ENGLISH } from "../../utility/labels";
+import Button from "../General/Button";
 
 function AddExcercise({ setShowAddingExcercise }) {
   const [name, setName] = useState("");
@@ -9,19 +13,30 @@ function AddExcercise({ setShowAddingExcercise }) {
   const [description, setDescription] = useState("");
   const [notes, setNotes] = useState("");
   const { addExercise } = useContext(DatabaseContext);
+  const { language } = useContext(LanguageContext);
   return (
     <View className="flex-col items-center  h-screen">
       <Text className="text-xl" style={{ fontFamily: "appFont" }}>
-        Add Exercise
+        {langChoice(language, ENGLISH.ADD_EXERCISE, ARABIC.ADD_EXCERCISE)}
       </Text>
       <View className="h-32"></View>
-      <Text className=" self-start" style={{ fontFamily: "appFont" }}>
-        Name
+      <Text
+        className={`${langChoice(language, "self-start", "self-end")} `}
+        style={{ fontFamily: "appFont" }}
+      >
+        {langChoice(language, ENGLISH.NAME, ARABIC.NAME)}
       </Text>
       <TextInput
         style={{ fontFamily: "appFont" }}
-        className={styles.userTextInput}
-        placeholder="Name"
+        className={
+          styles.userTextInput +
+          `${langChoice(language, " text-left", " text-right")}`
+        }
+        placeholder={langChoice(
+          language,
+          ENGLISH.ENTER_A_NAME,
+          ARABIC.ENTER_A_NAME
+        )}
         onChangeText={(text) => setName(text)}
       />
 
@@ -31,29 +46,49 @@ function AddExcercise({ setShowAddingExcercise }) {
         placeholder="Icon"
         onChangeText={(text) => setIcon(text)}
       /> */}
-      <Text className=" self-start" style={{ fontFamily: "appFont" }}>
-        Describtion
+      <Text
+        className={`${langChoice(language, "self-start", "self-end")} `}
+        style={{ fontFamily: "appFont" }}
+      >
+        {langChoice(language, ENGLISH.DESCRIBTION, ARABIC.DESCRIBTION)}
       </Text>
       <TextInput
         style={{ fontFamily: "appFont" }}
-        className={styles.userTextInput}
-        placeholder="Describtion"
+        className={
+          styles.userTextInput +
+          `${langChoice(language, " text-left", " text-right")}`
+        }
+        placeholder={langChoice(
+          language,
+          ENGLISH.ENTER_A_DESCRIPTION,
+          ARABIC.ENTER_A_DESCRIPTION
+        )}
         onChangeText={(text) => setDescription(text)}
       />
-      <Text className=" self-start" style={{ fontFamily: "appFont" }}>
-        Notes
+      <Text
+        className={`${langChoice(language, "self-start", "self-end")} `}
+        style={{ fontFamily: "appFont" }}
+      >
+        {langChoice(language, ENGLISH.NOTES, ARABIC.NOTES)}
       </Text>
       <TextInput
         style={{ fontFamily: "appFont" }}
-        className={styles.userTextInput}
-        placeholder="Notes"
+        className={
+          styles.userTextInput +
+          `${langChoice(language, " text-left", " text-right")}`
+        }
+        placeholder={langChoice(
+          language,
+          ENGLISH.ENTER_NOTES,
+          ARABIC.ENTER_NOTES
+        )}
         onChangeText={(text) => setNotes(text)}
       />
 
-      <View className="gap-5 mt-5">
-        <TouchableOpacity
-          className="bg-green-400 rounded p-1 items-center "
-          onPress={async () => {
+      <View className="flex-col h-28 mt-10 justify-between">
+        <Button
+          color="green"
+          func={async () => {
             await addExercise({
               name,
               icon,
@@ -62,27 +97,15 @@ function AddExcercise({ setShowAddingExcercise }) {
             });
             setShowAddingExcercise(false);
           }}
-        >
-          <Text
-            style={{ fontFamily: "appFont" }}
-            className="text-xl text-white font-bold"
-          >
-            Add
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          className="bg-red-400 rounded p-1 "
-          onPress={() => {
+          label={langChoice(language, ENGLISH.CONFIRM, ARABIC.CONFIRM)}
+        />
+        <Button
+          color="red"
+          func={() => {
             setShowAddingExcercise(false);
           }}
-        >
-          <Text
-            style={{ fontFamily: "appFont" }}
-            className="text-xl text-white font-bold"
-          >
-            Cancel
-          </Text>
-        </TouchableOpacity>
+          label={langChoice(language, ENGLISH.CANCEL, ARABIC.CANCEL)}
+        />
       </View>
     </View>
   );

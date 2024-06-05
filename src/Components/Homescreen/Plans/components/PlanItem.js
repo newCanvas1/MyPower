@@ -7,11 +7,16 @@ import Icon from "react-native-vector-icons/SimpleLineIcons";
 import Popover from "react-native-popover-view/dist/Popover";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { PopoverMode, PopoverPlacement } from "react-native-popover-view";
+import { langChoice } from "../../../../utility/functions/langChoice";
+import { ARABIC, ENGLISH } from "../../../../utility/labels";
+import { LanguageContext } from "../../../../../context/LanguageContext";
 function PlanItem({ item }) {
   const { deletePlan } = useContext(DatabaseContext);
+  const { language } = useContext(LanguageContext);
   const [showPlanPopover, setShowPlanPopover] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showEditPopover, setShowEditPopover] = useState(false);
+
   const tooltipRef = useRef();
   return (
     <View>
@@ -56,7 +61,7 @@ function PlanItem({ item }) {
                     style={{ fontFamily: "appFont" }}
                     className="font-bold text-red-700"
                   >
-                    Delete
+                    {langChoice(language, ENGLISH.DELETE, ARABIC.DELETE)}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -78,7 +83,7 @@ function PlanItem({ item }) {
                     style={{ fontFamily: "appFont" }}
                     className="font-bold text-green-700"
                   >
-                    Edit
+                    {langChoice(language, ENGLISH.EDIT, ARABIC.EDIT)}
                   </Text>
                 </TouchableOpacity>
               </View>

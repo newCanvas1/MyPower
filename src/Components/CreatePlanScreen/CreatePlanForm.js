@@ -15,12 +15,17 @@ import ExcercisesList from "./ExcercisesList";
 import ColorPicker from "./ColorPicker";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { LanguageContext } from "../../../context/LanguageContext";
+import { ARABIC, ENGLISH } from "../../utility/labels";
+import { langChoice } from "../../utility/functions/langChoice";
+import Button from "../General/Button";
 function CreatePlanForm(props) {
   const [name, setName] = useState("");
   const [showExcercisePopover, setShowExcercisePopover] = useState(false);
   const [description, setDescription] = useState("");
   const [color, setColor] = useState("");
   const { addPlan, setExcerciseToAdd } = useContext(DatabaseContext);
+  const { language } = useContext(LanguageContext);
   const router = useRouter();
   function goBack() {
     router.dismiss();
@@ -32,39 +37,77 @@ function CreatePlanForm(props) {
   }
   return (
     <View className="flex-col items-center justify-center  h-screen">
-      <View className="flex-row-reverse w-[100%] gap-2 items-center justify-center">
+      <View
+        className={`${langChoice(
+          language,
+          "flex-row-reverse",
+          "flex-row"
+        )} w-[100%] gap-2 items-center justify-center`}
+      >
         <Text style={{ fontFamily: "appFont" }} className="text-xl font-bold">
-          Create a Plan
+          {langChoice(language, ENGLISH.CREATE_A_PLAN, ARABIC.CREATE_A_PLAN)}
         </Text>
         <View className="bg-green-500 rounded p-1 shadow">
           <Icon name="newspaper" size={20} color="white" />
         </View>
       </View>
-      <Text style={{ fontFamily: "appFont" }} className="self-start ml-5">
-        Name
+      <Text
+        style={{ fontFamily: "appFont" }}
+        className={`${langChoice(language, "self-start", "self-end")} mx-5`}
+      >
+        {langChoice(language, ENGLISH.NAME, ARABIC.NAME)}
       </Text>
       <TextInput
         style={{ fontFamily: "appFont" }}
-        className={styles.userTextInput}
-        placeholder="Enter a name"
+        className={
+          styles.userTextInput +
+          `${langChoice(language, " text-left", " text-right")}`
+        }
+        placeholder={langChoice(
+          language,
+          ENGLISH.ENTER_A_NAME,
+          ARABIC.ENTER_A_NAME
+        )}
         onChangeText={(text) => setName(text)}
       />
-      <Text style={{ fontFamily: "appFont" }} className="self-start ml-5 mt-10">
-        Description
+      <Text
+        style={{ fontFamily: "appFont" }}
+        className={`${langChoice(language, "self-start", "self-end")} mx-5`}
+      >
+        {langChoice(language, ENGLISH.DESCRIBTION, ARABIC.DESCRIBTION)}
       </Text>
 
       <TextInput
         style={{ fontFamily: "appFont" }}
-        className={styles.userTextInput}
-        placeholder="Description [Optoinal]"
+        className={
+          styles.userTextInput +
+          `${langChoice(language, " text-left", " text-right")}`
+        }
+        placeholder={langChoice(
+          language,
+          ENGLISH.ENTER_A_DESCRIPTION,
+          ARABIC.ENTER_A_DESCRIPTION
+        )}
         onChangeText={(text) => setDescription(text)}
       />
       <ColorPicker setColor={setColor} />
 
-      <View className="flex-row justify-between w-[100%] gap-2 mt-1 ">
-        <View className="flex-row-reverse gap-1 justify-between items-center">
+      <View
+        className={`${langChoice(
+          language,
+          "flex-row",
+          "flex-row-reverse"
+        )} justify-between w-[100%] gap-2 mt-1 `}
+      >
+        <View
+          className={`${langChoice(
+            language,
+            "flex-row-reverse",
+            "flex-row"
+          )} gap-1 justify-between items-center`}
+        >
           <Text style={{ fontFamily: "appFont" }} className="font-bold text-lg">
-            Excercise
+            {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
           </Text>
           <View className="bg-green-500 rounded p-1 shadow">
             <MaterialCommunityIcons
@@ -94,26 +137,17 @@ function CreatePlanForm(props) {
         setShowPopover={setShowExcercisePopover}
         content={<ExcercisePopover />}
       />
-      <View className="gap-5 mt-5">
-        <TouchableOpacity
-          className="bg-green-400 rounded p-1 "
-          onPress={createPlan}
-        >
-          <Text
-            style={{ fontFamily: "appFont" }}
-            className="text-xl text-white font-bold"
-          >
-            Create
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity className="bg-red-500 rounded p-1 " onPress={goBack}>
-          <Text
-            style={{ fontFamily: "appFont" }}
-            className="text-xl text-white font-bold"
-          >
-            Cancel
-          </Text>
-        </TouchableOpacity>
+      <View className="flex-co h-28 justify-between">
+        <Button
+          color="green"
+          func={createPlan}
+          label={langChoice(language, ENGLISH.CONFIRM, ARABIC.CONFIRM)}
+        />
+        <Button
+          color="red"
+          func={goBack}
+          label={langChoice(language, ENGLISH.CANCEL, ARABIC.CANCEL)}
+        />
       </View>
     </View>
   );

@@ -10,11 +10,15 @@ import { DatabaseContext } from "../../../context/DataContext";
 import AddExcercise from "./AddExcercise";
 import ExcrecisesDropdown from "./ExcercisesDropdown";
 import ExerciseItem from "./ExerciseItem";
+import { LanguageContext } from "../../../context/LanguageContext";
+import { langChoice } from "../../utility/functions/langChoice";
+import { ARABIC, ENGLISH } from "../../utility/labels";
 
 function ExcercisePopover(props) {
   // get the data from the database
   const { exercises } = useContext(DatabaseContext);
   const [showAddingExcercise, setShowAddingExcercise] = useState(false);
+  const { language } = useContext(LanguageContext);
   useEffect(() => {}, [exercises]);
   return (
     <View>
@@ -30,14 +34,22 @@ function ExcercisePopover(props) {
       {showAddingExcercise && (
         <AddExcercise setShowAddingExcercise={setShowAddingExcercise} />
       )}
-      <FlatList
-      className=" p-1 mt-5  "
-      ItemSeparatorComponent={<View className="h-7" />}
-        data={exercises}
-        renderItem={({ item }) => <ExerciseItem exercise={item} />}
-        keyExtractor={(item) => item.exerciseId}
-      />
-      {/* <ExcrecisesDropdown /> */}
+
+      <View className="  rounded p-1  h-full ">
+        <Text
+          style={{ fontFamily: "appFont" }}
+          className={`text-xl text-center`}
+        >
+          {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
+        </Text>
+        <FlatList
+          className=" p-1 mt-5  "
+          ItemSeparatorComponent={<View className="h-7" />}
+          data={exercises}
+          renderItem={({ item }) => <ExerciseItem exercise={item} />}
+          keyExtractor={(item) => item.exerciseId}
+        />
+      </View>
     </View>
   );
 }

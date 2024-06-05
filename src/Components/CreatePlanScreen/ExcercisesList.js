@@ -2,9 +2,13 @@ import React, { useContext, useEffect } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { DatabaseContext } from "../../../context/DataContext";
 import Icon from "react-native-vector-icons/AntDesign";
+import { LanguageContext } from "../../../context/LanguageContext";
+import { langChoice } from "../../utility/functions/langChoice";
+import { ARABIC, ENGLISH } from "../../utility/labels";
 function ExcercisesList() {
   const { excerciseToAdd, exercises, setExcerciseToAdd } =
     useContext(DatabaseContext);
+  const { language } = useContext(LanguageContext);
   const ExcerciseItem = ({ item }) => {
     return (
       <View className="flex-row justify-between items-center rounded  bg-green-300 py-2 px-2 shadow">
@@ -15,7 +19,9 @@ function ExcercisesList() {
           className="bg-red-500 text-white font-bold py-2 px-2 rounded"
           onPress={() => {
             setExcerciseToAdd(
-              excerciseToAdd.filter((excercise) => excercise.index != item.index)
+              excerciseToAdd.filter(
+                (excercise) => excercise.index != item.index
+              )
             );
           }}
         >
@@ -43,7 +49,11 @@ function ExcercisesList() {
           style={{ fontFamily: "appFont" }}
           className=" self-center  opacity-40"
         >
-          Add Excercises here
+          {langChoice(
+            language,
+            ENGLISH.ADD_EXERCISE_HERE,
+            ARABIC.ADD_EXCERCISE_HERE
+          )}
         </Text>
       ) : (
         <FlatList
