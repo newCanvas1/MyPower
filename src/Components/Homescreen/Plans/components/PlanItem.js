@@ -25,7 +25,10 @@ function PlanItem({ item }) {
         onPress={() => setShowPlanPopover(true)}
       >
         <View className="flex-row justify-between">
-          <Text style={{ fontFamily: "appFont" }} className=" font-bold">
+          <Text
+            style={{ fontFamily: langChoice(language, "en", "ar") }}
+            className=" font-bold"
+          >
             {item.name}
           </Text>
           <TouchableOpacity
@@ -58,7 +61,7 @@ function PlanItem({ item }) {
                 >
                   <MaterialCommunityIcons name="delete" size={15} color="red" />
                   <Text
-                    style={{ fontFamily: "appFont" }}
+                    style={{ fontFamily: langChoice(language, "en", "ar") }}
                     className="font-bold text-red-700"
                   >
                     {langChoice(language, ENGLISH.DELETE, ARABIC.DELETE)}
@@ -80,7 +83,7 @@ function PlanItem({ item }) {
                   />
 
                   <Text
-                    style={{ fontFamily: "appFont" }}
+                    style={{ fontFamily: langChoice(language, "en", "ar") }}
                     className="font-bold text-green-700"
                   >
                     {langChoice(language, ENGLISH.EDIT, ARABIC.EDIT)}

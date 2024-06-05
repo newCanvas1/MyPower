@@ -4,6 +4,7 @@ import { getUserInfo } from "../../../database/database";
 import { langChoice } from "../../utility/functions/langChoice";
 import { LanguageContext } from "../../../context/LanguageContext";
 import { ARABIC, ENGLISH } from "../../utility/labels";
+import LangSelector from "../General/LangSelector";
 
 function Greeting(props) {
   const [userName, serUserName] = useState("");
@@ -16,13 +17,14 @@ function Greeting(props) {
     getUserName();
   }, []);
   return (
-    <View className="px-10 py-10">
+    <View className="px-10 py-10 items-center justify-center">
       <Text
         style={{ fontFamily: "appFont" }}
         className={`text-4xl ${langChoice(language, "self-start", "self-end")}`}
       >
         {langChoice(language, ENGLISH.HI, ARABIC.HI)} {userName} ⚡️👋
       </Text>
+      <LangSelector />
     </View>
   );
 }

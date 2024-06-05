@@ -56,14 +56,14 @@ function ExcercisePopover(props) {
 
       <View className="  rounded p-1  h-full ">
         <Text
-          style={{ fontFamily: "appFont" }}
-          className={`text-xl text-center`}
+        style={{ fontFamily: langChoice(language,"en","ar") }}
+        className={`text-xl text-center`}
         >
           {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
         </Text>
         <TextInput
-          style={{ fontFamily: "appFont" }}
-          className={
+        style={{ fontFamily: langChoice(language,"en","ar") }}
+        className={
             styles.userTextInput +
             " text-2xl text-center self-center  " +
             `${langChoice(language, " text-left", " text-right")}`
@@ -80,8 +80,8 @@ function ExcercisePopover(props) {
         />
         {displayExcercises.length == 0 ? (
           <Text
-            style={{ fontFamily: "appFont" }}
-            className=" self-center mt-5  opacity-40"
+          style={{ fontFamily: langChoice(language,"en","ar") }}
+          className=" self-center mt-5  opacity-40"
           >
             {langChoice(language, ENGLISH.NO_EXERCISES, ARABIC.NO_EXERCISES)}
           </Text>

@@ -44,7 +44,8 @@ function CreatePlanForm(props) {
           "flex-row"
         )} w-[100%] gap-2 items-center justify-center`}
       >
-        <Text style={{ fontFamily: "appFont" }} className="text-xl font-bold">
+        <Text         style={{ fontFamily: langChoice(language,"en","ar") }}
+ className="text-xl font-bold">
           {langChoice(language, ENGLISH.CREATE_A_PLAN, ARABIC.CREATE_A_PLAN)}
         </Text>
         <View className="bg-green-500 rounded p-1 shadow">
@@ -52,7 +53,7 @@ function CreatePlanForm(props) {
         </View>
       </View>
       <Text
-        style={{ fontFamily: "appFont" }}
+        style={{ fontFamily: langChoice(language,"en","ar") }}
         className={`${langChoice(
           language,
           "self-start",
@@ -62,7 +63,7 @@ function CreatePlanForm(props) {
         {langChoice(language, ENGLISH.NAME, ARABIC.NAME)}
       </Text>
       <TextInput
-        style={{ fontFamily: "appFont" }}
+        style={{ fontFamily: langChoice(language,"en","ar") }}
         className={
           styles.userTextInput +
           `${langChoice(language, " text-left", " text-right")}`
@@ -75,14 +76,14 @@ function CreatePlanForm(props) {
         onChangeText={(text) => setName(text)}
       />
       <Text
-        style={{ fontFamily: "appFont" }}
+        style={{ fontFamily: langChoice(language,"en","ar") }}
         className={`${langChoice(language, "self-start", "self-end")} mx-5`}
       >
         {langChoice(language, ENGLISH.DESCRIBTION, ARABIC.DESCRIBTION)}
       </Text>
 
       <TextInput
-        style={{ fontFamily: "appFont" }}
+        style={{ fontFamily: langChoice(language,"en","ar") }}
         className={
           styles.userTextInput +
           `${langChoice(language, " text-left", " text-right")}`
@@ -110,7 +111,8 @@ function CreatePlanForm(props) {
             "flex-row"
           )} gap-1 justify-between items-center`}
         >
-          <Text style={{ fontFamily: "appFont" }} className="font-bold text-lg">
+          <Text         style={{ fontFamily: langChoice(language,"en","ar") }}
+ className="font-bold text-lg">
             {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
           </Text>
           <View className="bg-green-500 rounded p-1 shadow">

@@ -36,7 +36,7 @@ export const LanguageContextProvider = ({ children }) => {
     // if a language is previously registered then reload the component.
   }, [language]);
   return (
-    <LanguageContext.Provider value={{ language, setLanguage }}>
+    <LanguageContext.Provider value={{ language, setLanguage,storeData }}>
       {children}
     </LanguageContext.Provider>
   );

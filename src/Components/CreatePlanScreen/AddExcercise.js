@@ -15,18 +15,21 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
   const { language } = useContext(LanguageContext);
   return (
     <View className="flex-col items-center  h-screen">
-      <Text className="text-xl" style={{ fontFamily: "appFont" }}>
+      <Text
+        className="text-xl"
+        style={{ fontFamily: langChoice(language, "en", "ar") }}
+      >
         {langChoice(language, ENGLISH.ADD_EXERCISE, ARABIC.ADD_EXCERCISE)}
       </Text>
       <View className="h-32"></View>
       <Text
         className={`${langChoice(language, "self-start", "self-end")} `}
-        style={{ fontFamily: "appFont" }}
+        style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.NAME, ARABIC.NAME)}
       </Text>
       <TextInput
-        style={{ fontFamily: "appFont" }}
+        style={{ fontFamily: langChoice(language, "en", "ar") }}
         className={
           styles.userTextInput +
           `${langChoice(language, " text-left", " text-right")}`
@@ -47,12 +50,12 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
       /> */}
       <Text
         className={`${langChoice(language, "self-start", "self-end")} `}
-        style={{ fontFamily: "appFont" }}
+        style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.DESCRIBTION, ARABIC.DESCRIBTION)}
       </Text>
       <TextInput
-        style={{ fontFamily: "appFont" }}
+        style={{ fontFamily: langChoice(language, "en", "ar") }}
         className={
           styles.userTextInput +
           `${langChoice(language, " text-left", " text-right")}`
@@ -66,12 +69,12 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
       />
       <Text
         className={`${langChoice(language, "self-start", "self-end")} `}
-        style={{ fontFamily: "appFont" }}
+        style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.NOTES, ARABIC.NOTES)}
       </Text>
       <TextInput
-        style={{ fontFamily: "appFont" }}
+        style={{ fontFamily: langChoice(language, "en", "ar") }}
         className={
           styles.userTextInput +
           `${langChoice(language, " text-left", " text-right")}`

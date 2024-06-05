@@ -12,7 +12,8 @@ function ExcercisesList() {
   const ExcerciseItem = ({ item }) => {
     return (
       <View className="flex-row justify-between items-center rounded  bg-green-300 py-2 px-2 shadow">
-        <Text style={{ fontFamily: "appFont" }} className=" font-bold ">
+        <Text         style={{ fontFamily: langChoice(language,"en","ar") }}
+ className=" font-bold ">
           {item.name}
         </Text>
         <TouchableOpacity
@@ -45,7 +46,7 @@ function ExcercisesList() {
     <View className="w-[80%]  rounded p-1  h-60 ">
       {items.length == 0 ? (
         <Text
-          style={{ fontFamily: "appFont" }}
+        style={{ fontFamily: langChoice(language,"en","ar") }}
           className=" self-center  opacity-40"
         >
           {langChoice(

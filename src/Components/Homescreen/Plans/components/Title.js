@@ -14,7 +14,7 @@ function Title(props) {
   }
   return (
     <View className={`${langChoice(language," flex-row","flex-row-reverse")} items-center justify-between `}>
-      <Text style={{ fontFamily: "appFont" }} className="text-2xl font-bold ">
+      <Text style={{ fontFamily: langChoice(language,"en","ar") }} className="text-2xl font-bold ">
         {langChoice(language, ENGLISH.PLANS, ARABIC.PLANS)}
       </Text>
       <TouchableOpacity className={styles.addBtn} onPress={addPlan}>
