@@ -4,8 +4,12 @@ import { getTable } from "../../../../../database/database";
 import { useState, useEffect } from "react";
 import { DatabaseContext } from "../../../../../context/DataContext";
 import PlanItem from "./PlanItem";
+import { langChoice } from "../../../../utility/functions/langChoice";
+import { LanguageContext } from "../../../../../context/LanguageContext";
+import { ARABIC, ENGLISH } from "../../../../utility/labels";
 function PlansList(props) {
   const { plans } = useContext(DatabaseContext);
+  const { language } = useContext(LanguageContext);
   useEffect(() => {}, [plans]);
   // grid flat list
   return (
@@ -20,8 +24,11 @@ function PlansList(props) {
           renderItem={({ item }) => <PlanItem item={item} />}
         />
       ) : (
-        <Text style={{fontFamily:"appFont"}} className="text-center text-gray-500 text-sm">
-          No plans found
+        <Text
+          style={{ fontFamily: "appFont" }}
+          className="text-center text-gray-500 text-sm"
+        >
+          {langChoice(language, ENGLISH.NO_PLANS, ARABIC.NO_PLANS)}
         </Text>
       )}
     </View>

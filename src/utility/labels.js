@@ -19,7 +19,8 @@ export const ARABIC = {
   HI: "مرحبا",
   CREATE_A_PLAN: "إنشاء خطة",
   SEARCH: "بحث",
-  NO_EXERCISES: "لم يتم العثور على تمارين🧑‍💻",
+  NO_EXERCISES: " لم يتم العثور على تمارين🧑‍💻",
+  NO_PLANS: " لم يتم العثور على خطة🧑‍💻، قم بإضافة خطة 👆",
 };
 
 export const ENGLISH = {
@@ -44,5 +45,6 @@ export const ENGLISH = {
   HI: "Hi",
   CREATE_A_PLAN: "Create a Plan",
   SEARCH: "Search",
-  NO_EXERCISES: "No exercises found",
+  NO_EXERCISES: "No exercises found🧑‍💻",
+  NO_PLANS: "No plans found, add a plan 👆",
 };

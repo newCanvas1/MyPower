@@ -1,34 +1,19 @@
 // database.js
 import * as SQLite from "expo-sqlite";
+import { exercises } from "../src/utility/exercises";
 
 let db;
 
-async function resetDatabase() {
-  const db = await SQLite.openDatabaseAsync("databaseName");
-  await db.execAsync(`
-        PRAGMA journal_mode = WAL;
-        DROP TABLE IF EXISTS workouts;
-        DROP TABLE IF EXISTS exercises;
-        DROP TABLE IF EXISTS sets;
-        DROP TABLE IF EXISTS plans;
-        DROP TABLE IF EXISTS PlansExercises;
-        `);
-}
 export const initDatabase = async () => {
-  // resetDatabase()
   const db = await SQLite.openDatabaseAsync("databaseName");
   // drop the excercises table
-
-  // `execAsync()` is useful for bulk queries when you want to execute altogether.
-  // Please note that `execAsync()` does not escape parameters and may lead to SQL injection.
+  // await resetDatabase();
   await db.execAsync(`
     PRAGMA journal_mode = WAL;
     CREATE TABLE IF NOT EXISTS user (name TEXT, weight INTEGER, height INTEGER );
    
     `);
 
-  // `execAsync()` is useful for bulk queries when you want to execute altogether.
-  // Please note that `execAsync()` does not escape parameters and may lead to SQL injection.
   await db.execAsync(`
         PRAGMA journal_mode = WAL;
         CREATE TABLE IF NOT EXISTS user (name TEXT, weight INTEGER, height INTEGER );
@@ -59,21 +44,41 @@ export const initDatabase = async () => {
         CREATE TABLE IF NOT EXISTS PlansExercises (id INTEGER PRIMARY KEY AUTOINCREMENT,planId INTEGER,exerciseId INTEGER);
         `);
   console.log("Database created");
-  // `getFirstAsync()` is useful when you want to get a single row from the database.
-  const firstRow = await db.getFirstAsync("SELECT * FROM user");
-  // console.log(firstRow.id, firstRow.value, firstRow.intValue);
 
-  // `getAllAsync()` is useful when you want to get all results as an array of objects.
-  const allRows = await db.getAllAsync("SELECT * FROM test");
-  for (const row of allRows) {
-    // console.log(row.id, row.value, row.intValue);
-  }
-
-  // `getEachAsync()` is useful when you want to iterate SQLite query cursor.
-  for await (const row of db.getEachAsync("SELECT * FROM test")) {
-    // console.log(row.id, row.value, row.intValue);
-  }
+  prepareExercises();
+  console.log("Excercises added");
 };
+async function resetDatabase() {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  await db.execAsync(`
+        PRAGMA journal_mode = WAL;
+        DROP TABLE IF EXISTS workouts;
+        DROP TABLE IF EXISTS exercises;
+        DROP TABLE IF EXISTS sets;
+        DROP TABLE IF EXISTS plans;
+        DROP TABLE IF EXISTS PlansExercises;
+        `);
+}
+async function prepareExercises() {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+
+  // Check if there are already exercises in the database
+  const results = await db.getAllAsync(
+    "SELECT COUNT(*) as count FROM exercises"
+  );
+  const count = results[0].count;
+
+  if (count === 0) {
+    // Only insert exercises if the table is empty
+
+    for (const exercise of exercises) {
+      await db.runAsync(
+        `INSERT INTO exercises (name, icon, description, notes) VALUES (?, ?, ?, ?)`,
+        [exercise.name, exercise.icon, exercise.description, exercise.notes]
+      );
+    }
+  }
+}
 
 export const insertUser = async (name, weight, height) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
@@ -146,7 +151,7 @@ export const insertSets = async (exerciseId, reps, weight, type) => {
 };
 
 // insert plan
-export const insertPlan = async (name, icon, description,color) => {
+export const insertPlan = async (name, icon, description, color) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const result = await db.runAsync(
     "INSERT INTO plans (name, icon,description,color) VALUES (?, ?,?,?)",

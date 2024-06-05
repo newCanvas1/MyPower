@@ -86,15 +86,17 @@ function ExcercisePopover(props) {
             {langChoice(language, ENGLISH.NO_EXERCISES, ARABIC.NO_EXERCISES)}
           </Text>
         ) : (
-          <FlatList
-            className=" p-1 mt-5  "
-            ItemSeparatorComponent={<View className="h-7" />}
-            data={displayExcercises}
-            renderItem={({ item }) => (
-              <ExerciseItem key={item.exerciseId} exercise={item} />
-            )}
-            keyExtractor={(item) => item.exerciseId}
-          />
+          <View className=" h-[600] mt-2 pb-5">
+            <FlatList
+              className="h-[100%]"
+              ItemSeparatorComponent={<View className="h-7" />}
+              data={displayExcercises}
+              renderItem={({ item }) => (
+                <ExerciseItem key={item.exerciseId} exercise={item} />
+              )}
+              keyExtractor={(item) => item.exerciseId}
+            />
+          </View>
         )}
       </View>
     </View>

@@ -36,7 +36,7 @@ function CreatePlanForm(props) {
     router.dismiss();
   }
   return (
-    <View className="flex-col items-center justify-center  h-screen">
+    <View className="flex-col items-center mt-10 h-screen">
       <View
         className={`${langChoice(
           language,
@@ -53,7 +53,11 @@ function CreatePlanForm(props) {
       </View>
       <Text
         style={{ fontFamily: "appFont" }}
-        className={`${langChoice(language, "self-start", "self-end")} mx-5`}
+        className={`${langChoice(
+          language,
+          "self-start",
+          "self-end"
+        )} mx-5 mt-20`}
       >
         {langChoice(language, ENGLISH.NAME, ARABIC.NAME)}
       </Text>
@@ -131,13 +135,13 @@ function CreatePlanForm(props) {
       </View>
 
       <CustomPopover
-        popOverheight={0.8}
-        popOverwidth={0.8}
+        popOverheight={0.85}
+        popOverwidth={0.9}
         showPopover={showExcercisePopover}
         setShowPopover={setShowExcercisePopover}
         content={<ExcercisePopover />}
       />
-      <View className="flex-co h-28 justify-between">
+      <View className="flex-co h-28 justify-between mt-10">
         <Button
           color="green"
           func={createPlan}
