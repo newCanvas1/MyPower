@@ -8,8 +8,7 @@ import {
 } from "react-native";
 import { DatabaseContext } from "../../../context/DataContext";
 import AddExcercise from "./AddExcercise";
-import ExcrecisesDropdown from "./ExcercisesDropdown";
-import ExerciseItem from "./ExerciseItem";
+import ExerciseItem from "./ExerciseAdd";
 import { LanguageContext } from "../../../context/LanguageContext";
 import { langChoice } from "../../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../utility/labels";

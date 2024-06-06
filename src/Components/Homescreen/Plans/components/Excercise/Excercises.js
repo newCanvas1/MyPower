@@ -2,13 +2,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import { DatabaseContext } from "../../../../../../context/DataContext";
 import ExcerciseItem from "./ExcerciseItem";
+import ExerciseItem from "../../../../CreatePlanScreen/ExerciseItem";
 
 function Excercises({ planId }) {
   const [excercises, setExcercises] = useState([]);
   const { getPlanExcercise, deletePlanExcercise } = useContext(DatabaseContext);
-  async function deleteExcercise(id) {
-    await deletePlanExcercise(id);
-    setExcercises(excercises.filter((excercise) => excercise.id != id));
+  async function deleteExcercise(item) {
+    console.log(item);
+
+    await deletePlanExcercise(item.id);
+    setExcercises(
+      excercises.filter((excercise) => excercise.id != item.id)
+    );
   }
   useEffect(() => {
     async function getExcercises() {
@@ -22,7 +27,7 @@ function Excercises({ planId }) {
       <FlatList
         data={excercises}
         renderItem={({ item }) => (
-          <ExcerciseItem excercise={item} deleteExcercise={deleteExcercise} />
+          <ExerciseItem item={item} deleteItem={deleteExcercise} />
         )}
       />
     </View>

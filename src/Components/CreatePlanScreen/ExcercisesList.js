@@ -1,36 +1,19 @@
 import React, { useContext, useEffect } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { DatabaseContext } from "../../../context/DataContext";
-import Icon from "react-native-vector-icons/AntDesign";
 import { LanguageContext } from "../../../context/LanguageContext";
 import { langChoice } from "../../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../utility/labels";
+import ExerciseItem from "./ExerciseItem";
 function ExcercisesList() {
   const { excerciseToAdd, exercises, setExcerciseToAdd } =
     useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
-  const ExcerciseItem = ({ item }) => {
-    return (
-      <View className="flex-row justify-between items-center rounded  bg-green-300 py-2 px-2 shadow">
-        <Text         style={{ fontFamily: langChoice(language,"en","ar") }}
- className=" font-bold ">
-          {item.name}
-        </Text>
-        <TouchableOpacity
-          className="bg-red-500 text-white font-bold py-2 px-2 rounded"
-          onPress={() => {
-            setExcerciseToAdd(
-              excerciseToAdd.filter(
-                (excercise) => excercise.index != item.index
-              )
-            );
-          }}
-        >
-          <Icon name="delete" size={20} color="white" />
-        </TouchableOpacity>
-      </View>
+  async function deleteExcercise(item) {
+    setExcerciseToAdd(
+      excerciseToAdd.filter((excercise) => excercise.index != item.index)
     );
-  };
+  }
   useEffect(() => {}, [excerciseToAdd]);
   // get the item from exercises by id
   const items = [];
@@ -46,7 +29,7 @@ function ExcercisesList() {
     <View className="w-[80%]  rounded p-1  h-60 ">
       {items.length == 0 ? (
         <Text
-        style={{ fontFamily: langChoice(language,"en","ar") }}
+          style={{ fontFamily: langChoice(language, "en", "ar") }}
           className=" self-center  opacity-40"
         >
           {langChoice(
@@ -59,7 +42,9 @@ function ExcercisesList() {
         <FlatList
           data={items}
           ItemSeparatorComponent={<View className="h-7" />}
-          renderItem={({ item }) => <ExcerciseItem item={item} />}
+          renderItem={({ item }) => (
+            <ExerciseItem item={item} deleteItem={deleteExcercise} />
+          )}
           keyExtractor={(item) => item.index}
         />
       )}
