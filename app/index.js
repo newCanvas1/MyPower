@@ -9,17 +9,17 @@ import {
 } from "react-native";
 import {
   checkIfUserExists,
-  getUserInfo,
   initDatabase,
 } from "../database/database";
-import Homescreen from "../src/screens/Homescreen.js";
 import EnterUserInput from "../src/screens/EnterUserInput.js";
 export default function Page() {
   const router = useRouter();
   const [user, setUser] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     async function getUser() {
       const isUserExists = await checkIfUserExists();
+      setIsLoading(false);
       if (isUserExists) {
         setUser(true);
       } else {
@@ -31,6 +31,10 @@ export default function Page() {
   }, []);
 
   return (
-    <SafeAreaView>{user ? <Homescreen /> : <EnterUserInput setUser={setUser} />}</SafeAreaView>
+    <SafeAreaView>
+      {user
+        ? router.replace("/(tabs)")
+        : !isLoading && <EnterUserInput setUser={setUser} />}
+    </SafeAreaView>
   );
 }
