@@ -28,6 +28,8 @@ export const ARABIC = {
   WEIGHT: "الوزن",
   WELCOME: " مرحبا بك 👋",
   PLEASE_ENTER_INFO: " يرجى إدخال بياناتك 😊👇",
+  HOME: "الرئيسية",
+  SETTINGS: "الإعدادات",
 };
 
 export const ENGLISH = {
@@ -61,4 +63,6 @@ export const ENGLISH = {
   WEIGHT: "Weight",
   WELCOME: "Welcome  👋",
   PLEASE_ENTER_INFO: "Please enter your info 😊👇",
+  HOME: "Home",
+  SETTINGS: "Settings",
 };
