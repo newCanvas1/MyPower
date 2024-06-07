@@ -7,10 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import {
-  checkIfUserExists,
-  initDatabase,
-} from "../database/database";
+import { checkIfUserExists, initDatabase } from "../database/database";
 import EnterUserInput from "../src/screens/EnterUserInput.js";
 export default function Page() {
   const router = useRouter();
@@ -21,20 +18,14 @@ export default function Page() {
       const isUserExists = await checkIfUserExists();
       setIsLoading(false);
       if (isUserExists) {
-        setUser(true);
+        router.replace("/(tabs)");
       } else {
-        setUser(false);
+        router.replace("/EnterUser");
       }
     }
     initDatabase();
     getUser();
   }, []);
 
-  return (
-    <SafeAreaView>
-      {user
-        ? router.replace("/(tabs)")
-        : !isLoading && <EnterUserInput setUser={setUser} />}
-    </SafeAreaView>
-  );
+  return <SafeAreaView></SafeAreaView>;
 }

@@ -8,7 +8,7 @@ import Button from "../Components/General/Button.js";
 import { langChoice } from "../utility/functions/langChoice.js";
 import { LanguageContext } from "../../context/LanguageContext.js";
 import { ARABIC, ENGLISH } from "../utility/labels.js";
-const EnterUserInput = ({ setUser }) => {
+const EnterUserInput = () => {
   const [name, setName] = useState("");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
@@ -17,11 +17,21 @@ const EnterUserInput = ({ setUser }) => {
   return (
     <SafeAreaView className="w-[100%] justify-center items-center">
       <View className="w-[100%] h-[100%] flex flex-col items-center  px-10">
-        <Text style={{ fontFamily: "appFont" }} className="text-center text-3xl mt-10">
+        <Text
+          style={{ fontFamily: "appFont" }}
+          className="text-center text-3xl mt-10"
+        >
           {langChoice(language, ENGLISH.WELCOME, ARABIC.WELCOME)}
         </Text>
-        <Text style={{ fontFamily: "appFont" }} className="text-center text-xl mt-20">
-          {langChoice(language, ENGLISH.PLEASE_ENTER_INFO, ARABIC.PLEASE_ENTER_INFO)}
+        <Text
+          style={{ fontFamily: "appFont" }}
+          className="text-center text-xl mt-20"
+        >
+          {langChoice(
+            language,
+            ENGLISH.PLEASE_ENTER_INFO,
+            ARABIC.PLEASE_ENTER_INFO
+          )}
         </Text>
         <Text
           style={{ fontFamily: "appFont" }}
@@ -85,17 +95,15 @@ const EnterUserInput = ({ setUser }) => {
           }
         />
         <View className="mt-10">
-
-        <Button
-          label={langChoice(language, ENGLISH.CONFIRM, ARABIC.CONFIRM)}
-          func={async () => {
-            await insertUser(name, weight, height);
-            setUser(true);
-          }}
-          color={"green"}
-        />
-                </View>
-
+          <Button
+            label={langChoice(language, ENGLISH.CONFIRM, ARABIC.CONFIRM)}
+            func={async () => {
+              await insertUser(name, weight, height);
+              router.replace("/(tabs)");
+            }}
+            color={"green"}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
