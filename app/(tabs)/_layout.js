@@ -1,4 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import Feather from "@expo/vector-icons/Feather";
 import { Tabs } from "expo-router";
 import { useContext } from "react";
 import { LanguageContext } from "../../context/LanguageContext";
@@ -7,7 +8,17 @@ import { ARABIC, ENGLISH } from "../../src/utility/labels";
 export default function TabLayout() {
   const { language } = useContext(LanguageContext);
   return (
-    <Tabs screenOptions={{tabBarActiveTintColor: "green", headerShown: false }}>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: "green",
+        headerShown: false,
+        tabBarStyle: {
+          height: 100,
+          backgroundColor: "transparent",
+          borderTopWidth: 0,
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
@@ -16,7 +27,7 @@ export default function TabLayout() {
             fontFamily: langChoice(language, "en", "ar"),
           },
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="home" color={color} />
+            <Feather size={28} name="home" color={color} />
           ),
         }}
       />
@@ -26,12 +37,14 @@ export default function TabLayout() {
           title: langChoice(language, ENGLISH.SETTINGS, ARABIC.SETTINGS),
           tabBarLabelStyle: {
             fontFamily: langChoice(language, "en", "ar"),
-            
           },
-          
+
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="cog" color={color} />
+            <Feather size={28} name="settings" color={color} />
           ),
+          tabBarIconStyle: {
+            marginBottom: 0,
+          },
         }}
       />
     </Tabs>
