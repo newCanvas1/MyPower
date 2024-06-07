@@ -213,3 +213,9 @@ export const checkIfUserExists = async () => {
 
   return data.length > 0;
 };
+
+export const updatePlanName = async (id, name) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  await db.runAsync("UPDATE plans SET name = ? WHERE id = ?", `${name}`, `${id}`);
+  return true;
+};

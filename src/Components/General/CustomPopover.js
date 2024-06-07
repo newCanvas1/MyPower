@@ -16,7 +16,7 @@ function CustomPopover({
       onRequestClose={() => setShowPopover(false)}
     >
       <View
-        style={{ width: popOverwidth * width, height: popOverheight * height, padding: 10 }}
+        style={{ width: popOverwidth * width, height: popOverheight * height, padding: 0 }}
       >
         {content}
       </View>

@@ -30,6 +30,10 @@ export const ARABIC = {
   PLEASE_ENTER_INFO: " يرجى إدخال بياناتك 😊👇",
   HOME: "الرئيسية",
   SETTINGS: "الإعدادات",
+  PROFILE: "الملف الشخصي",
+  START_WORKOUT: "بدء",
+  RENAME:"إعادة التسمية",
+  NEW_NAME: "الاسم الجديد",
 };
 
 export const ENGLISH = {
@@ -65,4 +69,8 @@ export const ENGLISH = {
   PLEASE_ENTER_INFO: "Please enter your info 😊👇",
   HOME: "Home",
   SETTINGS: "Settings",
+  PROFILE: "Profile",
+  START_WORKOUT: "Start",
+  RENAME:"Rename",
+  NEW_NAME: "New Name",
 };
