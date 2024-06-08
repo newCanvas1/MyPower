@@ -95,9 +95,9 @@ function ExcercisePopover(props) {
             // search using the item name and muscle and category
             const searchResults = exercises.filter(
               (item) =>
-                item.name.toLowerCase().includes(text.toLowerCase()) ||
-                item.muscle.toLowerCase().includes(text.toLowerCase()) ||
-                item.category.toLowerCase().includes(text.toLowerCase())
+                item.name?.toLowerCase().includes(text.toLowerCase()) ||
+                item.muscle?.toLowerCase().includes(text.toLowerCase()) ||
+                item.category?.toLowerCase().includes(text.toLowerCase())
             );
 
             const orgnized = organizeExercises(searchResults);
@@ -106,7 +106,7 @@ function ExcercisePopover(props) {
           }}
         />
 
-        {displayExcercises?.length == 0 ? (
+        {Object.keys(displayExcercises).length == 0 ? (
           <Text
             style={{ fontFamily: langChoice(language, "en", "ar") }}
             className=" self-center mt-5  opacity-40"
@@ -116,13 +116,15 @@ function ExcercisePopover(props) {
         ) : (
           <ScrollView className="   pb-5">
             {Object.keys(displayExcercises).map((category) => (
-              <View key={category}>
-                <Text
-                  style={{ fontFamily: langChoice(language, "en", "ar") }}
-                  className="text-xl text-center"
-                >
-                  {category}
-                </Text>
+              <View className="mt-5" key={category}>
+                <View className="border-l-4 border-green-500 px-2 rounded">
+                  <Text
+                    className="text-lg"
+                    style={{ fontFamily: langChoice(language, "en", "ar") }}
+                  >
+                    {category}
+                  </Text>
+                </View>
                 {displayExcercises[category].map((item) => (
                   <ExerciseItem key={item.exerciseId} exercise={item} />
                 ))}
