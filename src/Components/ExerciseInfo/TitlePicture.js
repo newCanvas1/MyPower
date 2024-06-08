@@ -17,17 +17,12 @@ function TitlePicture({ title, muscle }) {
           {title}
         </Text>
       </ScrollView>
-
-      <Image
-      source={muscles[`${muscle?.toLowerCase()}`]}
-        style={{
-          width: 200,
-          height: 200,
-          resizeMode: "clip",
-          alignSelf: "flex-end",
-        }}
-      />
-      {/* <View className="w-[200] h-[200] bg-slate-400 self-end mt-5"></View> */}
+      <View className=" self-end p-1 shadow border border-green-500 items-center justify-center bg-[#f6f6f4] w-[60%] rounded">
+        <Image
+          source={muscles[`${muscle?.toLowerCase()}`]}
+          className="w-[200] h-[180] "
+        />
+      </View>
     </View>
   );
 }

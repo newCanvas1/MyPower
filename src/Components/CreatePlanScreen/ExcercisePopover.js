@@ -13,6 +13,7 @@ import { LanguageContext } from "../../../context/LanguageContext";
 import { langChoice } from "../../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../utility/labels";
 import { styles } from "../../styles/styles";
+import AnimatedSearchInput from "./AnimatedTextInput";
 
 function ExcercisePopover(props) {
   // get the data from the database
@@ -60,14 +61,13 @@ function ExcercisePopover(props) {
         >
           {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
         </Text>
-        <TextInput
+        <AnimatedSearchInput
           style={{ fontFamily: langChoice(language, "en", "ar") }}
           className={
             styles.userTextInput +
             " text-2xl text-center self-center  " +
             `${langChoice(language, " text-left", " text-right")}`
           }
-          placeholder={langChoice(language, ENGLISH.SEARCH, ARABIC.SEARCH)}
           onChangeText={(text) => {
             setSearchText(text);
             // search using the item name and muscle and category
@@ -82,6 +82,7 @@ function ExcercisePopover(props) {
             );
           }}
         />
+
         {displayExcercises.length == 0 ? (
           <Text
             style={{ fontFamily: langChoice(language, "en", "ar") }}
