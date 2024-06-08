@@ -157,7 +157,7 @@ export const exercises = [
     notes:
       "You can do calf raises on your knees, but it is best to do them on your toes. Start with a few reps and gradually increase as you get stronger.",
     muscle: "Calves",
-    category: "Back",
+    category: "Legs",
   },
   {
     name: "Back Extension",

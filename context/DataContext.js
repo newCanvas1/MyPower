@@ -84,6 +84,20 @@ export const DatabaseProvider = ({ children }) => {
     const data = await getExerciseById(id);
     return data;
   };
+
+  const getSortedExercises = async () => {
+    const exercises = {};
+    const data = await getTable("exercises");
+    for (const exercise of data) {
+      exercises[exercise.category] = [
+        ...(exercises[exercise.category] || []),
+        exercise,
+      ];
+    }
+    console.log(exercises);
+    return exercises;
+  };
+
   return (
     <DatabaseContext.Provider
       value={{
@@ -97,7 +111,8 @@ export const DatabaseProvider = ({ children }) => {
         getPlanExcercise,
         deletePlanExcercise,
         changePlanName,
-        getExercise
+        getExercise,
+        getSortedExercises
       }}
     >
       {children}
