@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { TextInput } from 'react-native';
 
-const AnimatedSearchInput = ({style, className,onChangeText}) => {
+const AnimatedSearchInput = ({style, className,onChangeText,searchWords}) => {
   const [placeholder, setPlaceholder] = useState('');
-  const searchWords = ['بحث  ', 'Biceps  ', 'Legs  ']; // List of words to cycle through
 
   useEffect(() => {
     let wordIndex = 0;

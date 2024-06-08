@@ -62,6 +62,12 @@ function ExcercisePopover(props) {
           {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
         </Text>
         <AnimatedSearchInput
+          searchWords={[
+            langChoice(language, `${ENGLISH.SEARCH}  `, `${ARABIC.SEARCH}  `),
+            "Biceps  ",
+            "Legs ",
+            "Chest ",
+          ]}
           style={{ fontFamily: langChoice(language, "en", "ar") }}
           className={
             styles.userTextInput +
