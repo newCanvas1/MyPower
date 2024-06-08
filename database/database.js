@@ -216,6 +216,19 @@ export const checkIfUserExists = async () => {
 
 export const updatePlanName = async (id, name) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
-  await db.runAsync("UPDATE plans SET name = ? WHERE id = ?", `${name}`, `${id}`);
+  await db.runAsync(
+    "UPDATE plans SET name = ? WHERE id = ?",
+    `${name}`,
+    `${id}`
+  );
   return true;
+};
+
+export const getExerciseById = async (id) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync(
+    `SELECT * FROM exercises WHERE exerciseId = ${id}`
+  );
+
+  return data[0];
 };

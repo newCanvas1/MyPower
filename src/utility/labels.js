@@ -73,4 +73,5 @@ export const ENGLISH = {
   START_WORKOUT: "Start",
   RENAME:"Rename",
   NEW_NAME: "New Name",
+  
 };

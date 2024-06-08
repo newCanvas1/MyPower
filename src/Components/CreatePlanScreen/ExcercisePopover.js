@@ -35,7 +35,7 @@ function ExcercisePopover(props) {
   }
   useEffect(() => {}, [exercises]);
   return (
-    <View>
+    <View className="p-5">
       {!showAddingExcercise && (
         <TouchableOpacity
           className="bg-green-400 rounded p-1 w-[30%] items-center justify-center self-center"

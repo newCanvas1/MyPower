@@ -8,6 +8,7 @@ import {
   getPlansExercise,
   deletePlanExcerciseFromDatabase,
   updatePlanName,
+  getExerciseById,
 } from "../database/database";
 export const DatabaseContext = createContext(null);
 
@@ -79,6 +80,10 @@ export const DatabaseProvider = ({ children }) => {
     if (result)
       setPlans(plans.map((plan) => (plan.id == id ? { ...plan, name } : plan)));
   };
+  const getExercise = async (id) => {
+    const data = await getExerciseById(id);
+    return data;
+  };
   return (
     <DatabaseContext.Provider
       value={{
@@ -92,6 +97,7 @@ export const DatabaseProvider = ({ children }) => {
         getPlanExcercise,
         deletePlanExcercise,
         changePlanName,
+        getExercise
       }}
     >
       {children}
