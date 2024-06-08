@@ -115,7 +115,7 @@ function ExcercisePopover(props) {
             {langChoice(language, ENGLISH.NO_EXERCISES, ARABIC.NO_EXERCISES)}
           </Text>
         ) : (
-          <ScrollView className="   pb-5">
+          <ScrollView className="  ">
             {Object.keys(displayExcercises).map((category) => (
               <View className="mt-5" key={category}>
                 <View className="border-l-4 border-green-500 px-2 rounded">

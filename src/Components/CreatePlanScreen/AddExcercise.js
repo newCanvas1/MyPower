@@ -43,7 +43,16 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         )}
         onChangeText={(text) => setName(text)}
       />
-<CategoryDropdown value={category} setValue={setCategory} />
+      <Text
+        className={`${langChoice(language, "self-start", "self-end")} `}
+        style={{ fontFamily: langChoice(language, "en", "ar") }}
+      >
+        {langChoice(language, ENGLISH.CATEGORY, ARABIC.CATEGORY)}
+      </Text>
+      <View className="mt-3 z-10">
+              <CategoryDropdown value={category} setValue={setCategory} />
+
+      </View>
       {/* <TextInput
         style={{ fontFamily: "appFont" }}
         className={styles.userTextInput}
@@ -51,7 +60,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         onChangeText={(text) => setIcon(text)}
       /> */}
       <Text
-        className={`${langChoice(language, "self-start", "self-end")} `}
+        className={`${langChoice(language, "self-start", "self-end")} mt-2 `}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.DESCRIBTION, ARABIC.DESCRIBTION)}

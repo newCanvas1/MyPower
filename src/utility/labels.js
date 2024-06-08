@@ -32,10 +32,12 @@ export const ARABIC = {
   SETTINGS: "الإعدادات",
   PROFILE: "الملف الشخصي",
   START_WORKOUT: "بدء",
-  RENAME:"إعادة التسمية",
+  RENAME: "إعادة التسمية",
   NEW_NAME: "الاسم الجديد",
   NO_NOTES: " لم يتم العثور على ملاحظات",
   NO_DESCRIPTION: " لم يتم العثور على وصف",
+  CATEGORY: "التصنيف",
+  CHOOSE_CATEGORY: "إختر تصنيف",
 };
 
 export const ENGLISH = {
@@ -73,9 +75,10 @@ export const ENGLISH = {
   SETTINGS: "Settings",
   PROFILE: "Profile",
   START_WORKOUT: "Start",
-  RENAME:"Rename",
+  RENAME: "Rename",
   NEW_NAME: "New Name",
   NO_NOTES: "No notes found",
   NO_DESCRIPTION: "No description found",
-  
+  CATEGORY: "Category",
+  CHOOSE_CATEGORY: "Choose a category",
 };
