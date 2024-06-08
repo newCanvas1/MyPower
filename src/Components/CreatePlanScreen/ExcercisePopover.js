@@ -55,14 +55,14 @@ function ExcercisePopover(props) {
 
       <View className="  rounded p-1  h-full ">
         <Text
-        style={{ fontFamily: langChoice(language,"en","ar") }}
-        className={`text-xl text-center`}
+          style={{ fontFamily: langChoice(language, "en", "ar") }}
+          className={`text-xl text-center`}
         >
           {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
         </Text>
         <TextInput
-        style={{ fontFamily: langChoice(language,"en","ar") }}
-        className={
+          style={{ fontFamily: langChoice(language, "en", "ar") }}
+          className={
             styles.userTextInput +
             " text-2xl text-center self-center  " +
             `${langChoice(language, " text-left", " text-right")}`
@@ -70,17 +70,22 @@ function ExcercisePopover(props) {
           placeholder={langChoice(language, ENGLISH.SEARCH, ARABIC.SEARCH)}
           onChangeText={(text) => {
             setSearchText(text);
+            // search using the item name and muscle and category
+
             setDisplayExcercises(
-              exercises.filter((item) =>
-                item.name.toLowerCase().includes(text.toLowerCase())
+              exercises.filter(
+                (item) =>
+                  item.name.toLowerCase().includes(text.toLowerCase()) ||
+                  item.muscle.toLowerCase().includes(text.toLowerCase()) ||
+                  item.category.toLowerCase().includes(text.toLowerCase())
               )
             );
           }}
         />
         {displayExcercises.length == 0 ? (
           <Text
-          style={{ fontFamily: langChoice(language,"en","ar") }}
-          className=" self-center mt-5  opacity-40"
+            style={{ fontFamily: langChoice(language, "en", "ar") }}
+            className=" self-center mt-5  opacity-40"
           >
             {langChoice(language, ENGLISH.NO_EXERCISES, ARABIC.NO_EXERCISES)}
           </Text>

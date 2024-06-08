@@ -22,7 +22,7 @@ export const initDatabase = async () => {
         `);
   await db.execAsync(`
         PRAGMA journal_mode = WAL;
-        CREATE TABLE IF NOT EXISTS exercises (exerciseId INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,icon TEXT,description TEXT,notes TEXT, workoutId INTEGER);
+        CREATE TABLE IF NOT EXISTS exercises (exerciseId INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,icon TEXT,description TEXT,notes TEXT, workoutId INTEGER,muscle TEXT,category TEXT);
         `);
 
   await db.execAsync(`
@@ -71,8 +71,15 @@ async function prepareExercises() {
 
     for (const exercise of exercises) {
       await db.runAsync(
-        `INSERT INTO exercises (name, icon, description, notes) VALUES (?, ?, ?, ?)`,
-        [exercise.name, exercise.icon, exercise.description, exercise.notes]
+        `INSERT INTO exercises (name, icon, description, notes ,muscle,category) VALUES (?, ?, ?, ?,?,?)`,
+        [
+          exercise.name,
+          exercise.icon,
+          exercise.description,
+          exercise.notes,
+          exercise.muscle,
+          exercise.category,
+        ]
       );
     }
   }
@@ -229,6 +236,7 @@ export const getExerciseById = async (id) => {
   const data = await db.getAllAsync(
     `SELECT * FROM exercises WHERE exerciseId = ${id}`
   );
+  console.log(data);
 
   return data[0];
 };

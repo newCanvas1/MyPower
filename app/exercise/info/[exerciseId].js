@@ -29,7 +29,7 @@ function Exercise(props) {
       >
         {langChoice(language, ENGLISH.EXERCISE, ARABIC.EXCERCISE)}
       </Text>
-      <TitlePicture title={exercise.name} picture={exercise.picture} />
+      <TitlePicture title={exercise.name} muscle={exercise.muscle} />
       <Description text={exercise.description} />
       <Note text={exercise.notes} />
     </View>
