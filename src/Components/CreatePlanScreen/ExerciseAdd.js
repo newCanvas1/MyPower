@@ -17,41 +17,42 @@ function ExerciseItem({ exercise }) {
     }
   }, []);
   return (
-    <TouchableOpacity
-      onPress={() => {
-        router.push(`/exercise/info/${exercise.exerciseId}`);
-      }}
-      className="flex-row justify-between items-center rounded  bg-green-300 py-2 px-2 shadow"
-    >
-      <View className="flex-col items-center">
-        <Text>{exercise.name}</Text>
-        <Text
-          className="self-start"
-          style={{ fontFamily: langChoice(language, "en", "ar") }}
-        >
-          x {count}
-        </Text>
-      </View>
-      <View className="flex-row items-center justify-center gap-1">
-        <TouchableOpacity
-          onPress={() => {
-            setCount((prev) => prev + 1);
-            setExcerciseToAdd([
-              ...excerciseToAdd,
-              { index: Math.random(), exerciseId: exercise.exerciseId },
-            ]);
-          }}
-          className="bg-emerald-500 text-white font-bold p-1 items-center justify-center rounded"
-        >
+    <View className="flex-row w-[100%] mt-5 px-2 justify-between items-center shadow">
+      <TouchableOpacity
+        onPress={() => {
+          router.push(`/exercise/info/${exercise?.exerciseId}`);
+        }}
+        className="flex-row justify-between items-center rounded w-[90%]  bg-green-300 py-2 px-2 shadow"
+      >
+        <View className="flex-col items-center">
+          <Text>{exercise?.name}</Text>
           <Text
+            className="self-start"
             style={{ fontFamily: langChoice(language, "en", "ar") }}
-            className=" text-2xl text-white "
           >
-            +
+            x {count}
           </Text>
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
+        </View>
+        <View className="flex-row items-center justify-center gap-1"></View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          setCount((prev) => prev + 1);
+          setExcerciseToAdd([
+            ...excerciseToAdd,
+            { index: Math.random(), exerciseId: exercise.exerciseId },
+          ]);
+        }}
+        className="bg-emerald-400 text-white p-2 items-center justify-center rounded"
+      >
+        <Text
+          style={{ fontFamily: langChoice(language, "en", "ar") }}
+          className=" text-2xl text-white "
+        >
+          +
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 

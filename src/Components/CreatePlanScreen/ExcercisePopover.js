@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
   FlatList,
+  ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -21,7 +21,7 @@ function ExcercisePopover(props) {
   const [showAddingExcercise, setShowAddingExcercise] = useState(false);
   const { language } = useContext(LanguageContext);
   const [searchText, setSearchText] = useState("");
-  const [displayExcercises, setDisplayExcercises] = useState(exercises);
+  const [displayExcercises, setDisplayExcercises] = useState({});
   async function add(exercise) {
     const id = await addExercise({
       name: exercise.name,
@@ -29,14 +29,30 @@ function ExcercisePopover(props) {
       description: exercise.description,
       notes: exercise.notes,
     });
-    setDisplayExcercises([
+    setDisplayExcercises({
       ...displayExcercises,
-      { ...exercise, exerciseId: id },
-    ]);
+      [exercise.category]: [
+        ...(displayExcercises[exercise.category] || []),
+        { ...exercise, exerciseId: id },
+      ],
+    });
   }
-  useEffect(() => {}, [exercises]);
+  function organizeExercises(exercises) {
+    const categoriezedExercises = {};
+    for (const exercise in exercises) {
+      categoriezedExercises[exercises[exercise].category] = [
+        ...(categoriezedExercises[exercises[exercise].category] || []),
+        exercises[exercise],
+      ];
+    }
+    return categoriezedExercises;
+  }
+  useEffect(() => {
+    const orgnized = organizeExercises(exercises);
+    setDisplayExcercises(orgnized);
+  }, [exercises]);
   return (
-    <View className="p-5">
+    <View className="p-3">
       {!showAddingExcercise && (
         <TouchableOpacity
           className="bg-green-400 rounded p-1 w-[30%] items-center justify-center self-center"
@@ -77,19 +93,20 @@ function ExcercisePopover(props) {
           onChangeText={(text) => {
             setSearchText(text);
             // search using the item name and muscle and category
-
-            setDisplayExcercises(
-              exercises.filter(
-                (item) =>
-                  item.name.toLowerCase().includes(text.toLowerCase()) ||
-                  item.muscle.toLowerCase().includes(text.toLowerCase()) ||
-                  item.category.toLowerCase().includes(text.toLowerCase())
-              )
+            const searchResults = exercises.filter(
+              (item) =>
+                item.name.toLowerCase().includes(text.toLowerCase()) ||
+                item.muscle.toLowerCase().includes(text.toLowerCase()) ||
+                item.category.toLowerCase().includes(text.toLowerCase())
             );
+
+            const orgnized = organizeExercises(searchResults);
+            console.log(orgnized);
+            setDisplayExcercises(organizeExercises(searchResults));
           }}
         />
 
-        {displayExcercises.length == 0 ? (
+        {displayExcercises?.length == 0 ? (
           <Text
             style={{ fontFamily: langChoice(language, "en", "ar") }}
             className=" self-center mt-5  opacity-40"
@@ -97,17 +114,21 @@ function ExcercisePopover(props) {
             {langChoice(language, ENGLISH.NO_EXERCISES, ARABIC.NO_EXERCISES)}
           </Text>
         ) : (
-          <View className=" h-[600] mt-2 pb-5">
-            <FlatList
-              className="h-[100%]"
-              ItemSeparatorComponent={<View className="h-7" />}
-              data={displayExcercises}
-              renderItem={({ item }) => (
-                <ExerciseItem key={item.exerciseId} exercise={item} />
-              )}
-              keyExtractor={(item) => item.exerciseId}
-            />
-          </View>
+          <ScrollView className="   pb-5">
+            {Object.keys(displayExcercises).map((category) => (
+              <View key={category}>
+                <Text
+                  style={{ fontFamily: langChoice(language, "en", "ar") }}
+                  className="text-xl text-center"
+                >
+                  {category}
+                </Text>
+                {displayExcercises[category].map((item) => (
+                  <ExerciseItem key={item.exerciseId} exercise={item} />
+                ))}
+              </View>
+            ))}
+          </ScrollView>
         )}
       </View>
     </View>
