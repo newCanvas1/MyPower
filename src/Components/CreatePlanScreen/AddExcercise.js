@@ -6,9 +6,11 @@ import { LanguageContext } from "../../../context/LanguageContext";
 import { langChoice } from "../../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../utility/labels";
 import Button from "../General/Button";
+import CategoryDropdown from "./CategoryDropdown";
 
 function AddExcercise({ setShowAddingExcercise, addExercise }) {
   const [name, setName] = useState("");
+  const [category, setCategory] = useState("biceps");
   const [icon, setIcon] = useState("");
   const [description, setDescription] = useState("");
   const [notes, setNotes] = useState("");
@@ -41,7 +43,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         )}
         onChangeText={(text) => setName(text)}
       />
-
+<CategoryDropdown value={category} setValue={setCategory} />
       {/* <TextInput
         style={{ fontFamily: "appFont" }}
         className={styles.userTextInput}
@@ -96,6 +98,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
               icon,
               description,
               notes,
+              category,
             });
             setShowAddingExcercise(false);
           }}

@@ -28,6 +28,7 @@ function ExcercisePopover(props) {
       icon: exercise.icon,
       description: exercise.description,
       notes: exercise.notes,
+      category: exercise.category,
     });
     setDisplayExcercises({
       ...displayExcercises,

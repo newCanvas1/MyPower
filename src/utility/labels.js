@@ -34,6 +34,8 @@ export const ARABIC = {
   START_WORKOUT: "بدء",
   RENAME:"إعادة التسمية",
   NEW_NAME: "الاسم الجديد",
+  NO_NOTES: " لم يتم العثور على ملاحظات",
+  NO_DESCRIPTION: " لم يتم العثور على وصف",
 };
 
 export const ENGLISH = {
@@ -73,5 +75,7 @@ export const ENGLISH = {
   START_WORKOUT: "Start",
   RENAME:"Rename",
   NEW_NAME: "New Name",
+  NO_NOTES: "No notes found",
+  NO_DESCRIPTION: "No description found",
   
 };

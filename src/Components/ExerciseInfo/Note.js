@@ -8,9 +8,15 @@ function Note({ text }) {
   const { language } = useContext(LanguageContext);
   return (
     <View className="mt-10 w-[90%] ">
-      <View className={` border-${langChoice(language, "l", "r")}-4 rounded px-1 border-green-500  w-full`}>
+      <View
+        className={` border-${langChoice(
+          language,
+          "l",
+          "r"
+        )}-4 rounded px-1 border-green-500  w-full`}
+      >
         <Text
-        style={{ fontFamily: langChoice(language, "en", "ar") }}
+          style={{ fontFamily: langChoice(language, "en", "ar") }}
           className={`text-xl ${langChoice(
             language,
             "text-left",
@@ -23,11 +29,12 @@ function Note({ text }) {
       <View className="p-2  border rounded border-green-500 max-h-[50%]  w-full mt-3">
         <ScrollView className="h-full">
           <Text
-            className="text-xs "
+            className="text-xs text-center "
             style={{ fontFamily: langChoice(language, "en", "ar") }}
           >
-            {text}
-            
+            {text?.length > 0
+              ? text
+              : langChoice(language, ENGLISH.NO_NOTES, ARABIC.NO_NOTES)}
           </Text>
         </ScrollView>
       </View>

@@ -53,7 +53,8 @@ export const DatabaseProvider = ({ children }) => {
       exercise.name,
       exercise.icon,
       exercise.description,
-      exercise.notes
+      exercise.notes,
+      exercise.category
     );
     // update exercises
     setExercises([
