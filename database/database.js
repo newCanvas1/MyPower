@@ -32,7 +32,7 @@ export const initDatabase = async () => {
   // create plans table
   await db.execAsync(`
         PRAGMA journal_mode = WAL;
-        CREATE TABLE IF NOT EXISTS plans (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,icon TEXT,description TEXT,color TEXT);
+        CREATE TABLE IF NOT EXISTS plans (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,icon TEXT,description TEXT,color TEXT,lastUsed TEXT);
         `);
 
   // create PlansExercises table
@@ -120,7 +120,13 @@ export const insertWorkout = async (
   return result;
 };
 // insert exercise
-export const insertExercise = async (name, icon, description, notes, category) => {
+export const insertExercise = async (
+  name,
+  icon,
+  description,
+  notes,
+  category
+) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const result = await db.runAsync(
     "INSERT INTO exercises (name, icon,description,notes, category) VALUES (?,?,?,?,?)",
@@ -237,6 +243,14 @@ export const getExerciseById = async (id) => {
   const data = await db.getAllAsync(
     `SELECT * FROM exercises WHERE exerciseId = ${id}`
   );
+  console.log(data);
+
+  return data[0];
+};
+
+export const getPlanInfo = async (id) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync(`SELECT * FROM plans WHERE id = ${id}`);
   console.log(data);
 
   return data[0];

@@ -10,13 +10,17 @@ import { ARABIC, ENGLISH } from "../../../../utility/labels";
 import { LanguageContext } from "../../../../../context/LanguageContext";
 import Tooltip from "../../../General/Tooltip/Tooltip";
 import RenamePopover from "../../RenamePopover";
+import { useRouter } from "expo-router";
+import PlanPopover from "./Plan/PlanPopover";
 function PlanItem({ item }) {
   const { deletePlan } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showEditPopover, setShowEditPopover] = useState(false);
   const [showRenamePopover, setShowRenamePopover] = useState(false);
+  const [showStartPopover, setShowStartPopover] = useState(false);
   const tooltipRef = useRef();
+  const router = useRouter();
   const planToolTipButtons = [
     {
       func: () => deletePlan(item.id),
@@ -60,7 +64,9 @@ function PlanItem({ item }) {
     <View>
       <TouchableOpacity
         className={`flex-col p-2 rounded-lg h-20 w-40 m-3 ${item.color} shadow`}
-        onPress={() => {}}
+        onPress={() => {
+          setShowStartPopover(true);
+        }}
       >
         <View className="flex-row justify-between">
           <Text
@@ -84,7 +90,7 @@ function PlanItem({ item }) {
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
-     
+
       <CustomPopover
         showPopover={showEditPopover}
         setShowPopover={setShowEditPopover}
@@ -103,6 +109,13 @@ function PlanItem({ item }) {
           />
         }
         popOverheight={0.3}
+        popOverwidth={0.8}
+      />
+      <CustomPopover
+        showPopover={showStartPopover}
+        setShowPopover={setShowStartPopover}
+        content={<PlanPopover planId={item.id} />}
+        popOverheight={0.8}
         popOverwidth={0.8}
       />
     </View>

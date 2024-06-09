@@ -15,6 +15,7 @@ export default function Layout() {
             }}
           >
             <Stack.Screen name="exercise/info/[exerciseId]" options={{ presentation: "modal" }} />
+
           </Stack>
         </DatabaseProvider>
       </FontContextProvider>

@@ -9,6 +9,7 @@ import {
   deletePlanExcerciseFromDatabase,
   updatePlanName,
   getExerciseById,
+  getPlanInfo,
 } from "../database/database";
 export const DatabaseContext = createContext(null);
 
@@ -102,11 +103,15 @@ export const DatabaseProvider = ({ children }) => {
     const result = await insertPlanExcercise(planId, exerciseId);
     return result;
   };
-
+const getPlan= async (id)=>{
+    const data = await getPlanInfo(id);
+    return data;
+}
   return (
     <DatabaseContext.Provider
       value={{
         plans,
+        getPlan,
         addPlan,
         deletePlan,
         exercises,

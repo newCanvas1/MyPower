@@ -34,11 +34,11 @@ function ExercisesAddList({ planId }) {
                 className="  justify-between flex-row items-center"
                 key={exercise.name}
               >
-                <Exercise exercise={exercise} key={exercise.name} />
+                <View className="mt-4 w-[85%]">
+                  <Exercise exercise={exercise} key={exercise.name} />
+                </View>
                 <TouchableOpacity
-                  className={
-                    styles.addBtn + " items-center justify-center ml-3"
-                  }
+                  className={styles.addBtn}
                   onPress={async () => {
                     await addExerciseToPlan(planId, exercise.exerciseId);
                   }}
