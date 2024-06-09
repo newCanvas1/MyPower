@@ -43,7 +43,7 @@ function ExercisesAddList({ planId }) {
                     await addExerciseToPlan(planId, exercise.exerciseId);
                   }}
                 >
-                  <Text className=" text-lg text-center">+ </Text>
+                  <Text className=" text-2xl text-center">+ </Text>
                 </TouchableOpacity>
               </View>
             ))}

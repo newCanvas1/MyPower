@@ -58,13 +58,18 @@ function Excercises({ planId, name }) {
         </View>
       )}
       <TouchableOpacity
-        className={styles.addBtn + " w-20  mt-5 self-center"}
+        className={
+          styles.addBtn + "justify-center items-center w-24  mt-5 self-center"
+        }
         onPress={() => {
           if (!showAddExcercise) return setShowAddExcercise(true);
           return setShowAddExcercise(false);
         }}
       >
-        <Text className="h-5" style={{ fontFamily: langChoice(language, "en", "ar") }}>
+        <Text
+          className="text-xl"
+          style={{ fontFamily: langChoice(language, "en", "ar") }}
+        >
           {showAddExcercise
             ? langChoice(language, ENGLISH.BACK, ARABIC.BACK)
             : "+"}
