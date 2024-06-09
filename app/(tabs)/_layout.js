@@ -53,7 +53,22 @@ export default function TabLayout() {
             },
           }}
         />
+        <Tabs.Screen
+          name="history"
+          options={{
+            title: langChoice(language, ENGLISH.HISTORY, ARABIC.HISTORY),
+            tabBarLabelStyle: {
+              fontFamily: langChoice(language, "en", "ar"),
+            },
 
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons size={28} name="history" color={color} />
+            ),
+            tabBarIconStyle: {
+              marginBottom: 0,
+            },
+          }}
+        />
         <Tabs.Screen
           name="profile"
           options={{
@@ -64,23 +79,6 @@ export default function TabLayout() {
 
             tabBarIcon: ({ color }) => (
               <Octicons size={28} name="person" color={color} />
-            ),
-            tabBarIconStyle: {
-              marginBottom: 0,
-            },
-          }}
-        />
-
-        <Tabs.Screen
-          name="settings"
-          options={{
-            title: langChoice(language, ENGLISH.SETTINGS, ARABIC.SETTINGS),
-            tabBarLabelStyle: {
-              fontFamily: langChoice(language, "en", "ar"),
-            },
-
-            tabBarIcon: ({ color }) => (
-              <Feather size={28} name="settings" color={color} />
             ),
             tabBarIconStyle: {
               marginBottom: 0,

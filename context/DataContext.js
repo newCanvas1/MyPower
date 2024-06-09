@@ -95,8 +95,12 @@ export const DatabaseProvider = ({ children }) => {
         exercise,
       ];
     }
-    console.log(exercises);
     return exercises;
+  };
+
+  const addExerciseToPlan = async (planId, exerciseId) => {
+    const result = await insertPlanExcercise(planId, exerciseId);
+    return result;
   };
 
   return (
@@ -113,7 +117,8 @@ export const DatabaseProvider = ({ children }) => {
         deletePlanExcercise,
         changePlanName,
         getExercise,
-        getSortedExercises
+        getSortedExercises,
+        addExerciseToPlan,
       }}
     >
       {children}

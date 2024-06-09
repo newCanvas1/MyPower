@@ -7,15 +7,17 @@ import { LanguageContext } from "../../../context/LanguageContext";
 export default ExerciseItem = ({ item, deleteItem }) => {
   const { language } = useContext(LanguageContext);
   return (
-    <View className="flex-row justify-between items-center rounded  bg-green-300 py-2 px-2 shadow">
-      <Text
-        style={{ fontFamily: langChoice(language, "en", "ar") }}
-        className=" font-bold "
-      >
-        {item.name}
-      </Text>
+    <View className="flex-row justify-between">
+      <View className="flex-row  w-[85%] items-center rounded  bg-green-300 py-2 px-2 shadow ">
+        <Text
+          style={{ fontFamily: langChoice(language, "en", "ar") }}
+          className=" font-bold "
+        >
+          {item.name}
+        </Text>
+      </View>
       <TouchableOpacity
-        className="bg-red-500 text-white font-bold py-2 px-2 rounded"
+        className="bg-red-500 text-white font-bold py-2 px-2 ml-2 rounded"
         onPress={() => {
           deleteItem(item);
         }}

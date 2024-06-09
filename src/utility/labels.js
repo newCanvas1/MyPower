@@ -38,6 +38,8 @@ export const ARABIC = {
   NO_DESCRIPTION: " لم يتم العثور على وصف",
   CATEGORY: "التصنيف",
   CHOOSE_CATEGORY: "إختر تصنيف",
+  HISTORY: "التاريخ",
+  BACK: "الرجوع",
 };
 
 export const ENGLISH = {
@@ -81,4 +83,6 @@ export const ENGLISH = {
   NO_DESCRIPTION: "No description found",
   CATEGORY: "Category",
   CHOOSE_CATEGORY: "Choose a category",
+  HISTORY: "History",
+  BACK: "Back",
 };
