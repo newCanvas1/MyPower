@@ -49,6 +49,7 @@ export const ARABIC = {
   FINISH: "انهاء",
   ADD_SET: "أضف مجموعة",
   BEST_SET: "أفضل مجموعة",
+  LANGUAGE: "اللغة",
 };
 
 export const ENGLISH = {
@@ -103,4 +104,5 @@ export const ENGLISH = {
   FINISH: "Finish",
   ADD_SET: "Add Set",
   BEST_SET: "Best Set",
+  LANGUAGE: "Language",
 };

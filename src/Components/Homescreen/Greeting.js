@@ -24,7 +24,6 @@ function Greeting(props) {
       >
         {langChoice(language, ENGLISH.HI, ARABIC.HI)} {userName} ⚡️👋
       </Text>
-      <LangSelector />
     </View>
   );
 }

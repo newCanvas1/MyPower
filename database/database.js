@@ -388,7 +388,12 @@ export const getSetsOfExercise = async (exerciseId) => {
   const data = await db.getAllAsync(
     `SELECT * FROM sets WHERE exerciseId = ${exerciseId} ORDER BY workoutId DESC `
   );
+  if (data.length === 0) {
+    return [];
+    
+  }
   //  take only sets of the latest workoutId
+
   const latestWorkoutId = data[0].workoutId;
   const latestWorkoutSets = data.filter(
     (set) => set.workoutId === latestWorkoutId
