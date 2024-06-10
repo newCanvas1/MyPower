@@ -102,7 +102,6 @@ function ExcercisePopover(props) {
             );
 
             const orgnized = organizeExercises(searchResults);
-            console.log(orgnized);
             setDisplayExcercises(organizeExercises(searchResults));
           }}
         />

@@ -9,7 +9,6 @@ function History(props) {
   useEffect(() => {
     getAllWorkouts().then((data) => {
       setHistory(data);
-      console.log("history", data.length);
     });
   }, []);
   return (

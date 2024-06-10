@@ -231,7 +231,6 @@ export const getExerciseById = async (id) => {
   const data = await db.getAllAsync(
     `SELECT * FROM exercises WHERE exerciseId = ${id}`
   );
-  console.log(data);
 
   return data[0];
 };
@@ -239,7 +238,6 @@ export const getExerciseById = async (id) => {
 export const getPlanInfo = async (id) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const data = await db.getAllAsync(`SELECT * FROM plans WHERE id = ${id}`);
-  console.log(data);
 
   return data[0];
 };
@@ -255,7 +253,6 @@ export const updatePlanLastUsed = async (plan, date) => {
 };
 
 export const insertWorkout = async (duration, notes, date, planId) => {
-  console.log(duration, notes, date, planId);
   const db = await SQLite.openDatabaseAsync("databaseName");
   const result = await db.runAsync(
     "INSERT INTO workouts (duration, notes, date, planId) VALUES (?,?,?,?)",
@@ -289,7 +286,9 @@ export const getWorkoutInfo = async (id) => {
 
 export const getWorkouts = async () => {
   const db = await SQLite.openDatabaseAsync("databaseName");
-  const data = await db.getAllAsync(`SELECT * FROM workouts ORDER BY date DESC`);
+  const data = await db.getAllAsync(
+    `SELECT * FROM workouts ORDER BY date DESC`
+  );
   const workouts = [];
 
   for (const workout of data) {
@@ -380,4 +379,20 @@ export const getLastSetOfExercise = async (exerciseId) => {
     `SELECT * FROM sets WHERE exerciseId = ${exerciseId} ORDER BY id DESC LIMIT 1`
   );
   return data[0];
+};
+
+// get the sets of a certain exercise in the most recent workout added
+export const getSetsOfExercise = async (exerciseId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+
+  const data = await db.getAllAsync(
+    `SELECT * FROM sets WHERE exerciseId = ${exerciseId} ORDER BY workoutId DESC `
+  );
+  //  take only sets of the latest workoutId
+  const latestWorkoutId = data[0].workoutId;
+  const latestWorkoutSets = data.filter(
+    (set) => set.workoutId === latestWorkoutId
+  );
+
+  return latestWorkoutSets;
 };

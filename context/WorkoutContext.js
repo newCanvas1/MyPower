@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { DatabaseContext } from "./DataContext";
 import {
-  getMostRecentWorkout,
+  getSetsOfExercise,
   getTable,
   insertSets,
   insertWorkout,
@@ -22,12 +22,12 @@ export const WorkoutContextProvider = ({ children }) => {
     const preparedSets = {};
     for (const exercise of exercises) {
       const list = [];
-      const sets = await getTable("sets");
+      const sets = await getSetsOfExercise(exercise.exerciseId);
+
       for (const set of sets) {
-        if (set.exerciseId === exercise.exerciseId) {
-          list.push(set);
-        }
+        list.push(set);
       }
+
       preparedSets[exercise.exerciseId] = list;
     }
     setSets(preparedSets);
@@ -92,7 +92,9 @@ export const WorkoutContextProvider = ({ children }) => {
         setExercises(data);
         await prepareSets(data);
         setPlan(plan);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     getInfo();

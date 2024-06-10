@@ -17,7 +17,6 @@ function Workout({ item }) {
     const bestSet = await getBestSetOfExerciseOfWorkout(exerciseId, workoutId);
     return bestSet;
   }
-  console.log("sets", item);
 
   const { language } = useContext(LanguageContext);
 
