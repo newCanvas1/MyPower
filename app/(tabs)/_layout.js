@@ -9,9 +9,10 @@ import Octicons from "@expo/vector-icons/Octicons";
 import { SafeAreaView, Text, Touchable, TouchableOpacity } from "react-native";
 import { WorkoutContext } from "../../context/WorkoutContext";
 import formatTime from "../../src/utility/functions/formatTime";
+import BottomWorkoutIndicator from "../../src/Components/General/BottomWorkoutIndicator";
 export default function TabLayout() {
   const { language } = useContext(LanguageContext);
-  const { activeWorkout, timePassed,planId } = useContext(WorkoutContext);
+  const { activeWorkout, timePassed, planId } = useContext(WorkoutContext);
   return (
     <SafeAreaView style={{ height: "100%", width: "100%" }}>
       <Tabs
@@ -89,15 +90,7 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-      {activeWorkout && (
-        <TouchableOpacity onPress={()=>{
-          router.push(`workout/${planId}`);
-        }} className=" rounded border-t-2 bg-green-300 p-1 shadow w-[90%] self-center flex-row justify-between items-center h-20 ">
-          <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
-            Back Day {formatTime(timePassed)}
-          </Text>
-        </TouchableOpacity>
-      )}
+      <BottomWorkoutIndicator />
     </SafeAreaView>
   );
 }
