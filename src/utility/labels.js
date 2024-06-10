@@ -40,6 +40,14 @@ export const ARABIC = {
   CHOOSE_CATEGORY: "إختر تصنيف",
   HISTORY: "التاريخ",
   BACK: "الرجوع",
+  START_WORKOUT: "بدء",
+  REPS: "العدّات",
+  WEIGHT: "الوزن",
+  TYPE: "النوع",
+  SET: "المجموعة",
+  PREVIOUS: "السابق",
+  FINISH: "انهاء",
+  ADD_SET: "أضف مجموعة",
 };
 
 export const ENGLISH = {
@@ -85,4 +93,12 @@ export const ENGLISH = {
   CHOOSE_CATEGORY: "Choose a category",
   HISTORY: "History",
   BACK: "Back",
+  START_WORKOUT: "Start",
+  REPS: "Reps",
+  WEIGHT: "Weight",
+  TYPE: "Type",
+  SET: "Set",
+  PREVIOUS: "Previous",
+  FINISH: "Finish",
+  ADD_SET: "Add Set",
 };

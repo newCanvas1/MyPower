@@ -18,7 +18,7 @@ export const initDatabase = async () => {
         `);
   await db.execAsync(`
         PRAGMA journal_mode = WAL;
-        CREATE TABLE IF NOT EXISTS workouts (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, duration DOUBLE,icon TEXT,description TEXT,notes TEXT,date TEXT);
+        CREATE TABLE IF NOT EXISTS workouts (workoutId INTEGER PRIMARY KEY AUTOINCREMENT, duration INTEGER TEXT,notes TEXT,date TEXT,planId INTEGER);
         `);
   await db.execAsync(`
         PRAGMA journal_mode = WAL;
@@ -27,7 +27,7 @@ export const initDatabase = async () => {
 
   await db.execAsync(`
         PRAGMA journal_mode = WAL;
-        CREATE TABLE IF NOT EXISTS sets (id INTEGER PRIMARY KEY AUTOINCREMENT,  exerciseId INTEGER, reps INTEGER,weight DOUBLE,type TEXT);
+        CREATE TABLE IF NOT EXISTS sets (id INTEGER PRIMARY KEY AUTOINCREMENT,  exerciseId INTEGER, reps INTEGER,weight DOUBLE,type TEXT,planId INTEGER,workoutId INTEGER);
         `);
   // create plans table
   await db.execAsync(`
@@ -97,28 +97,7 @@ export const insertUser = async (name, weight, height) => {
 
   return result;
 };
-// insert workout
-export const insertWorkout = async (
-  name,
-  duration,
-  icon,
-  description,
-  notes,
-  date
-) => {
-  const db = await SQLite.openDatabaseAsync("databaseName");
-  const result = await db.runAsync(
-    "INSERT INTO workouts (name, duration,icon,description,notes,date) VALUES (?, ?,?,?,?,?)",
-    `${name}`,
-    `${duration}`,
-    `${icon}`,
-    `${description}`,
-    `${notes}`,
-    `${date}`
-  );
 
-  return result;
-};
 // insert exercise
 export const insertExercise = async (
   name,
@@ -148,15 +127,23 @@ export const insertPlanExcercise = async (planId, exerciseId) => {
   return result;
 };
 // insert reps
-export const insertSets = async (exerciseId, reps, weight, type) => {
+export const insertSets = async (
+  exerciseId,
+  reps,
+  weight,
+  type,
+  planId,
+  workoutId
+) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
-
   const result = await db.runAsync(
-    "INSERT INTO sets (exerciseId, reps,weight,type) VALUES (?, ?,?,?)",
+    "INSERT INTO sets (exerciseId, reps,weight,type,planId,workoutId) VALUES (?, ?,?,?,?,?)",
     `${exerciseId}`,
     `${reps}`,
     `${weight}`,
-    `${type}`
+    `${type}`,
+    `${planId}`,
+    `${workoutId}`
   );
 
   return result;
@@ -254,4 +241,17 @@ export const getPlanInfo = async (id) => {
   console.log(data);
 
   return data[0];
+};
+
+export const insertWorkout = async (duration, notes, date, planId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const result = await db.runAsync(
+    "INSERT INTO workouts (duration, notes, date, planId) VALUES (?, ?,?,?)",
+    `${duration}`,
+    `${notes}`,
+    `${date}`,
+    `${planId}`
+  );
+
+  return result;
 };

@@ -20,7 +20,6 @@ function PlanItem({ item }) {
   const [showRenamePopover, setShowRenamePopover] = useState(false);
   const [showStartPopover, setShowStartPopover] = useState(false);
   const tooltipRef = useRef();
-  const router = useRouter();
   const planToolTipButtons = [
     {
       func: () => deletePlan(item.id),
@@ -114,9 +113,9 @@ function PlanItem({ item }) {
       <CustomPopover
         showPopover={showStartPopover}
         setShowPopover={setShowStartPopover}
-        content={<PlanPopover planId={item.id} />}
+        content={<PlanPopover planId={item.id} setShowPopover={setShowStartPopover}/>}
         popOverheight={0.8}
-        popOverwidth={0.8}
+        popOverwidth={0.9}
       />
     </View>
   );
