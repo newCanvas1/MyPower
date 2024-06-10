@@ -255,3 +255,38 @@ export const insertWorkout = async (duration, notes, date, planId) => {
 
   return result;
 };
+
+export const getWorkoutInfo = async (id) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync(
+    `SELECT * FROM workouts JOIN plans ON workouts.planId = plans.id WHERE workouts.id = ${id}`
+  );
+  const sets = await db.getAllAsync(
+    `SELECT * FROM sets WHERE workoutId = ${id}`
+  );
+  const exercises = await db.getAllAsync(
+    `SELECT * FROM exercises WHERE exerciseId IN (SELECT exerciseId FROM sets)`
+  );
+  const workout = { workout: data[0], sets, exercises };
+  console.log(workout);
+
+  return data[0];
+};
+
+export const getWorkouts = async () => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync(`SELECT * FROM workouts`);
+  const workouts = [];
+
+  for (const workout of data) {
+    const sets = await db.getAllAsync(
+      `SELECT * FROM sets WHERE workoutId = ${workout.id}`
+    );
+    const exercises = await db.getAllAsync(
+      `SELECT * FROM exercises WHERE exerciseId IN (SELECT exerciseId FROM sets)`
+    );
+    workouts.push({ workout, sets, exercises });
+  }
+
+  return workouts;
+};

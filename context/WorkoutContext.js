@@ -46,14 +46,25 @@ export const WorkoutContextProvider = ({ children }) => {
   }
 
   async function save(timePassed) {
-    const workoutId = await insertWorkout(
-      timePassed,
-      "notes",
-      new Date(),
-      planId
-    );
-    await saveSets(workoutId);
-    console.log("workout saved");
+    const setsAdded = false;
+    Object.keys(sets).forEach((exerciseId) => {
+      if (sets[exerciseId].length > 0) {
+        setsAdded = true;
+      }
+    });
+    if (setsAdded) {
+      const workoutId = await insertWorkout(
+        timePassed,
+        "notes",
+        new Date(),
+        planId
+      );
+      await saveSets(workoutId);
+      console.log("workout saved");
+      reset();
+
+      return true;
+    }
     return true;
   }
 
