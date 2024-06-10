@@ -16,14 +16,21 @@ function Set({ set, count }) {
       <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
         {setOrder}
       </Text>
-      <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
-        50 kg x 10
-      </Text>
+      {weight == 0 || reps == 0 ? (
+        <View className="bg-slate-500 roun w-[15%] h-1"></View>
+      ) : (
+        <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
+          {`${weight} kg x ${reps}`}
+        </Text>
+      )}
 
       <TextInput
         style={{ fontFamily: langChoice(language, "en", "ar") }}
-        placeholder={langChoice(language, ENGLISH.WEIGHT, ARABIC.WEIGHT)}
-        value={weight}
+        placeholder={
+          weight == 0
+            ? langChoice(language, ENGLISH.WEIGHT, ARABIC.WEIGHT)
+            : weight.toString()
+        }
         onChangeText={(text) => {
           setSets((prev) => {
             const newSets = { ...prev };
@@ -42,8 +49,11 @@ function Set({ set, count }) {
       />
       <TextInput
         style={{ fontFamily: langChoice(language, "en", "ar") }}
-        placeholder={langChoice(language, ENGLISH.REPS, ARABIC.REPS)}
-        value={reps}
+        placeholder={
+          reps == 0
+            ? langChoice(language, ENGLISH.REPS, ARABIC.REPS)
+            : reps.toString()
+        }
         onChangeText={(text) => {
           setSets((prev) => {
             const newSets = { ...prev };

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { LanguageContext } from "../../../context/LanguageContext";
 import { langChoice } from "../../utility/functions/langChoice";
 import { Text } from "react-native";
-
+import formatTime from "../../utility/functions/formatTime";
 function WorkoutTimeCounter({ timePassed, setTimePassed, stopTimer }) {
   const { language } = useContext(LanguageContext);
   useEffect(() => {
@@ -16,11 +16,7 @@ function WorkoutTimeCounter({ timePassed, setTimePassed, stopTimer }) {
     return () => clearInterval(interval);
   }, [stopTimer]);
 
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
-  };
+ 
 
   return (
     <Text

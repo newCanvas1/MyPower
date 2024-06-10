@@ -9,13 +9,21 @@ export const WorkoutContextProvider = ({ children }) => {
   const [plan, setPlan] = useState({});
   const [exercises, setExercises] = useState([]);
   const [sets, setSets] = useState({});
-
+  const [timePassed, setTimePassed] = useState(0);
+  const [activeWorkout, setActiveWorkout] = useState(false);
   const { getPlan, getPlanExcercise } = useContext(DatabaseContext);
-  function prepareSets(exercises) {
+  async function prepareSets(exercises) {
     // object keys should be the exerciseId for each exercise
     const preparedSets = {};
     for (const exercise of exercises) {
-      preparedSets[exercise.exerciseId] = [];
+      const list = [];
+      const sets = await getTable("sets");
+      for (const set of sets) {
+        if (set.exerciseId === exercise.exerciseId) {
+          list.push(set);
+        }
+      }
+      preparedSets[exercise.exerciseId] = list;
     }
     setSets(preparedSets);
   }
@@ -46,7 +54,7 @@ export const WorkoutContextProvider = ({ children }) => {
   }
 
   async function save(timePassed) {
-    const setsAdded = false;
+    let setsAdded = false;
     Object.keys(sets).forEach((exerciseId) => {
       if (sets[exerciseId].length > 0) {
         setsAdded = true;
@@ -60,7 +68,9 @@ export const WorkoutContextProvider = ({ children }) => {
         planId
       );
       await saveSets(workoutId);
+      setTimePassed(0);
       console.log("workout saved");
+      setActiveWorkout(false);
       reset();
 
       return true;
@@ -74,7 +84,7 @@ export const WorkoutContextProvider = ({ children }) => {
         const data = await getPlanExcercise(planId);
         const plan = await getPlan(planId);
         setExercises(data);
-        prepareSets(data);
+        await prepareSets(data);
         setPlan(plan);
       } catch (error) {}
     }
@@ -83,7 +93,19 @@ export const WorkoutContextProvider = ({ children }) => {
   }, [planId]);
   return (
     <WorkoutContext.Provider
-      value={{ plan, exercises, planId, setPlanId, sets, setSets, save }}
+      value={{
+        plan,
+        exercises,
+        planId,
+        setPlanId,
+        sets,
+        setSets,
+        save,
+        timePassed,
+        setTimePassed,
+        setActiveWorkout,
+        activeWorkout,
+      }}
     >
       {children}
     </WorkoutContext.Provider>

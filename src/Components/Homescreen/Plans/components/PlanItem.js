@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { act, useContext, useRef, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { DatabaseContext } from "../../../../../context/DataContext";
 import CustomPopover from "../../../General/CustomPopover";
@@ -10,8 +10,9 @@ import { ARABIC, ENGLISH } from "../../../../utility/labels";
 import { LanguageContext } from "../../../../../context/LanguageContext";
 import Tooltip from "../../../General/Tooltip/Tooltip";
 import RenamePopover from "../../RenamePopover";
-import { useRouter } from "expo-router";
+import { router, useRouter } from "expo-router";
 import PlanPopover from "./Plan/PlanPopover";
+import { WorkoutContext } from "../../../../../context/WorkoutContext";
 function PlanItem({ item }) {
   const { deletePlan } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
@@ -19,6 +20,7 @@ function PlanItem({ item }) {
   const [showEditPopover, setShowEditPopover] = useState(false);
   const [showRenamePopover, setShowRenamePopover] = useState(false);
   const [showStartPopover, setShowStartPopover] = useState(false);
+  const { planId, activeWorkout } = useContext(WorkoutContext);
   const tooltipRef = useRef();
   const planToolTipButtons = [
     {
@@ -64,6 +66,10 @@ function PlanItem({ item }) {
       <TouchableOpacity
         className={`flex-col p-2 rounded-lg h-20 w-40 m-3 ${item.color} shadow`}
         onPress={() => {
+          if (activeWorkout) {
+            router.push(`workout/${planId}`);
+            return;
+          }
           setShowStartPopover(true);
         }}
       >
@@ -113,7 +119,9 @@ function PlanItem({ item }) {
       <CustomPopover
         showPopover={showStartPopover}
         setShowPopover={setShowStartPopover}
-        content={<PlanPopover planId={item.id} setShowPopover={setShowStartPopover}/>}
+        content={
+          <PlanPopover planId={item.id} setShowPopover={setShowStartPopover} />
+        }
         popOverheight={0.8}
         popOverwidth={0.9}
       />

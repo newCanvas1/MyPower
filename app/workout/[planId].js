@@ -15,8 +15,8 @@ import { ARABIC, ENGLISH } from "../../src/utility/labels";
 import { useRouter } from "expo-router";
 
 function workout(props) {
-  const { exercises, plan, save, sets } = useContext(WorkoutContext);
-  const [timePassed, setTimePassed] = useState(0);
+  const { exercises, plan, save, timePassed, setTimePassed } =
+    useContext(WorkoutContext);
   const [stopTimer, setStopTimer] = useState(false);
   const { language } = useContext(LanguageContext);
   const router = useRouter();

@@ -10,6 +10,7 @@ import {
   updatePlanName,
   getExerciseById,
   getPlanInfo,
+  getWorkouts,
 } from "../database/database";
 export const DatabaseContext = createContext(null);
 
@@ -103,10 +104,14 @@ export const DatabaseProvider = ({ children }) => {
     const result = await insertPlanExcercise(planId, exerciseId);
     return result;
   };
-const getPlan= async (id)=>{
+  const getPlan = async (id) => {
     const data = await getPlanInfo(id);
     return data;
-}
+  };
+  const getAllWorkouts = async () => {
+    const data = await getWorkouts();
+    return data;
+  };
   return (
     <DatabaseContext.Provider
       value={{
@@ -124,6 +129,7 @@ const getPlan= async (id)=>{
         getExercise,
         getSortedExercises,
         addExerciseToPlan,
+        getAllWorkouts,
       }}
     >
       {children}

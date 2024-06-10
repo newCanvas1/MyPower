@@ -12,7 +12,7 @@ import { WorkoutContext } from "../../../../../../context/WorkoutContext";
 function PlanPopover({ planId, setShowPopover }) {
   const { getPlanExcercise, getPlan } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
-  const { setPlanId } = useContext(WorkoutContext);
+  const { setPlanId, setActiveWorkout } = useContext(WorkoutContext);
   const [exercises, setExercises] = useState([]);
   const [name, setName] = useState("");
   const router = useRouter();
@@ -48,6 +48,7 @@ function PlanPopover({ planId, setShowPopover }) {
           setShowPopover(false);
           setTimeout(() => {
             setPlanId(planId);
+            setActiveWorkout(true);
             router.push(`workout/${planId}`);
           }, 400);
         }}

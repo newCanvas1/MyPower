@@ -253,7 +253,7 @@ export const insertWorkout = async (duration, notes, date, planId) => {
     `${planId}`
   );
 
-  return result;
+  return result.lastInsertRowId;
 };
 
 export const getWorkoutInfo = async (id) => {
@@ -280,12 +280,25 @@ export const getWorkouts = async () => {
 
   for (const workout of data) {
     const sets = await db.getAllAsync(
-      `SELECT * FROM sets WHERE workoutId = ${workout.id}`
+      `SELECT * FROM sets WHERE workoutId = ${workout.workoutId}`
+    );
+    // categorize sets by exerciseId
+    const categorizedSets = {};
+    for (const set of sets) {
+      if (categorizedSets[set.exerciseId]) {
+        categorizedSets[set.exerciseId].push(set);
+      } else {
+        categorizedSets[set.exerciseId] = [set];
+      }
+    }
+    const plan = await db.getAllAsync(
+      `SELECT * FROM plans WHERE id = ${workout.planId}`
     );
     const exercises = await db.getAllAsync(
       `SELECT * FROM exercises WHERE exerciseId IN (SELECT exerciseId FROM sets)`
     );
-    workouts.push({ workout, sets, exercises });
+    console.log(categorizedSets); 
+    workouts.push({ workout, sets:categorizedSets, exercises ,plan});
   }
 
   return workouts;
