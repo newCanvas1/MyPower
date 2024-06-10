@@ -3,10 +3,12 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { DatabaseContext } from "../../../context/DataContext";
 import { langChoice } from "../../utility/functions/langChoice";
 import { useRouter } from "expo-router";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 function ExerciseItem({ exercise }) {
   const { setExcerciseToAdd, excerciseToAdd } = useContext(DatabaseContext);
   const { language } = useContext(DatabaseContext);
+  const {theme} =useContext(ThemeContext)
   const router = useRouter();
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -22,7 +24,7 @@ function ExerciseItem({ exercise }) {
         onPress={() => {
           router.push(`/exercise/info/${exercise?.exerciseId}`);
         }}
-        className="flex-row justify-between items-center rounded w-[90%]  bg-green-300 py-2 px-2 shadow"
+        className={"flex-row justify-between items-center rounded w-[90%]  py-2 px-2 shadow "+theme.primary}
       >
         <View className="flex-col items-center">
           <Text>{exercise?.name}</Text>
@@ -43,7 +45,7 @@ function ExerciseItem({ exercise }) {
             { index: Math.random(), exerciseId: exercise.exerciseId },
           ]);
         }}
-        className="bg-emerald-400 text-white p-2 items-center justify-center rounded"
+        className={" text-white p-2 items-center justify-center rounded "+theme.secondary}
       >
         <Text
           style={{ fontFamily: langChoice(language, "en", "ar") }}

@@ -19,6 +19,7 @@ import { LanguageContext } from "../../../context/LanguageContext";
 import { ARABIC, ENGLISH } from "../../utility/labels";
 import { langChoice } from "../../utility/functions/langChoice";
 import Button from "../General/Button";
+import { ThemeContext } from "../../../context/ThemeContext";
 function CreatePlanForm(props) {
   const [name, setName] = useState("");
   const [showExcercisePopover, setShowExcercisePopover] = useState(false);
@@ -26,6 +27,7 @@ function CreatePlanForm(props) {
   const [color, setColor] = useState("");
   const { addPlan, setExcerciseToAdd } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
+  const { theme } = useContext(ThemeContext);
   const router = useRouter();
   function goBack() {
     router.dismiss();
@@ -44,16 +46,18 @@ function CreatePlanForm(props) {
           "flex-row"
         )} w-[100%] gap-2 items-center justify-center`}
       >
-        <Text         style={{ fontFamily: langChoice(language,"en","ar") }}
- className="text-xl font-bold">
+        <Text
+          style={{ fontFamily: langChoice(language, "en", "ar") }}
+          className="text-xl font-bold"
+        >
           {langChoice(language, ENGLISH.CREATE_A_PLAN, ARABIC.CREATE_A_PLAN)}
         </Text>
-        <View className="bg-green-500 rounded p-1 shadow">
+        <View className={"bg-green-500 rounded p-1 shadow "+theme.primary}>
           <Icon name="newspaper" size={20} color="white" />
         </View>
       </View>
       <Text
-        style={{ fontFamily: langChoice(language,"en","ar") }}
+        style={{ fontFamily: langChoice(language, "en", "ar") }}
         className={`${langChoice(
           language,
           "self-start",
@@ -63,7 +67,7 @@ function CreatePlanForm(props) {
         {langChoice(language, ENGLISH.NAME, ARABIC.NAME)}
       </Text>
       <TextInput
-        style={{ fontFamily: langChoice(language,"en","ar") }}
+        style={{ fontFamily: langChoice(language, "en", "ar") }}
         className={
           styles.userTextInput +
           `${langChoice(language, " text-left", " text-right")}`
@@ -76,14 +80,14 @@ function CreatePlanForm(props) {
         onChangeText={(text) => setName(text)}
       />
       <Text
-        style={{ fontFamily: langChoice(language,"en","ar") }}
+        style={{ fontFamily: langChoice(language, "en", "ar") }}
         className={`${langChoice(language, "self-start", "self-end")} mx-5`}
       >
         {langChoice(language, ENGLISH.DESCRIBTION, ARABIC.DESCRIBTION)}
       </Text>
 
       <TextInput
-        style={{ fontFamily: langChoice(language,"en","ar") }}
+        style={{ fontFamily: langChoice(language, "en", "ar") }}
         className={
           styles.userTextInput +
           `${langChoice(language, " text-left", " text-right")}`
@@ -111,11 +115,13 @@ function CreatePlanForm(props) {
             "flex-row"
           )} gap-1 justify-between items-center`}
         >
-          <Text         style={{ fontFamily: langChoice(language,"en","ar") }}
- className="font-bold text-lg">
+          <Text
+            style={{ fontFamily: langChoice(language, "en", "ar") }}
+            className="font-bold text-lg"
+          >
             {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
           </Text>
-          <View className="bg-green-500 rounded p-1 shadow">
+          <View className={"rounded p-1 shadow "+theme.primary}>
             <MaterialCommunityIcons
               name="weight-lifter"
               size={25}
@@ -124,12 +130,12 @@ function CreatePlanForm(props) {
           </View>
         </View>
         <TouchableOpacity
-          className="bg-green-500 rounded p-1 w-9 justify-center items-center shadow"
+          className={" rounded p-1 w-9 justify-center items-center shadow "+theme.primary}
           onPress={() => {
             setShowExcercisePopover(true);
           }}
         >
-          <Text className=" text-white text-xl font-bold">+</Text>
+          <Text className={" text-xl font-bold "+theme.textSecondary}>+</Text>
         </TouchableOpacity>
       </View>
       <View className=" w-full mt-4 justify-center items-center ">

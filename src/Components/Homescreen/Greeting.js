@@ -3,12 +3,14 @@ import { Text, View } from "react-native";
 import { getUserInfo } from "../../../database/database";
 import { langChoice } from "../../utility/functions/langChoice";
 import { LanguageContext } from "../../../context/LanguageContext";
+import { ThemeContext } from "../../../context/ThemeContext";
 import { ARABIC, ENGLISH } from "../../utility/labels";
-import LangSelector from "../General/LangSelector";
 
 function Greeting(props) {
   const [userName, serUserName] = useState("");
   const { language } = useContext(LanguageContext);
+  const { theme } = useContext(ThemeContext);
+
   useEffect(() => {
     async function getUserName() {
       const user = await getUserInfo();
@@ -20,7 +22,11 @@ function Greeting(props) {
     <View className="px-10 py-10 items-center justify-center">
       <Text
         style={{ fontFamily: "appFont" }}
-        className={`text-4xl ${langChoice(language, "self-start", "self-end")}`}
+        className={`text-4xl ${theme.textPrimary} ${langChoice(
+          language,
+          "self-start",
+          "self-end"
+        )}`}
       >
         {langChoice(language, ENGLISH.HI, ARABIC.HI)} {userName} ⚡️👋
       </Text>

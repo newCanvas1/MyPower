@@ -1,7 +1,7 @@
 export const styles = {
   userTextInput:
     " p-1 py-3  rounded-lg  w-[90%] shadow-md shadow-green-200 bg-slate-100 mt-2",
-  addBtn: "bg-green-400 rounded p-2 justify-center items-center shadow",
+  addBtn: "rounded p-2 justify-center items-center shadow ",
   btn:"rounded p-1 px-4 shadow"
 };
 export const colors = [

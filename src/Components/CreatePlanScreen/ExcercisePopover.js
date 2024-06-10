@@ -14,12 +14,14 @@ import { langChoice } from "../../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../utility/labels";
 import { styles } from "../../styles/styles";
 import AnimatedSearchInput from "./AnimatedTextInput";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 function ExcercisePopover(props) {
   // get the data from the database
   const { exercises, addExercise } = useContext(DatabaseContext);
   const [showAddingExcercise, setShowAddingExcercise] = useState(false);
   const { language } = useContext(LanguageContext);
+  const {theme} = useContext(ThemeContext);
   const [searchText, setSearchText] = useState("");
   const [displayExcercises, setDisplayExcercises] = useState({});
   async function add(exercise) {
@@ -56,12 +58,12 @@ function ExcercisePopover(props) {
     <View className="p-3">
       {!showAddingExcercise && (
         <TouchableOpacity
-          className="bg-green-400 rounded p-1 w-[30%] items-center justify-center self-center"
+          className={" rounded p-1 w-[30%] items-center justify-center self-center "+theme.primary}
           onPress={() => {
             setShowAddingExcercise(true);
           }}
         >
-          <Text className="text-xl text-white font-bold">+</Text>
+          <Text className={"text-xl  font-bold "+theme.textSecondary}>+</Text>
         </TouchableOpacity>
       )}
       {showAddingExcercise && (
@@ -117,7 +119,7 @@ function ExcercisePopover(props) {
           <ScrollView className="  ">
             {Object.keys(displayExcercises).map((category) => (
               <View className="mt-5" key={category}>
-                <View className="border-l-4 border-green-500 px-2 rounded">
+                <View className={"border-l-4 px-2 rounded border-green-300 "  }>
                   <Text
                     className="text-lg"
                     style={{ fontFamily: langChoice(language, "en", "ar") }}

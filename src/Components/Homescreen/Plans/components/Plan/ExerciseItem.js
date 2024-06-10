@@ -3,9 +3,11 @@ import { langChoice } from "../../../../../utility/functions/langChoice";
 import { LanguageContext } from "../../../../../../context/LanguageContext";
 import { Text, View } from "react-native";
 import { getBestSetOfExercise } from "../../../../../../database/database";
+import { ThemeContext } from "../../../../../../context/ThemeContext";
 
 function ExerciseItem({ exercise }) {
   const { language } = useContext(LanguageContext);
+  const {theme} = useContext(ThemeContext);
   const [bestSet, setBestSet] = useState({});
   useEffect(() => {
     async function getSet() {
@@ -15,7 +17,7 @@ function ExerciseItem({ exercise }) {
     getSet();
   }, []);
   return (
-    <View className="flex-row items-center justify-between rounded  bg-green-300 p-4 shadow ">
+    <View className={"flex-row items-center justify-between rounded p-4 shadow "+ theme.primary}>
       <Text
         style={{ fontFamily: langChoice(language, "en", "ar") }}
         className=" font-bold w-[70%] h-full "

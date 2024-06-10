@@ -13,6 +13,7 @@ import RenamePopover from "../../RenamePopover";
 import { router, useRouter } from "expo-router";
 import PlanPopover from "./Plan/PlanPopover";
 import { WorkoutContext } from "../../../../../context/WorkoutContext";
+import { ThemeContext } from "../../../../../context/ThemeContext";
 function PlanItem({ item }) {
   const { deletePlan } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
@@ -20,6 +21,7 @@ function PlanItem({ item }) {
   const [showEditPopover, setShowEditPopover] = useState(false);
   const [showRenamePopover, setShowRenamePopover] = useState(false);
   const [showStartPopover, setShowStartPopover] = useState(false);
+  const {theme} = useContext(ThemeContext);
   const { planId, activeWorkout } = useContext(WorkoutContext);
   const tooltipRef = useRef();
   const planToolTipButtons = [
