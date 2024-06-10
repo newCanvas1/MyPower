@@ -34,10 +34,19 @@ function PlanPopover({ planId, setShowPopover }) {
       >
         {name}
       </Text>
-      <View className="mt-5 p-4 w-full">
+      <View className="w-full mt-5 flex-row ">
+        <View className=" w-[70%] h-2"></View>
+        <Text
+          className="  flex-1 text-center"
+          style={{ fontFamily: langChoice(language, "en", "ar") }}
+        >
+          {langChoice(language, ENGLISH.BEST_SET, ARABIC.BEST_SET)}
+        </Text>
+      </View>
+      <View className="p-4 w-full">
         <FlatList
           data={exercises}
-          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <ExerciseItem exercise={item} />}
         />

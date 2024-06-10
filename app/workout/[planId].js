@@ -15,7 +15,7 @@ import { ARABIC, ENGLISH } from "../../src/utility/labels";
 import { useRouter } from "expo-router";
 
 function workout(props) {
-  const { exercises, plan, save, timePassed, setTimePassed } =
+  const { exercises, plan, save, timePassed, setTimePassed, cancel } =
     useContext(WorkoutContext);
   const [stopTimer, setStopTimer] = useState(false);
   const { language } = useContext(LanguageContext);
@@ -32,7 +32,7 @@ function workout(props) {
               setTimePassed={setTimePassed}
             />
           </View>
-          <TouchableOpacity
+          <TouchableOpacity 
             onPress={async () => {
               setStopTimer(!stopTimer);
               const saved = await save(timePassed);
@@ -54,6 +54,17 @@ function workout(props) {
           renderItem={({ item }) => <WorkoutExercise exercise={item} />}
           keyExtractor={(item) => item.exerciseId}
         />
+        <TouchableOpacity
+          onPress={() => {
+            cancel();
+            router.back();
+          }}
+          className="mt-5 justify-center bg-red-400 w-[60%] h-10  items-center p-1 rounded"
+        >
+          <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
+            {langChoice(language, ENGLISH.CANCEL, ARABIC.CANCEL)}
+          </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

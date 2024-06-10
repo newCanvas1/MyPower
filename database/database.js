@@ -1,6 +1,7 @@
 // database.js
 import * as SQLite from "expo-sqlite";
 import { exercises } from "../src/utility/exercises";
+import getBestSet from "../src/utility/functions/getBestSet";
 export const initDatabase = async () => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   // drop the excercises table
@@ -137,7 +138,7 @@ export const insertSets = async (
 ) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const result = await db.runAsync(
-    "INSERT INTO sets (exerciseId, reps,weight,type,planId,workoutId) VALUES (?, ?,?,?,?,?)",
+    "INSERT INTO sets (exerciseId,reps,weight,type,planId,workoutId) VALUES (?,?,?,?,?,?)",
     `${exerciseId}`,
     `${reps}`,
     `${weight}`,
@@ -243,15 +244,29 @@ export const getPlanInfo = async (id) => {
   return data[0];
 };
 
+export const updatePlanLastUsed = async (plan, date) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  await db.runAsync(
+    "UPDATE plans SET lastUsed = ? WHERE id = ?",
+    `${date}`,
+    `${plan}`
+  );
+  return true;
+};
+
 export const insertWorkout = async (duration, notes, date, planId) => {
+  console.log(duration, notes, date, planId);
   const db = await SQLite.openDatabaseAsync("databaseName");
   const result = await db.runAsync(
-    "INSERT INTO workouts (duration, notes, date, planId) VALUES (?, ?,?,?)",
+    "INSERT INTO workouts (duration, notes, date, planId) VALUES (?,?,?,?)",
     `${duration}`,
     `${notes}`,
     `${date}`,
     `${planId}`
   );
+
+  // update plan last used
+  await updatePlanLastUsed(planId, date);
 
   return result.lastInsertRowId;
 };
@@ -268,20 +283,20 @@ export const getWorkoutInfo = async (id) => {
     `SELECT * FROM exercises WHERE exerciseId IN (SELECT exerciseId FROM sets)`
   );
   const workout = { workout: data[0], sets, exercises };
-  console.log(workout);
 
-  return data[0];
+  return workout;
 };
 
 export const getWorkouts = async () => {
   const db = await SQLite.openDatabaseAsync("databaseName");
-  const data = await db.getAllAsync(`SELECT * FROM workouts`);
+  const data = await db.getAllAsync(`SELECT * FROM workouts ORDER BY date DESC`);
   const workouts = [];
 
   for (const workout of data) {
     const sets = await db.getAllAsync(
       `SELECT * FROM sets WHERE workoutId = ${workout.workoutId}`
     );
+
     // categorize sets by exerciseId
     const categorizedSets = {};
     for (const set of sets) {
@@ -297,9 +312,72 @@ export const getWorkouts = async () => {
     const exercises = await db.getAllAsync(
       `SELECT * FROM exercises WHERE exerciseId IN (SELECT exerciseId FROM sets)`
     );
-    console.log(categorizedSets); 
-    workouts.push({ workout, sets:categorizedSets, exercises ,plan});
+    workouts.push({ workout, sets: categorizedSets, exercises, plan: plan[0] });
   }
 
   return workouts;
+};
+
+export const getMostRecentWorkout = async (planId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync(
+    `SELECT * FROM workouts JOIN plans ON workouts.planId = plans.id WHERE plans.id = ${planId}`
+  );
+  const lastWorkout = data[data.length - 1];
+  const sets = await db.getAllAsync(
+    `SELECT * FROM sets WHERE workoutId = ${lastWorkout.workoutId}`
+  );
+  const exercises = await db.getAllAsync(
+    `SELECT * FROM exercises WHERE exerciseId IN (SELECT exerciseId FROM sets)`
+  );
+  const workout = { workout: lastWorkout, sets, exercises };
+
+  return workout;
+};
+
+export const getBestSetOfExercise = async (exerciseId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync(
+    `SELECT * FROM sets WHERE exerciseId = ${exerciseId}`
+  );
+  // get user weight
+  let bestSet = data[0];
+  let bestOneRepMax = getBestSet(data[0]);
+  // calculate one rep max weight
+  for (const set of data) {
+    const oneRepMax = getBestSet(set);
+    if (oneRepMax > bestOneRepMax) {
+      bestSet = set;
+    }
+  }
+
+  return bestSet;
+};
+
+export const getBestSetOfExerciseOfWorkout = async (exerciseId, workoutId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync(
+    `SELECT * FROM sets WHERE exerciseId = ${exerciseId} AND workoutId = ${workoutId}`
+  );
+  // get user weight
+  let bestSet = data[0];
+  let bestOneRepMax = getBestSet(data[0]);
+  // calculate one rep max weight
+  for (const set of data) {
+    const oneRepMax = getBestSet(set);
+    if (oneRepMax > bestOneRepMax) {
+      bestSet = set;
+    }
+  }
+
+  return bestSet;
+};
+
+// get last added set of exercise
+export const getLastSetOfExercise = async (exerciseId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync(
+    `SELECT * FROM sets WHERE exerciseId = ${exerciseId} ORDER BY id DESC LIMIT 1`
+  );
+  return data[0];
 };

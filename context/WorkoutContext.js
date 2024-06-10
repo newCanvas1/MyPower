@@ -1,6 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { DatabaseContext } from "./DataContext";
-import { getTable, insertSets, insertWorkout } from "../database/database";
+import {
+  getMostRecentWorkout,
+  getTable,
+  insertSets,
+  insertWorkout,
+} from "../database/database";
 
 export const WorkoutContext = createContext();
 
@@ -27,7 +32,7 @@ export const WorkoutContextProvider = ({ children }) => {
     }
     setSets(preparedSets);
   }
-  function reset(params) {
+  function reset() {
     setPlanId("");
     setPlan({});
     setExercises([]);
@@ -49,10 +54,11 @@ export const WorkoutContextProvider = ({ children }) => {
         );
       }
     }
-    console.log("sets saved");
-    console.log(await getTable("sets"));
   }
-
+  function cancel() {
+    setActiveWorkout(false);
+    reset();
+  }
   async function save(timePassed) {
     let setsAdded = false;
     Object.keys(sets).forEach((exerciseId) => {
@@ -105,6 +111,7 @@ export const WorkoutContextProvider = ({ children }) => {
         setTimePassed,
         setActiveWorkout,
         activeWorkout,
+        cancel,
       }}
     >
       {children}

@@ -48,6 +48,7 @@ export const ARABIC = {
   PREVIOUS: "السابق",
   FINISH: "انهاء",
   ADD_SET: "أضف مجموعة",
+  BEST_SET: "أفضل مجموعة",
 };
 
 export const ENGLISH = {
@@ -101,4 +102,5 @@ export const ENGLISH = {
   PREVIOUS: "Previous",
   FINISH: "Finish",
   ADD_SET: "Add Set",
+  BEST_SET: "Best Set",
 };
