@@ -6,12 +6,23 @@ export const lightTheme = {
   textPrimary: "text-black",
   textSecondary: "text-white",
   buttonMain: "bg-green-500",
+  mainScreen: "bg-white",
+  popoverScreen: "bg-white",
+  tabBarSelected: "green",
+  border: "border-green-400",
 
 };
 
 export const darkTheme = {
   background: "#000000",
   text: "#ffffff",
-  primary: "#bb86fc",
+  primary: "bg-purple-300",
   textPrimary: "text-white",
+  textSecondary: "text-black",
+  buttonMain: "bg-green-500",
+  mainScreen: "bg-black",
+  popoverScreen: "bg-black",
+  tabBarSelected: "purple",
+  border: "border-purple-400",
+
 };

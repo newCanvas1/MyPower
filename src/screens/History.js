@@ -5,10 +5,12 @@ import Workout from "../Components/History/Workout";
 import { LanguageContext } from "../../context/LanguageContext";
 import { langChoice } from "../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../utility/labels";
+import { ThemeContext } from "../../context/ThemeContext";
 
 function History(props) {
   const { getAllWorkouts } = useContext(DatabaseContext);
   const [history, setHistory] = useState([]);
+  const {theme} = useContext(ThemeContext);
   const { language } = useContext(LanguageContext);
   useEffect(() => {
     getAllWorkouts().then((data) => {
@@ -16,10 +18,10 @@ function History(props) {
     });
   }, []);
   return (
-    <View className="p-3">
+    <View className={"p-3 "+theme.mainScreen}>
       <Text
         style={{ fontFamily: langChoice(language, "en", "ar") }}
-        className={`text-xl ${langChoice(language, "text-left", "text-right")}`}
+        className={`text-xl ${langChoice(language, "text-left", "text-right")} ${theme.textPrimary}`}
       >
         {langChoice(language, ENGLISH.HISTORY, ARABIC.HISTORY)}
       </Text>

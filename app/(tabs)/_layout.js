@@ -7,17 +7,17 @@ import { langChoice } from "../../src/utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../src/utility/labels";
 import Octicons from "@expo/vector-icons/Octicons";
 import { SafeAreaView, Text, Touchable, TouchableOpacity } from "react-native";
-import { WorkoutContext } from "../../context/WorkoutContext";
-import formatTime from "../../src/utility/functions/formatTime";
+
 import BottomWorkoutIndicator from "../../src/Components/General/BottomWorkoutIndicator";
+import { ThemeContext } from "../../context/ThemeContext";
 export default function TabLayout() {
   const { language } = useContext(LanguageContext);
-  const { activeWorkout, timePassed, planId } = useContext(WorkoutContext);
+  const {theme} = useContext(ThemeContext);
   return (
-    <SafeAreaView style={{ height: "100%", width: "100%" }}>
+    <SafeAreaView className={theme.mainScreen} style={{ height: "100%", width: "100%" }}>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: "green",
+          tabBarActiveTintColor: theme.tabBarSelected,
           headerShown: false,
           tabBarStyle: {
             backgroundColor: "transparent",

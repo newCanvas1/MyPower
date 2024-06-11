@@ -19,9 +19,9 @@ function Exercises(props) {
   }, []);
   // this component should list exercises of same category one after another , and set the category on top of its first element
   return (
-    <View>
+    <View className={theme.mainScreen}>
       <Text
-        className="  self-center text-2xl mt-5"
+        className={"self-center text-2xl mt-5 "+theme.textPrimary}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
@@ -29,9 +29,9 @@ function Exercises(props) {
       <ScrollView className="px-5 mt-5">
         {Object.keys(exercises).map((category) => (
           <View className="my-5" key={category}>
-            <View className={"border-l-4 border-green-400 px-2 rounded "}>
+            <View className={"border-l-4 px-2 rounded "+theme.border}>
               <Text
-                className="text-lg"
+                className={"text-lg "+theme.textPrimary}
                 style={{ fontFamily: langChoice(language, "en", "ar") }}
               >
                 {category}
