@@ -30,7 +30,7 @@ function ExcercisesList() {
       {items.length == 0 ? (
         <Text
           style={{ fontFamily: langChoice(language, "en", "ar") }}
-          className=" self-center  opacity-40"
+          className=" self-center text-gray-400"
         >
           {langChoice(
             language,

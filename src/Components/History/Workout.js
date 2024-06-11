@@ -26,13 +26,13 @@ function Workout({ item }) {
       <View className="flex-row items-center justify-between p-4">
         <View>
           <Text
-            className={"text-xl " + theme.textPrimary}
+            className={"text-xl " + theme.textSecondary}
             style={{ fontFamily: langChoice(language, "en", "ar") }}
           >
             {plan.name}
           </Text>
           <Text
-            className={theme.textPrimary}
+            className={theme.textSecondary}
             style={{ fontFamily: langChoice(language, "en", "ar") }}
           >
             {formateTime(workout.duration)}
@@ -40,7 +40,7 @@ function Workout({ item }) {
         </View>
 
         <Text
-          className={theme.textPrimary}
+          className={theme.textSecondary}
           style={{ fontFamily: langChoice(language, "en", "ar") }}
         >
           {formatDate(workout.date)}
@@ -48,13 +48,13 @@ function Workout({ item }) {
       </View>
       <View className="flex-row items-center px-10 justify-between mb-2">
         <Text
-          className={theme.textPrimary}
+          className={theme.textSecondary}
           style={{ fontFamily: langChoice(language, "en", "ar") }}
         >
           {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
         </Text>
         <Text
-          className={theme.textPrimary}
+          className={theme.textSecondary}
           style={{ fontFamily: langChoice(language, "en", "ar") }}
         >
           {langChoice(language, ENGLISH.BEST_SET, ARABIC.BEST_SET)}

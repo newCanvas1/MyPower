@@ -45,7 +45,7 @@ function ExerciseItem({ exercise }) {
             { index: Math.random(), exerciseId: exercise.exerciseId },
           ]);
         }}
-        className={" text-white p-2 items-center justify-center rounded "+theme.secondary}
+        className={" text-white p-1 w-6 items-center justify-center rounded "+theme.primary}
       >
         <Text
           style={{ fontFamily: langChoice(language, "en", "ar") }}

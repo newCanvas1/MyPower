@@ -38,7 +38,7 @@ function CreatePlanForm(props) {
     router.dismiss();
   }
   return (
-    <View className="flex-col items-center mt-10 h-screen">
+    <View className={"flex-col items-center mt-10 h-full " + theme.mainScreen}>
       <View
         className={`${langChoice(
           language,
@@ -48,11 +48,11 @@ function CreatePlanForm(props) {
       >
         <Text
           style={{ fontFamily: langChoice(language, "en", "ar") }}
-          className="text-xl font-bold"
+          className={"text-xl font-bold "+theme.textPrimary}
         >
           {langChoice(language, ENGLISH.CREATE_A_PLAN, ARABIC.CREATE_A_PLAN)}
         </Text>
-        <View className={"bg-green-500 rounded p-1 shadow "+theme.primary}>
+        <View className={"bg-green-500 rounded p-1 shadow " + theme.primary}>
           <Icon name="newspaper" size={20} color="white" />
         </View>
       </View>
@@ -62,7 +62,7 @@ function CreatePlanForm(props) {
           language,
           "self-start",
           "self-end"
-        )} mx-5 mt-20`}
+        )} mx-5 mt-20 ${theme.textPrimary}`}
       >
         {langChoice(language, ENGLISH.NAME, ARABIC.NAME)}
       </Text>
@@ -81,7 +81,9 @@ function CreatePlanForm(props) {
       />
       <Text
         style={{ fontFamily: langChoice(language, "en", "ar") }}
-        className={`${langChoice(language, "self-start", "self-end")} mx-5`}
+        className={`${langChoice(language, "self-start", "self-end")} mx-5 ${
+          theme.textPrimary
+        }`}
       >
         {langChoice(language, ENGLISH.DESCRIBTION, ARABIC.DESCRIBTION)}
       </Text>
@@ -90,7 +92,7 @@ function CreatePlanForm(props) {
         style={{ fontFamily: langChoice(language, "en", "ar") }}
         className={
           styles.userTextInput +
-          `${langChoice(language, " text-left", " text-right")}`
+          `${langChoice(language, " text-left", " text-right ")}  `
         }
         placeholder={langChoice(
           language,
@@ -117,11 +119,11 @@ function CreatePlanForm(props) {
         >
           <Text
             style={{ fontFamily: langChoice(language, "en", "ar") }}
-            className="font-bold text-lg"
+            className={"font-bold text-lg " + theme.textPrimary}
           >
             {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
           </Text>
-          <View className={"rounded p-1 shadow "+theme.primary}>
+          <View className={"rounded p-1 shadow " + theme.primary}>
             <MaterialCommunityIcons
               name="weight-lifter"
               size={25}
@@ -130,12 +132,15 @@ function CreatePlanForm(props) {
           </View>
         </View>
         <TouchableOpacity
-          className={" rounded p-1 w-9 justify-center items-center shadow "+theme.primary}
+          className={
+            " rounded p-1 w-9 justify-center items-center shadow " +
+            theme.primary
+          }
           onPress={() => {
             setShowExcercisePopover(true);
           }}
         >
-          <Text className={" text-xl font-bold "+theme.textSecondary}>+</Text>
+          <Text className={" text-xl font-bold " + theme.textSecondary}>+</Text>
         </TouchableOpacity>
       </View>
       <View className=" w-full mt-4 justify-center items-center ">

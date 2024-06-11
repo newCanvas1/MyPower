@@ -7,6 +7,7 @@ import { langChoice } from "../../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../utility/labels";
 import Button from "../General/Button";
 import CategoryDropdown from "./CategoryDropdown";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 function AddExcercise({ setShowAddingExcercise, addExercise }) {
   const [name, setName] = useState("");
@@ -15,10 +16,11 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
   const [description, setDescription] = useState("");
   const [notes, setNotes] = useState("");
   const { language } = useContext(LanguageContext);
+  const { theme } = useContext(ThemeContext);
   return (
     <View className="flex-col items-center  h-screen">
       <Text
-        className="text-xl"
+        className={"text-xl "}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.ADD_EXERCISE, ARABIC.ADD_EXCERCISE)}
@@ -44,7 +46,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         onChangeText={(text) => setName(text)}
       />
       <Text
-        className={`${langChoice(language, "self-start", "self-end")} `}
+        className={`${langChoice(language, "self-start", "self-end")}  `}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.CATEGORY, ARABIC.CATEGORY)}
@@ -60,7 +62,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         onChangeText={(text) => setIcon(text)}
       /> */}
       <Text
-        className={`${langChoice(language, "self-start", "self-end")} mt-2 `}
+        className={`${langChoice(language, "self-start", "self-end")} mt-2   `}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.DESCRIBTION, ARABIC.DESCRIBTION)}
@@ -79,7 +81,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         onChangeText={(text) => setDescription(text)}
       />
       <Text
-        className={`${langChoice(language, "self-start", "self-end")} `}
+        className={`${langChoice(language, "self-start", "self-end")}  `}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.NOTES, ARABIC.NOTES)}

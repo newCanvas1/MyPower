@@ -8,11 +8,13 @@ import { ENGLISH, ARABIC } from "../../../src/utility/labels";
 import TitlePicture from "../../../src/Components/ExerciseInfo/TitlePicture";
 import Description from "../../../src/Components/ExerciseInfo/Description";
 import Note from "../../../src/Components/ExerciseInfo/Note";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 function Exercise(props) {
   const { exerciseId } = useLocalSearchParams();
   const { getExercise } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
+  const {theme} = useContext(ThemeContext)
   const [exercise, setExercise] = useState({});
   useEffect(() => {
     async function getExerciseInfo() {

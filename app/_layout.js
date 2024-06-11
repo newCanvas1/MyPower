@@ -4,29 +4,38 @@ import { DatabaseProvider } from "../context/DataContext";
 import FontContextProvider from "../context/FontContext";
 import { LanguageContextProvider } from "../context/LanguageContext";
 import { WorkoutContextProvider } from "../context/WorkoutContext";
-import { ThemeProvider } from "../context/ThemeContext";
+import { ThemeContext, ThemeProvider } from "../context/ThemeContext";
+import { useContext } from "react";
 
 export default function Layout() {
+  const StackElement = () => {
+    const { theme } = useContext(ThemeContext);
+
+    return (
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: theme.screenColor },
+        }}
+      >
+        <Stack.Screen
+          name="exercise/info/[exerciseId]"
+          options={{ presentation: "modal" }}
+        />
+        <Stack.Screen
+          name="workout/[planId]"
+          options={{ presentation: "modal" }}
+        />
+      </Stack>
+    );
+  };
   return (
     <LanguageContextProvider>
       <FontContextProvider>
         <DatabaseProvider>
           <WorkoutContextProvider>
             <ThemeProvider>
-              <Stack
-                screenOptions={{
-                  headerShown: false,
-                }}
-              >
-                <Stack.Screen
-                  name="exercise/info/[exerciseId]"
-                  options={{ presentation: "modal" }}
-                />
-                <Stack.Screen
-                  name="workout/[planId]"
-                  options={{ presentation: "modal" }}
-                />
-              </Stack>
+              <StackElement />
             </ThemeProvider>
           </WorkoutContextProvider>
         </DatabaseProvider>

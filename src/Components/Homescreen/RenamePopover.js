@@ -5,15 +5,17 @@ import { langChoice } from "../../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../utility/labels";
 import { styles } from "../../styles/styles.js";
 import { DatabaseContext } from "../../../context/DataContext.js";
+import { ThemeContext } from "../../../context/ThemeContext";
 function RenamePopover({ setShowRenamePopover, planId,oldName }) {
   const { language } = useContext(LanguageContext);
   const { changePlanName } = useContext(DatabaseContext);
+  const {theme} = useContext(ThemeContext);
   const [newName, setNewName] = useState( oldName);
   return (
     <View className="w-full h-full items-center py-5  ">
       <Text
         style={{ fontFamily: langChoice(language, "en", "ar") }}
-        className="text-center text-xl font-bold"
+        className={"text-center text-xl font-bold "+theme.color}
       >
         {langChoice(language, ENGLISH.RENAME, ARABIC.RENAME)}
       </Text>

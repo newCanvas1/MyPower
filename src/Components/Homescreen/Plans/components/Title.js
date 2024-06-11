@@ -41,7 +41,7 @@ function Title(props) {
         </View>
       </View>
       <TouchableOpacity
-        className={styles.addBtn + theme.primary}
+        className={styles.addBtn + theme.primary + " h-8 w-7 "}
         onPress={addPlan}
       >
         <Text className="text-xl text-white">+</Text>

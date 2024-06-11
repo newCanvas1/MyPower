@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { colors } from "../../styles/styles";
+import { ThemeContext } from "../../../context/ThemeContext";
 function ColorPicker({ setColor }) {
   const [choice, setChoice] = useState(0);
+  const {theme} = useContext(ThemeContext);
   useEffect(() => {
     setColor(colors[0]);
   }, []);
@@ -14,7 +16,7 @@ function ColorPicker({ setColor }) {
         data={colors}
         renderItem={({ item, index }) => (
           <View
-            className={`  p-[3] ${index === choice && "border-b-4 rounded "}`}
+            className={`p-[3] ${index === choice && "border-b-4 rounded "} ${theme.border}`}
           >
             <TouchableOpacity
               onPress={() => {

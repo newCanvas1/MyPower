@@ -21,7 +21,7 @@ function ExcercisePopover(props) {
   const { exercises, addExercise } = useContext(DatabaseContext);
   const [showAddingExcercise, setShowAddingExcercise] = useState(false);
   const { language } = useContext(LanguageContext);
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const [searchText, setSearchText] = useState("");
   const [displayExcercises, setDisplayExcercises] = useState({});
   async function add(exercise) {
@@ -58,12 +58,15 @@ function ExcercisePopover(props) {
     <View className="p-3">
       {!showAddingExcercise && (
         <TouchableOpacity
-          className={" rounded p-1 w-[30%] items-center justify-center self-center "+theme.primary}
+          className={
+            " rounded p-1 w-[30%] items-center justify-center self-center " +
+            theme.primary
+          }
           onPress={() => {
             setShowAddingExcercise(true);
           }}
         >
-          <Text className={"text-xl  font-bold "+theme.textSecondary}>+</Text>
+          <Text className={"text-xl  font-bold " + theme.textSecondary}>+</Text>
         </TouchableOpacity>
       )}
       {showAddingExcercise && (
@@ -76,7 +79,7 @@ function ExcercisePopover(props) {
       <View className="  rounded p-1  h-full ">
         <Text
           style={{ fontFamily: langChoice(language, "en", "ar") }}
-          className={`text-xl text-center`}
+          className={`text-xl text-center ${theme.textSecondary}`}
         >
           {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
         </Text>
@@ -111,17 +114,17 @@ function ExcercisePopover(props) {
         {Object.keys(displayExcercises).length == 0 ? (
           <Text
             style={{ fontFamily: langChoice(language, "en", "ar") }}
-            className=" self-center mt-5  opacity-40"
+            className=" self-center mt-5 text-gray-400"
           >
             {langChoice(language, ENGLISH.NO_EXERCISES, ARABIC.NO_EXERCISES)}
           </Text>
         ) : (
-          <ScrollView className="  ">
+          <ScrollView className="mt-2  ">
             {Object.keys(displayExcercises).map((category) => (
               <View className="mt-5" key={category}>
-                <View className={"border-l-4 px-2 rounded border-green-300 "  }>
+                <View className={"border-l-4 px-2 rounded  " + theme.border}>
                   <Text
-                    className="text-lg"
+                    className={"text-lg " + theme.color}
                     style={{ fontFamily: langChoice(language, "en", "ar") }}
                   >
                     {category}
