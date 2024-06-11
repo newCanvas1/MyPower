@@ -5,24 +5,37 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const ThemeContext = createContext(null);
 
 export const ThemeProvider = ({ children }) => {
+  const [mode, setMode] = useState("light");
   const [theme, setTheme] = useState(lightTheme);
 
-  const toggleTheme = () => {
-    AsyncStorage.setItem(
-      "theme",
-      theme === lightTheme ? darkTheme : lightTheme
-    );
-    setTheme((prevTheme) =>
-      prevTheme === lightTheme ? darkTheme : lightTheme
-    );
+  const toggleTheme =async () => {
+    console.log(mode);
+    if (mode === "light") {
+      setMode("dark");
+      setTheme(darkTheme);
+      await AsyncStorage.setItem("theme", "dark");
+    } else {
+      setMode("light");
+      setTheme(lightTheme);
+      await AsyncStorage.setItem("theme", "light");
+    }
   };
   useEffect(() => {
-    // const storedTheme = AsyncStorage.getItem("theme");
-    // if (theme !== null) {
-    //   setTheme(storedTheme === lightTheme ? darkTheme : lightTheme);
-    // } else {
-    //   setTheme(lightTheme);
-    // }
+    async function getMode() {
+      const theme = await AsyncStorage.getItem("theme");
+      if (theme !== null) {
+        setMode(theme);
+        if (theme === "dark") {
+          setTheme(darkTheme);
+        } else {
+          setTheme(lightTheme);
+        }
+      } else {
+        setMode("light");
+        setTheme(lightTheme);
+      }
+    }
+    getMode();
   }, []);
 
   return (

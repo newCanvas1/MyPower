@@ -50,6 +50,7 @@ export const ARABIC = {
   ADD_SET: "أضف مجموعة",
   BEST_SET: "أفضل مجموعة",
   LANGUAGE: "اللغة",
+  THEME: "الثيم",
 };
 
 export const ENGLISH = {
@@ -105,4 +106,5 @@ export const ENGLISH = {
   ADD_SET: "Add Set",
   BEST_SET: "Best Set",
   LANGUAGE: "Language",
+  THEME: "Theme",
 };
