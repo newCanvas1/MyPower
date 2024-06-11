@@ -12,6 +12,7 @@ export const lightTheme = {
   border: "border-green-400",
   color: "white",
   screenColor: "white",
+  workoutScreen: "bg-white",
 };
 
 export const darkTheme = {
@@ -26,6 +27,7 @@ export const darkTheme = {
   tabBarSelected: "purple",
   border: "border-purple-400",
   color: "black",
+  workoutScreen: "bg-[#9290C3]",
 
   screenColor: "#070F2B",
 };

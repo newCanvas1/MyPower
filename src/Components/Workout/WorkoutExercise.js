@@ -11,7 +11,7 @@ function WorkoutExercise({ exercise }) {
   const { language } = useContext(LanguageContext);
   return (
     <View className="flex flex-col">
-      <View className=" bg-green-300 p-4 shadow w-[100%] ">
+      <View className="  bg-green-300 p-2 shadow w-[100%] ">
         <Text>{exercise.name}</Text>
       </View>
       {!sets[exercise.exerciseId]?.length == 0 && (
@@ -49,7 +49,7 @@ function WorkoutExercise({ exercise }) {
       >
         <Text
           style={{ fontFamily: langChoice(language, "en", "ar") }}
-          className="text-lg"
+          className="text-md"
         >
           + {langChoice(language, ENGLISH.ADD_SET, ARABIC.ADD_SET)}
         </Text>

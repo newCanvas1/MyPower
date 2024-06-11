@@ -13,16 +13,22 @@ import { langChoice } from "../../src/utility/functions/langChoice";
 import { LanguageContext } from "../../context/LanguageContext";
 import { ARABIC, ENGLISH } from "../../src/utility/labels";
 import { useRouter } from "expo-router";
+import { ThemeContext } from "../../context/ThemeContext";
 
 function workout(props) {
   const { exercises, plan, save, timePassed, setTimePassed, cancel } =
     useContext(WorkoutContext);
+  const { theme } = useContext(ThemeContext);
   const [stopTimer, setStopTimer] = useState(false);
   const { language } = useContext(LanguageContext);
   const router = useRouter();
   return (
-    <SafeAreaView>
-      <View className="flex-col h-[100%] w-[100%] p-5 justify-center items-center">
+      <View
+        className={
+          "flex-col h-[100%] w-[100%] p-5 justify-center items-center " +
+          theme.workoutScreen
+        }
+      >
         <View className="flex-row justify-between w-[100%] items-center">
           <View className="flex flex-col">
             <Text className="text-2xl self-start">{plan.name}</Text>
@@ -32,7 +38,7 @@ function workout(props) {
               setTimePassed={setTimePassed}
             />
           </View>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={async () => {
               setStopTimer(!stopTimer);
               const saved = await save(timePassed);
@@ -59,14 +65,13 @@ function workout(props) {
             cancel();
             router.back();
           }}
-          className="mt-5 justify-center bg-red-400 w-[60%] h-10  items-center p-1 rounded"
+          className="mt-3 justify-center bg-red-400 w-[60%] h-10  items-center p-1 rounded"
         >
           <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
             {langChoice(language, ENGLISH.CANCEL, ARABIC.CANCEL)}
           </Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
   );
 }
 

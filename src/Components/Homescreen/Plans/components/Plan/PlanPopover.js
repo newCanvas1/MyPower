@@ -31,7 +31,7 @@ function PlanPopover({ planId, setShowPopover }) {
   return (
     <View className=" mt-10 items-center justify-center flex-col">
       <Text
-        className={" text-2xl " + theme.textPrimary}
+        className={" text-2xl " + theme.color}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {name}
@@ -39,14 +39,14 @@ function PlanPopover({ planId, setShowPopover }) {
       <View className="w-full mt-5 flex-row ">
         <View className=" px-7 w-[70%] h-full">
           <Text
-            className={theme.textPrimary}
+            className={theme.color}
             style={{ fontFamily: langChoice(language, "en", "ar") }}
           >
             {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
           </Text>
         </View>
         <Text
-          className={"  flex-1 text-center " + theme.textPrimary}
+          className={"  flex-1 text-center " + theme.color}
           style={{ fontFamily: langChoice(language, "en", "ar") }}
         >
           {langChoice(language, ENGLISH.BEST_SET, ARABIC.BEST_SET)}
@@ -61,7 +61,7 @@ function PlanPopover({ planId, setShowPopover }) {
         />
       </View>
       <TouchableOpacity
-        className={"  py-2 px-10 rounded " + theme.buttonMain}
+        className={"  py-2 px-10 rounded " + theme.primary}
         onPress={() => {
           setShowPopover(false);
           setTimeout(() => {
@@ -72,7 +72,7 @@ function PlanPopover({ planId, setShowPopover }) {
         }}
       >
         <Text
-          className={"text-xl text-white " + theme.textSecondary}
+          className={"text-xl text-white " + theme.textSecondary }
           style={{ fontFamily: langChoice(language, "en", "ar") }}
         >
           {langChoice(language, ENGLISH.START_WORKOUT, ARABIC.START_WORKOUT)}

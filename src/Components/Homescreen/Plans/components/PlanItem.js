@@ -124,7 +124,7 @@ function PlanItem({ item }) {
         content={
           <PlanPopover planId={item.id} setShowPopover={setShowStartPopover} />
         }
-        popOverheight={0.8}
+        popOverheight={0.6}
         popOverwidth={0.9}
       />
     </View>
