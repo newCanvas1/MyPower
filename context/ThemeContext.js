@@ -8,8 +8,7 @@ export const ThemeProvider = ({ children }) => {
   const [mode, setMode] = useState("light");
   const [theme, setTheme] = useState(lightTheme);
 
-  const toggleTheme =async () => {
-    console.log(mode);
+  const toggleTheme = async () => {
     if (mode === "light") {
       setMode("dark");
       setTheme(darkTheme);
@@ -39,7 +38,7 @@ export const ThemeProvider = ({ children }) => {
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, mode }}>
       {children}
     </ThemeContext.Provider>
   );

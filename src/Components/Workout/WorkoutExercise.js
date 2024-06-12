@@ -11,11 +11,11 @@ function WorkoutExercise({ exercise }) {
   const { language } = useContext(LanguageContext);
   return (
     <View className="flex flex-col">
-      <View className="  bg-green-300 p-2 shadow w-[100%] ">
+      <View className="  p-2 shadow w-[100%] ">
         <Text>{exercise.name}</Text>
       </View>
       {!sets[exercise.exerciseId]?.length == 0 && (
-        <View className=" p-2 shadow w-[80%] flex-row justify-between items-center mt-2 self-end">
+        <View className=" p-2 shadow w-[80%] flex-row justify-between items-center self-end">
           <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
             {langChoice(language, ENGLISH.PREVIOUS, ARABIC.PREVIOUS)}
           </Text>
@@ -45,7 +45,7 @@ function WorkoutExercise({ exercise }) {
             return newSets;
           });
         }}
-        className=" bg-green-400 w-full items-center p-1 rounded mt-4 self-end"
+        className="  border w-full items-center p-1 rounded mt-4 self-end"
       >
         <Text
           style={{ fontFamily: langChoice(language, "en", "ar") }}

@@ -17,14 +17,18 @@ export const DatabaseContext = createContext(null);
 export const DatabaseProvider = ({ children }) => {
   const [plans, setPlans] = useState([]);
   const [exercises, setExercises] = useState([]);
+  const [workouts, setWorkouts] = useState([]);
   const [excerciseToAdd, setExcerciseToAdd] = useState([]);
-
+  const [updateExercises, setUpdateExercises] = useState(false);
   useEffect(() => {
     getTable("plans").then((data) => {
       setPlans(data);
     });
     getTable("exercises").then((data) => {
       setExercises(data);
+    });
+    getAllWorkouts().then((data) => {
+      setWorkouts(data);
     });
   }, []);
   // add plan to database
@@ -63,6 +67,7 @@ export const DatabaseProvider = ({ children }) => {
       ...exercises,
       { ...exercise, exerciseId: result.lastInsertRowId },
     ]);
+    setUpdateExercises(!updateExercises);
     return result.lastInsertRowId;
   };
 
@@ -112,6 +117,7 @@ export const DatabaseProvider = ({ children }) => {
     const data = await getWorkouts();
     return data;
   };
+
   return (
     <DatabaseContext.Provider
       value={{
@@ -130,6 +136,10 @@ export const DatabaseProvider = ({ children }) => {
         getSortedExercises,
         addExerciseToPlan,
         getAllWorkouts,
+        workouts,
+        setWorkouts,
+        updateExercises,
+        setUpdateExercises,
       }}
     >
       {children}

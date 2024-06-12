@@ -52,8 +52,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         {langChoice(language, ENGLISH.CATEGORY, ARABIC.CATEGORY)}
       </Text>
       <View className="mt-3 z-10">
-              <CategoryDropdown value={category} setValue={setCategory} />
-
+        <CategoryDropdown value={category} setValue={setCategory} />
       </View>
       {/* <TextInput
         style={{ fontFamily: "appFont" }}
@@ -103,14 +102,15 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
       <View className="flex-col h-28 mt-10 justify-between">
         <Button
           color="green"
-          func={() => {
-            addExercise({
+          func={async() => {
+            await addExercise({
               name,
               icon,
               description,
               notes,
               category,
             });
+            
             setShowAddingExcercise(false);
           }}
           label={langChoice(language, ENGLISH.CONFIRM, ARABIC.CONFIRM)}

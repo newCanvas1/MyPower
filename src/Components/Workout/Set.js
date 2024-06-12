@@ -16,13 +16,17 @@ function Set({ set, count }) {
       <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
         {setOrder}
       </Text>
+      <View className="w-20 items-center ">
+        
       {weight == 0 || reps == 0 ? (
-        <View className="bg-slate-500 roun w-[15%] h-1"></View>
+        <View className="bg-slate-500 roun w-[50%] h-1"></View>
       ) : (
         <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
           {`${weight} kg x ${reps}`}
         </Text>
       )}
+        </View>
+
 
       <TextInput
         style={{ fontFamily: langChoice(language, "en", "ar") }}

@@ -7,7 +7,9 @@ import { ThemeContext } from "../../../context/ThemeContext";
 
 function ThemeSelector(props) {
   const { language } = useContext(LanguageContext);
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, toggleTheme,mode } = useContext(ThemeContext);
+  console.log( mode);
+
   return (
     <View className="self-start items-center min-w-[100]">
       <Text
@@ -19,11 +21,11 @@ function ThemeSelector(props) {
       <TouchableOpacity
         className={"p-2 rounded-xl w-10 shadow items-center " + theme.primary}
         onPress={() => {
-            toggleTheme();
+          toggleTheme();
         }}
-      >
+      > 
         <Text style={{ fontFamily: "Poppins-Bold", letterSpacing: 0.7 }}>
-          {language.toUpperCase()}
+          {mode == "dark" ? "🌚" : "🌞"}
         </Text>
       </TouchableOpacity>
     </View>

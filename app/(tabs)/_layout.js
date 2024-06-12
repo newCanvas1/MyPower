@@ -59,7 +59,9 @@ export default function TabLayout() {
         />
         <Tabs.Screen
           name="history"
+        
           options={{
+            
             title: langChoice(language, ENGLISH.HISTORY, ARABIC.HISTORY),
             tabBarLabelStyle: {
               fontFamily: langChoice(language, "en", "ar"),

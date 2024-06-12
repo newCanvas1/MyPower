@@ -33,6 +33,7 @@ export const WorkoutContextProvider = ({ children }) => {
     setSets(preparedSets);
   }
   function reset() {
+    setTimePassed(0);
     setPlanId("");
     setPlan({});
     setExercises([]);

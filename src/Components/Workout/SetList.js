@@ -8,7 +8,7 @@ function SetList({ exerciseId }) {
 
   return (
     <FlatList
-      className="mt-5 w-full "
+      className=" w-full "
       data={sets[exerciseId]}
       ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
       renderItem={({ item, index }) => <Set set={item} count={index + 1} />}
