@@ -21,7 +21,7 @@ function PlanItem({ item }) {
   const [showEditPopover, setShowEditPopover] = useState(false);
   const [showRenamePopover, setShowRenamePopover] = useState(false);
   const [showStartPopover, setShowStartPopover] = useState(false);
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const { planId, activeWorkout } = useContext(WorkoutContext);
   const tooltipRef = useRef();
   const planToolTipButtons = [
@@ -66,7 +66,7 @@ function PlanItem({ item }) {
   return (
     <View>
       <TouchableOpacity
-        className={`flex-col p-2 rounded-lg h-20 w-40 m-3 ${item.color} shadow`}
+        className={`flex-col p-2 rounded-lg h-20 w-40 m-3 ${theme.primary} shadow`}
         onPress={() => {
           if (activeWorkout) {
             router.push(`workout/${planId}`);
@@ -78,7 +78,7 @@ function PlanItem({ item }) {
         <View className="flex-row justify-between">
           <Text
             style={{ fontFamily: langChoice(language, "en", "ar") }}
-            className=" font-bold"
+            className={" font-bold " + theme.color}
           >
             {item.name}
           </Text>

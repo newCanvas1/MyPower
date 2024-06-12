@@ -4,32 +4,39 @@ import { ARABIC, ENGLISH } from "../../utility/labels";
 import { langChoice } from "../../utility/functions/langChoice";
 import { LanguageContext } from "../../../context/LanguageContext";
 import { WorkoutContext } from "../../../context/WorkoutContext";
+import { ThemeContext } from "../../../context/ThemeContext";
 function Set({ set, count }) {
   const [reps, setReps] = useState(set.reps);
   const [weight, setWeight] = useState(set.weight);
   const [setOrder, setSetOrder] = useState(count);
   const { language } = useContext(LanguageContext);
   const { setSets } = useContext(WorkoutContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <View className=" p-1 shadow w-[100%] flex-row justify-between items-center ">
-      <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
+      <Text
+        className={theme.textPrimary}
+        style={{ fontFamily: langChoice(language, "en", "ar") }}
+      >
         {setOrder}
       </Text>
       <View className="w-20 items-center ">
-        
-      {weight == 0 || reps == 0 ? (
-        <View className="bg-slate-500 roun w-[50%] h-1"></View>
-      ) : (
-        <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
-          {`${weight} kg x ${reps}`}
-        </Text>
-      )}
-        </View>
-
+        {weight == 0 || reps == 0 ? (
+          <View className="bg-slate-500 roun w-[50%] h-1"></View>
+        ) : (
+          <Text
+            className={theme.textPrimary}
+            style={{ fontFamily: langChoice(language, "en", "ar") }}
+          >
+            {`${weight} kg x ${reps}`}
+          </Text>
+        )}
+      </View>
 
       <TextInput
         style={{ fontFamily: langChoice(language, "en", "ar") }}
+        placeholderTextColor={theme.setPlaceholder}
         placeholder={
           weight == 0
             ? langChoice(language, ENGLISH.WEIGHT, ARABIC.WEIGHT)
@@ -49,10 +56,16 @@ function Set({ set, count }) {
             return newSets;
           });
         }}
-        className=" rounded p-1 w-10 text-center bg-white shadow"
+        className={
+          " rounded p-1 w-10 text-center border  shadow " +
+          theme.setInputBorder +
+          " " +
+          theme.inputValue
+        }
       />
       <TextInput
         style={{ fontFamily: langChoice(language, "en", "ar") }}
+        placeholderTextColor={theme.setPlaceholder}
         placeholder={
           reps == 0
             ? langChoice(language, ENGLISH.REPS, ARABIC.REPS)
@@ -72,7 +85,12 @@ function Set({ set, count }) {
             return newSets;
           });
         }}
-        className=" rounded p-1 w-12 text-center bg-white shadow"
+        className={
+          " rounded p-1 w-12 text-center border shadow " +
+          theme.setInputBorder +
+          " " +
+          theme.inputValue
+        }
       />
     </View>
   );

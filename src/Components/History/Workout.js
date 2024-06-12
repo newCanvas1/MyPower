@@ -22,17 +22,17 @@ function Workout({ item }) {
   const { language } = useContext(LanguageContext);
 
   return (
-    <View className={"shadow w-full p-2 pb-4 rounded-xl " + theme.primary}>
+    <View className={"shadow w-full p-2 pb-4 rounded-xl " + theme.workoutCard}>
       <View className="flex-row items-center justify-between p-4">
         <View>
           <Text
-            className={"text-xl " + theme.textSecondary}
+            className={"text-xl " + theme.textPrimary}
             style={{ fontFamily: langChoice(language, "en", "ar") }}
           >
             {plan.name}
           </Text>
           <Text
-            className={theme.textSecondary}
+            className={theme.textPrimary}
             style={{ fontFamily: langChoice(language, "en", "ar") }}
           >
             {formateTime(workout.duration)}
@@ -40,7 +40,7 @@ function Workout({ item }) {
         </View>
 
         <Text
-          className={theme.textSecondary}
+          className={theme.textPrimary}
           style={{ fontFamily: langChoice(language, "en", "ar") }}
         >
           {formatDate(workout.date)}
@@ -48,13 +48,13 @@ function Workout({ item }) {
       </View>
       <View className="flex-row items-center px-10 justify-between mb-2">
         <Text
-          className={theme.textSecondary}
+          className={theme.textPrimary}
           style={{ fontFamily: langChoice(language, "en", "ar") }}
         >
           {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
         </Text>
         <Text
-          className={theme.textSecondary}
+          className={theme.textPrimary}
           style={{ fontFamily: langChoice(language, "en", "ar") }}
         >
           {langChoice(language, ENGLISH.BEST_SET, ARABIC.BEST_SET)}
@@ -71,10 +71,16 @@ function Workout({ item }) {
             key={index}
             className="flex-row items-center px-10 justify-between"
           >
-            <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
+            <Text
+              className={theme.textPrimary}
+              style={{ fontFamily: langChoice(language, "en", "ar") }}
+            >
               {exercise.name}
             </Text>
-            <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
+            <Text
+              className={theme.textPrimary}
+              style={{ fontFamily: langChoice(language, "en", "ar") }}
+            >
               {bestSet?.weight} kg x {bestSet?.reps}
             </Text>
           </View>

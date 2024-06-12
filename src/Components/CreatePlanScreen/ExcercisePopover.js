@@ -59,14 +59,14 @@ function ExcercisePopover(props) {
       {!showAddingExcercise && (
         <TouchableOpacity
           className={
-            " rounded p-1 w-[30%] items-center justify-center self-center " +
-            theme.primary
+            " rounded p-1 w-[30%] items-center justify-center self-center border-2 " +
+            theme.workoutCard
           }
           onPress={() => {
             setShowAddingExcercise(true);
           }}
         >
-          <Text className={"text-xl  font-bold " + theme.textSecondary}>+</Text>
+          <Text className={" font-bold " + theme.textPrimary}>Add New</Text>
         </TouchableOpacity>
       )}
       {showAddingExcercise && (
@@ -93,7 +93,7 @@ function ExcercisePopover(props) {
           style={{ fontFamily: langChoice(language, "en", "ar") }}
           className={
             styles.userTextInput +
-            " text-2xl text-center self-center  " +
+            " text-xs text-center self-center  " +
             `${langChoice(language, " text-left", " text-right")}`
           }
           onChangeText={(text) => {
@@ -119,12 +119,14 @@ function ExcercisePopover(props) {
             {langChoice(language, ENGLISH.NO_EXERCISES, ARABIC.NO_EXERCISES)}
           </Text>
         ) : (
-          <ScrollView className="mt-2  ">
+          <ScrollView>
             {Object.keys(displayExcercises).map((category) => (
               <View className="mt-5" key={category}>
-                <View className={"border-l-4 px-2 rounded  " + theme.border}>
+                <View
+                  className={"border-l-4 px-2 rounded  " + theme.setInputBorder}
+                >
                   <Text
-                    className={"text-lg " + theme.color}
+                    className={"text-lg " + theme.textPrimary}
                     style={{ fontFamily: langChoice(language, "en", "ar") }}
                   >
                     {category}

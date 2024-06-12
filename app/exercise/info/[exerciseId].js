@@ -26,7 +26,7 @@ function Exercise(props) {
   return (
     <View style={{ flex: 1, alignItems: "center", marginTop: 20 }}>
       <Text
-        className="text-2xl"
+        className={"text-2xl "+theme.textPrimary}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.EXERCISE, ARABIC.EXCERCISE)}

@@ -33,7 +33,9 @@ function workout(props) {
     >
       <View className="flex-row justify-between w-[100%] items-center">
         <View className="flex flex-col">
-          <Text className="text-2xl self-start">{plan.name}</Text>
+          <Text className={"text-2xl self-start " + theme.textPrimary}>
+            {plan.name}
+          </Text>
           <WorkoutTimeCounter
             stopTimer={stopTimer}
             timePassed={timePassed}

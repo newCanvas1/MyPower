@@ -8,24 +8,26 @@ import Button from "../Components/General/Button.js";
 import { langChoice } from "../utility/functions/langChoice.js";
 import { LanguageContext } from "../../context/LanguageContext.js";
 import { ARABIC, ENGLISH } from "../utility/labels.js";
+import { ThemeContext } from "../../context/ThemeContext.js";
 const EnterUserInput = () => {
   const [name, setName] = useState("");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const router = useRouter();
   const { language } = useContext(LanguageContext);
+  const {theme} = useContext(ThemeContext);
   return (
     <SafeAreaView className="w-[100%] justify-center items-center">
       <View className="w-[100%] h-[100%] flex flex-col items-center  px-10">
         <Text
           style={{ fontFamily: "appFont" }}
-          className="text-center text-3xl mt-10"
+          className={"text-center text-3xl mt-10 "+theme.textPrimary}
         >
           {langChoice(language, ENGLISH.WELCOME, ARABIC.WELCOME)}
         </Text>
         <Text
           style={{ fontFamily: "appFont" }}
-          className="text-center text-xl mt-20"
+          className={"text-center text-xl mt-20 "+theme.textPrimary}
         >
           {langChoice(
             language,
@@ -35,7 +37,7 @@ const EnterUserInput = () => {
         </Text>
         <Text
           style={{ fontFamily: "appFont" }}
-          className={`${langChoice(language, "self-start", " self-end")} `}
+          className={`${langChoice(language, "self-start", " self-end")} ${theme.textPrimary}`}
         >
           {langChoice(language, ENGLISH.NAME, ARABIC.NAME)}
         </Text>
@@ -55,7 +57,7 @@ const EnterUserInput = () => {
         />
         <Text
           style={{ fontFamily: "appFont" }}
-          className={`${langChoice(language, "self-start", " self-end")} `}
+          className={`${langChoice(language, "self-start", " self-end")} ${theme.textPrimary} mt-10`}
         >
           {langChoice(language, ENGLISH.HEIGHT, ARABIC.HEIGHT)}
         </Text>
@@ -71,12 +73,12 @@ const EnterUserInput = () => {
           onChangeText={setHeight}
           className={
             styles.userTextInput +
-            ` ${langChoice(language, "text-left", "text-right")}`
+            ` ${langChoice(language, "text-left", "text-right")} `
           }
         />
         <Text
           style={{ fontFamily: "appFont" }}
-          className={`${langChoice(language, "self-start", " self-end")} `}
+          className={`${langChoice(language, "self-start", " self-end")} ${theme.textPrimary} mt-10`}
         >
           {langChoice(language, ENGLISH.WEIGHT, ARABIC.WEIGHT)}
         </Text>
