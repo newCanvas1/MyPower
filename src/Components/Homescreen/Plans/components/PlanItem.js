@@ -64,16 +64,18 @@ function PlanItem({ item }) {
     },
   ];
   return (
-    <View>
-      <TouchableOpacity
-        className={`flex-col p-2 rounded-lg h-20 w-40 m-3 ${theme.primary} shadow`}
-        onPress={() => {
-          if (activeWorkout) {
-            router.push(`workout/${planId}`);
-            return;
-          }
-          setShowStartPopover(true);
-        }}
+    <TouchableOpacity
+      className={`flex-col`}
+      onPress={() => {
+        if (activeWorkout) {
+          router.push(`workout/${planId}`);
+          return;
+        }
+        setShowStartPopover(true);
+      }}
+    >
+      <View
+        className={` p-2 rounded-lg w-40 h-28 m-3  ${theme.primary} shadow`}
       >
         <View className="flex-row justify-between">
           <Text
@@ -84,20 +86,21 @@ function PlanItem({ item }) {
           </Text>
           <TouchableOpacity
             ref={tooltipRef}
-            className="p-1 rounded bg-gray-400 shadow w-6 items-center"
+            className=" w-9 h-9  items-center justify-center "
             onPress={() => setShowTooltip(true)}
           >
-            <Icon name="options" size={13} color="white" />
-            <Tooltip
-              setShowTooltip={setShowTooltip}
-              showTooltip={showTooltip}
-              tooltipRef={tooltipRef}
-              buttons={planToolTipButtons}
-            />
+            <View className="p-1 rounded bg-gray-400 shadow w-6 items-center justify-center">
+              <Icon name="options" size={13} color="white" />
+              <Tooltip
+                setShowTooltip={setShowTooltip}
+                showTooltip={showTooltip}
+                tooltipRef={tooltipRef}
+                buttons={planToolTipButtons}
+              />
+            </View>
           </TouchableOpacity>
         </View>
-      </TouchableOpacity>
-
+      </View>
       <CustomPopover
         showPopover={showEditPopover}
         setShowPopover={setShowEditPopover}
@@ -127,7 +130,7 @@ function PlanItem({ item }) {
         popOverheight={0.6}
         popOverwidth={0.9}
       />
-    </View>
+    </TouchableOpacity>
   );
 }
 

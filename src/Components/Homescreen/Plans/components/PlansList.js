@@ -13,7 +13,7 @@ function PlansList(props) {
   useEffect(() => {}, [plans]);
   // grid flat list
   return (
-    <View className="mt-3">
+    <View className="mt-3 h-full">
       {plans.length > 0 ? (
         <FlatList
           className="w-full rounded-lg h-60 "
