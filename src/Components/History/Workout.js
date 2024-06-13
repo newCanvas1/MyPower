@@ -1,24 +1,28 @@
-import React, { useContext, useState } from "react";
-import { Text, View } from "react-native";
+import React, { useContext, useRef, useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 import formateTime from "../../utility/functions/formatTime";
 import { LanguageContext } from "../../../context/LanguageContext";
 import { ThemeContext } from "../../../context/ThemeContext";
-
+import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { ENGLISH, ARABIC } from "../../utility/labels";
 import { langChoice } from "../../utility/functions/langChoice";
-
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { getBestSetOfExerciseOfWorkout } from "../../../database/database";
 import formatDate from "../../utility/functions/formatDate";
+import Tooltip from "../General/Tooltip/Tooltip";
+import { DatabaseContext } from "../../../context/DataContext";
 function Workout({ item }) {
   const [workout, setWorkout] = useState(item.workout);
   const [exercises, setExercises] = useState(item.exercises);
   const [plan, setPlan] = useState(item.plan);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const tooltipRef = useRef();
   const { theme } = useContext(ThemeContext);
   async function getBestSet(exerciseId, workoutId) {
     const bestSet = await getBestSetOfExerciseOfWorkout(exerciseId, workoutId);
     return bestSet;
   }
-
+  const { deleteWorkout } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
 
   return (
@@ -39,13 +43,37 @@ function Workout({ item }) {
           </Text>
         </View>
 
-        <Text
-          className={theme.textPrimary}
-          style={{ fontFamily: langChoice(language, "en", "ar") }}
-        >
-          {formatDate(workout.date)}
-        </Text>
+        <View className="flex-col items-center">
+          <TouchableOpacity
+            ref={tooltipRef}
+            className="bg-gray-400 p-1 rounded"
+            onPress={() => setShowTooltip(true)}
+          >
+            <Icon name="options" size={15} color="black" />
+          </TouchableOpacity>
+          <Text
+            className={theme.textPrimary}
+            style={{ fontFamily: langChoice(language, "en", "ar") }}
+          >
+            {formatDate(workout.date)}
+          </Text>
+        </View>
       </View>
+      <Tooltip
+        setShowTooltip={setShowTooltip}
+        showTooltip={showTooltip}
+        tooltipRef={tooltipRef}
+        buttons={[
+          {
+            func: () => deleteWorkout(workout.workoutId),
+            label: langChoice(language, ENGLISH.DELETE, ARABIC.DELETE),
+            color: "red",
+            icon: (
+              <MaterialCommunityIcons name={"delete"} size={15} color={"red"} />
+            ),
+          },
+        ]}
+      />
       <View className="flex-row items-center px-10 justify-between mb-2">
         <Text
           className={theme.textPrimary}

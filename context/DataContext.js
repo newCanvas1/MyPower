@@ -11,6 +11,7 @@ import {
   getExerciseById,
   getPlanInfo,
   getWorkouts,
+  deleteWorkoutFromDatabase,
 } from "../database/database";
 export const DatabaseContext = createContext(null);
 
@@ -117,7 +118,13 @@ export const DatabaseProvider = ({ children }) => {
     const data = await getWorkouts();
     return data;
   };
-
+  const deleteWorkout = async (workoutId) => {
+    const deleted = await deleteWorkoutFromDatabase(workoutId);
+    if (deleted)
+      setWorkouts(
+        workouts.filter((workout) => workout.workout.workoutId !== workoutId)
+      );
+  };
   return (
     <DatabaseContext.Provider
       value={{
@@ -140,6 +147,7 @@ export const DatabaseProvider = ({ children }) => {
         setWorkouts,
         updateExercises,
         setUpdateExercises,
+        deleteWorkout,
       }}
     >
       {children}

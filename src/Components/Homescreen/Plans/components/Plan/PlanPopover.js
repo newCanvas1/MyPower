@@ -9,7 +9,8 @@ import ExerciseItem from "./ExerciseItem";
 import { TouchableOpacity } from "react-native";
 import { WorkoutContext } from "../../../../../../context/WorkoutContext";
 import { ThemeContext } from "../../../../../../context/ThemeContext";
-
+import Swipeable from "react-native-gesture-handler/Swipeable";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 function PlanPopover({ planId, setShowPopover }) {
   const { getPlanExcercise, getPlan } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
@@ -72,7 +73,7 @@ function PlanPopover({ planId, setShowPopover }) {
         }}
       >
         <Text
-          className={"text-xl " + theme.color }
+          className={"text-xl " + theme.color}
           style={{ fontFamily: langChoice(language, "en", "ar") }}
         >
           {langChoice(language, ENGLISH.START_WORKOUT, ARABIC.START_WORKOUT)}

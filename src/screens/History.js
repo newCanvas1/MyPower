@@ -10,16 +10,19 @@ import { ThemeContext } from "../../context/ThemeContext";
 function History(props) {
   const { theme } = useContext(ThemeContext);
   const { language } = useContext(LanguageContext);
-  const { workouts, setWorkouts } = useContext(DatabaseContext);
+  const { workouts } = useContext(DatabaseContext);
+  useEffect(() => {
+ console.log("workouts");
+  }, [workouts]);
   return (
     <View className={" p-3 h-[100%] w-[100%] " + theme.mainScreen}>
       <Text
         style={{ fontFamily: langChoice(language, "en", "ar") }}
         className={`  text-2xl text-center ${theme.textPrimary}`}
       >
-        {langChoice(language, ENGLISH.HISTORY, ARABIC.HISTORY)}
+        {langChoice(language, ENGLISH.HISTORY, ARABIC.HISTORY)} 
       </Text>
-      <FlatList
+      <FlatList 
         data={workouts}
         renderItem={({ item }) => <Workout item={item} />}
         className={"  mt-10 "}

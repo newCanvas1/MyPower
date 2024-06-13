@@ -390,7 +390,6 @@ export const getSetsOfExercise = async (exerciseId) => {
   );
   if (data.length === 0) {
     return [];
-    
   }
   //  take only sets of the latest workoutId
 
@@ -400,4 +399,36 @@ export const getSetsOfExercise = async (exerciseId) => {
   );
 
   return latestWorkoutSets;
+};
+
+// delete workout and sets
+export const deleteWorkoutFromDatabase = async (id) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  await db.runAsync("DELETE FROM workouts WHERE workoutId = ?", `${id}`);
+  await db.runAsync("DELETE FROM sets WHERE workoutId = ?", `${id}`);
+  return true;
+};
+
+// get number of number oftimes a user has done a certain exercise, sets of same workout are counted as one
+export const getNumberOfTimesUserHasDoneExercise = async (exerciseId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync(
+    `SELECT * FROM sets  WHERE exerciseId = ${exerciseId}`
+  );
+  let count = 0;
+  let workoutIdList = [];
+  for (const set of data) {
+    if (workoutIdList.includes(set.workoutId)) {
+    } else {
+      count++;
+      workoutIdList.push(set.workoutId);
+    }
+  }
+  // get best set of exercise
+  const bestSet = await getBestSetOfExercise(exerciseId);
+  // get number of times user has done exercise
+  if (count == 0) {
+    return false;
+  }
+  return { bestSet, count };
 };
