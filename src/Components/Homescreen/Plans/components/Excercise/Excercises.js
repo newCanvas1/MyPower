@@ -8,12 +8,14 @@ import { langChoice } from "../../../../../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../../../../utility/labels";
 import { styles } from "../../../../../styles/styles";
 import ExercisesAddList from "./ExercisesAddList";
+import { ThemeContext } from "../../../../../../context/ThemeContext";
 
 function Excercises({ planId, name }) {
   const [excercises, setExcercises] = useState([]);
   const [showAddExcercise, setShowAddExcercise] = useState(false);
   const { getPlanExcercise, deletePlanExcercise } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
+  const {theme} = useContext(ThemeContext);
   async function deleteExcercise(item) {
     await deletePlanExcercise(item.id);
     setExcercises(excercises.filter((excercise) => excercise.id != item.id));
@@ -31,7 +33,7 @@ function Excercises({ planId, name }) {
         <View>
           <Text
             style={{ fontFamily: langChoice(language, "en", "ar") }}
-            className="font-bold text-center text-2xl"
+            className={"font-bold text-center text-2xl "+theme.textPrimary}
           >
             {name}
           </Text>
@@ -41,7 +43,7 @@ function Excercises({ planId, name }) {
               language,
               "left",
               "right"
-            )} text-xl`}
+            )} text-xl ${theme.textPrimary}`}
           >
             {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
           </Text>
@@ -59,7 +61,7 @@ function Excercises({ planId, name }) {
       )}
       <TouchableOpacity
         className={
-          styles.addBtn + "justify-center items-center w-24  mt-5 self-center"
+          styles.addBtn + "justify-center items-center w-24  mt-5 self-center " +theme.workoutCard
         }
         onPress={() => {
           if (!showAddExcercise) return setShowAddExcercise(true);
@@ -67,7 +69,7 @@ function Excercises({ planId, name }) {
         }}
       >
         <Text
-          className="text-xl"
+          className={"text-xl p-1 " + theme.textPrimary}
           style={{ fontFamily: langChoice(language, "en", "ar") }}
         >
           {showAddExcercise

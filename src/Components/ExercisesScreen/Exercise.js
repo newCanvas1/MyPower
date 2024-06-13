@@ -15,7 +15,7 @@ function Exercise({ exercise }) {
   return (
     <TouchableOpacity
       onPress={goToExerciseModal}
-      className={" flex-1  p-5 rounded-lg shadow mt-5 "+ theme.primary}
+      className={" flex-1  p-5 rounded-lg shadow mt-3 "+ theme.primary}
     >
       <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
         {exercise.name}

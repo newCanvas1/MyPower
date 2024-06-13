@@ -15,7 +15,7 @@ function RenamePopover({ setShowRenamePopover, planId,oldName }) {
     <View className="w-full h-full items-center py-5  ">
       <Text
         style={{ fontFamily: langChoice(language, "en", "ar") }}
-        className={"text-center text-xl font-bold "+theme.color}
+        className={"text-center text-xl font-bold "+theme.textPrimary}
       >
         {langChoice(language, ENGLISH.RENAME, ARABIC.RENAME)}
       </Text>

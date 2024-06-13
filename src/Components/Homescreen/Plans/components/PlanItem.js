@@ -102,7 +102,7 @@ function PlanItem({ item }) {
         showPopover={showEditPopover}
         setShowPopover={setShowEditPopover}
         content={<Excercises name={item.name} planId={item.id} />}
-        popOverheight={0.8}
+        popOverheight={0.5}
         popOverwidth={0.8}
       />
       <CustomPopover

@@ -14,6 +14,7 @@ function CustomPopover({
   const { theme } = useContext(ThemeContext);
   return (
     <Popover
+    popoverStyle={{borderRadius: 50}}
       isVisible={showPopover}
       onRequestClose={() => setShowPopover(false)}
     >
