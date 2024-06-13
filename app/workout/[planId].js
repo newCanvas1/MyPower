@@ -31,7 +31,8 @@ function workout(props) {
         theme.workoutScreen
       }
     >
-      <View className="flex-row justify-between w-[100%] items-center">
+    <View className="h-1 w-10 mb-10 bg-slate-500"></View>
+    <View className="flex-row justify-between w-[100%] items-center">
         <View className="flex flex-col">
           <Text className={"text-2xl self-start " + theme.textPrimary}>
             {plan.name}

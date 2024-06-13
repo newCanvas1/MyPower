@@ -14,7 +14,7 @@ function Exercise(props) {
   const { exerciseId } = useLocalSearchParams();
   const { getExercise } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
-  const {theme} = useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext);
   const [exercise, setExercise] = useState({});
   useEffect(() => {
     async function getExerciseInfo() {
@@ -25,8 +25,10 @@ function Exercise(props) {
   }, []);
   return (
     <View style={{ flex: 1, alignItems: "center", marginTop: 20 }}>
+      <View className="h-1 w-10 mb-10 bg-slate-500"></View>
+
       <Text
-        className={"text-2xl "+theme.textPrimary}
+        className={"text-2xl " + theme.textPrimary}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.EXERCISE, ARABIC.EXCERCISE)}
