@@ -18,6 +18,7 @@ export const lightTheme = {
   setPlaceholder: "gray",
   inputValue: "text-black",
   countTag: "bg-green-500",
+  set: " rounded p-1 w-10 text-center border shadow ",
 };
 
 export const darkTheme = {
@@ -36,7 +37,8 @@ export const darkTheme = {
   screenColor: "#222831",
   workoutCard: "border border-white",
   setInputBorder: "border-gray-400",
-  setPlaceholder: "white",
+  setPlaceholder: "gray",
   inputValue: "text-white",
   countTag: "bg-slate-500 ",
+  set: " rounded p-1 w-10 text-center bg-[#222831]   shadow ",
 };

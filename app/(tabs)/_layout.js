@@ -13,6 +13,8 @@ import { ThemeContext } from "../../context/ThemeContext";
 export default function TabLayout() {
   const { language } = useContext(LanguageContext);
   const {theme} = useContext(ThemeContext);
+
+   
   return (
     <SafeAreaView className={theme.mainScreen} style={{ height: "100%", width: "100%" }}>
       <Tabs

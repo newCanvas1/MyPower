@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
-import { Text, TextInput, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { ARABIC, ENGLISH } from "../../utility/labels";
 import { langChoice } from "../../utility/functions/langChoice";
 import { LanguageContext } from "../../../context/LanguageContext";
 import { WorkoutContext } from "../../../context/WorkoutContext";
 import { ThemeContext } from "../../../context/ThemeContext";
+import Feather from "@expo/vector-icons/Feather";
 function Set({ set, count }) {
   const [reps, setReps] = useState(set.reps);
   const [weight, setWeight] = useState(set.weight);
@@ -23,7 +24,7 @@ function Set({ set, count }) {
       </Text>
       <View className="w-20 items-center ">
         {weight == 0 || reps == 0 ? (
-          <View className="bg-slate-500 roun w-[50%] h-1"></View>
+          <View className="bg-slate-500  w-[50%] h-1"></View>
         ) : (
           <Text
             className={theme.textPrimary}
@@ -57,7 +58,7 @@ function Set({ set, count }) {
           });
         }}
         className={
-          " rounded p-1 w-10 text-center border  shadow " +
+         theme.set+ 
           theme.setInputBorder +
           " " +
           theme.inputValue
@@ -86,12 +87,33 @@ function Set({ set, count }) {
           });
         }}
         className={
-          " rounded p-1 w-12 text-center border shadow " +
+          theme.set+
           theme.setInputBorder +
           " " +
           theme.inputValue
         }
       />
+      <TouchableOpacity
+        onPress={() => {
+          setSets((prev) => {
+            const newSets = { ...prev };
+            const listofSets = newSets[set.exerciseId];
+            for (let i = 0; i < listofSets.length; i++) {
+              if (listofSets[i].id === set.id) {
+                listofSets[i].checked = !listofSets[i].checked;
+                break;
+              }
+            }
+            newSets[set.exerciseId] = listofSets;
+            return newSets;
+          });
+        }}
+        className={`${
+          set.checked ? "bg-green-400" : " "
+        } rounded border shadow p-[1px]`}
+      >
+        <Feather name="check" size={20} color={theme.color} />
+      </TouchableOpacity>
     </View>
   );
 }

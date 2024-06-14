@@ -6,7 +6,7 @@ import { LanguageContext } from "../../../context/LanguageContext";
 import { ARABIC, ENGLISH } from "../../utility/labels";
 import { langChoice } from "../../utility/functions/langChoice";
 import { ThemeContext } from "../../../context/ThemeContext";
-
+import Feather from "react-native-vector-icons/Feather";
 function WorkoutExercise({ exercise }) {
   const { setSets, sets } = useContext(WorkoutContext);
   const { language } = useContext(LanguageContext);
@@ -24,7 +24,7 @@ function WorkoutExercise({ exercise }) {
           }
         >
           <Text
-            className={theme.textPrimary}
+            className={theme.textPrimary + " justify-center items-center "}
             style={{ fontFamily: langChoice(language, "en", "ar") }}
           >
             {langChoice(language, ENGLISH.PREVIOUS, ARABIC.PREVIOUS)}
@@ -41,6 +41,9 @@ function WorkoutExercise({ exercise }) {
           >
             {langChoice(language, ENGLISH.REPS, ARABIC.REPS)}
           </Text>
+          <View>
+            <Feather name="check" size={20} color={theme.color} />
+          </View>
         </View>
       )}
       <SetList exerciseId={exercise.exerciseId} />

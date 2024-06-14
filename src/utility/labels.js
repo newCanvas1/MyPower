@@ -1,4 +1,3 @@
-import Info from "../Components/ExerciseInfo/Info";
 
 export const ARABIC = {
   PLANS: "الخطط",
@@ -116,4 +115,5 @@ export const ENGLISH = {
   INFO: "Info",
   CHARTS: "Charts",
   HISTORY: "History",
+
 };

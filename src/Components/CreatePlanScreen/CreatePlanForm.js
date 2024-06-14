@@ -48,7 +48,7 @@ function CreatePlanForm(props) {
       >
         <Text
           style={{ fontFamily: langChoice(language, "en", "ar") }}
-          className={"text-xl font-bold "+theme.textPrimary}
+          className={"text-xl font-bold " + theme.textPrimary}
         >
           {langChoice(language, ENGLISH.CREATE_A_PLAN, ARABIC.CREATE_A_PLAN)}
         </Text>
@@ -101,7 +101,7 @@ function CreatePlanForm(props) {
         )}
         onChangeText={(text) => setDescription(text)}
       />
-      <ColorPicker setColor={setColor} />
+      {/* <ColorPicker setColor={setColor} /> */}
 
       <View
         className={`${langChoice(
