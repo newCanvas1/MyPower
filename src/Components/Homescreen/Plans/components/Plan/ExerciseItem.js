@@ -16,7 +16,7 @@ function ExerciseItem({ exercise }) {
     }
     getSet();
   }, []);
-  console.log(bestSet == undefined);
+
   return (
     <View
       className={

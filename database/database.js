@@ -432,3 +432,4 @@ export const getNumberOfTimesUserHasDoneExercise = async (exerciseId) => {
   }
   return { bestSet, count };
 };
+

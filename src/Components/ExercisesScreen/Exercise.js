@@ -22,14 +22,14 @@ function Exercise({ exercise }) {
         exercise.exerciseId
       );
       setInfo(info);
-      console.log(info);
+
     }
     getInfo();
   }, [workouts]);
   return (
     <View>
       {info.count > 0 && (
-        <View className=" bg-slate-500 items-center justify-center w-4 h-4 rounded self-end absolute shadow-lg z-10 mt-2 ">
+        <View className={`${theme.countTag} items-center justify-center w-4 h-4 rounded self-end absolute shadow-lg z-10 mt-2` }>
           <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
             {info.count}
           </Text>

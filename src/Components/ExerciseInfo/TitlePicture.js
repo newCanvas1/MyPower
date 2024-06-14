@@ -22,7 +22,7 @@ function TitlePicture({ title, muscle }) {
           {title}
         </Text>
       </ScrollView>
-      <View className=" self-end  items-center justify-center  w-[60%] rounded">
+      <View className=" self-end    w-[60%] rounded">
         <Image
           source={muscles[`${muscle?.toLowerCase()}`]}
           className="w-[200] h-[180] "

@@ -12,7 +12,7 @@ function History(props) {
   const { language } = useContext(LanguageContext);
   const { workouts } = useContext(DatabaseContext);
   useEffect(() => {
- console.log("workouts");
+
   }, [workouts]);
   return (
     <View className={" p-3 h-[100%] w-[100%] " + theme.mainScreen}>

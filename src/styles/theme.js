@@ -13,10 +13,11 @@ export const lightTheme = {
   color: "black",
   screenColor: "white",
   workoutScreen: "bg-white",
-  workoutCard:"bg-green-400",
+  workoutCard: "bg-green-400",
   setInputBorder: "border-black",
-  setPlaceholder:"gray"
-  ,inputValue:"text-black"
+  setPlaceholder: "gray",
+  inputValue: "text-black",
+  countTag: "bg-green-500",
 };
 
 export const darkTheme = {
@@ -33,8 +34,9 @@ export const darkTheme = {
   color: "white",
   workoutScreen: "bg-[#31363F]",
   screenColor: "#222831",
-  workoutCard:"border border-white",
+  workoutCard: "border border-white",
   setInputBorder: "border-gray-400",
-  setPlaceholder:"white"
-  ,inputValue:"text-white"
+  setPlaceholder: "white",
+  inputValue: "text-white",
+  countTag: "bg-slate-500 ",
 };

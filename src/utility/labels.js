@@ -1,3 +1,5 @@
+import Info from "../Components/ExerciseInfo/Info";
+
 export const ARABIC = {
   PLANS: "الخطط",
   NAME: "الإسم",
@@ -51,6 +53,10 @@ export const ARABIC = {
   BEST_SET: "أفضل مجموعة",
   LANGUAGE: "اللغة",
   THEME: "الثيم",
+  INFO: "المعلومات",
+  CHARTS: "الرسوم",
+  HISTORY: "التاريخ",
+
 };
 
 export const ENGLISH = {
@@ -107,4 +113,7 @@ export const ENGLISH = {
   BEST_SET: "Best Set",
   LANGUAGE: "Language",
   THEME: "Theme",
+  INFO: "Info",
+  CHARTS: "Charts",
+  HISTORY: "History",
 };

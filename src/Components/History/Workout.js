@@ -95,23 +95,25 @@ function Workout({ item }) {
           workout.workoutId
         );
         return (
-          <View
-            key={index}
-            className="flex-row items-center px-10 justify-between"
-          >
-            <Text
-              className={theme.textPrimary}
-              style={{ fontFamily: langChoice(language, "en", "ar") }}
+          bestSet != undefined && (
+            <View
+              key={index}
+              className="flex-row items-center px-10 justify-between"
             >
-              {exercise.name}
-            </Text>
-            <Text
-              className={theme.textPrimary}
-              style={{ fontFamily: langChoice(language, "en", "ar") }}
-            >
-              {bestSet?.weight} kg x {bestSet?.reps}
-            </Text>
-          </View>
+              <Text
+                className={theme.textPrimary}
+                style={{ fontFamily: langChoice(language, "en", "ar") }}
+              >
+                {exercise.name}
+              </Text>
+              <Text
+                className={theme.textPrimary}
+                style={{ fontFamily: langChoice(language, "en", "ar") }}
+              >
+                {bestSet?.weight} kg x {bestSet?.reps}
+              </Text>
+            </View>
+          )
         );
       })}
     </View>
