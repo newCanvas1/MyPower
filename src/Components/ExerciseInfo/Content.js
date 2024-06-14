@@ -6,7 +6,7 @@ import { View } from "react-native";
 
 function Content({ content, exercise }) {
   return (
-    <View className="mt-5">
+    <View className="mt-5  w-[100%]">
       {content == "info" ? (
         <Info exercise={exercise} />
       ) : content == "charts" ? (
