@@ -10,12 +10,17 @@ function Set({ set, count }) {
   const [reps, setReps] = useState(set.reps);
   const [weight, setWeight] = useState(set.weight);
   const [setOrder, setSetOrder] = useState(count);
+  const [setChecked, setSetChecked] = useState(set?.checked);
   const { language } = useContext(LanguageContext);
   const { setSets } = useContext(WorkoutContext);
   const { theme } = useContext(ThemeContext);
 
+  const setBackground = setChecked ? "bg-green-400 opacity-60" : " ";
+
   return (
-    <View className=" p-1 shadow w-[100%] flex-row justify-between items-center ">
+    <View
+      className={`${setBackground} p-1 shadow w-[100%] flex-row justify-between items-center `}
+    >
       <Text
         className={theme.textPrimary}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
@@ -36,8 +41,7 @@ function Set({ set, count }) {
       </View>
 
       <TextInput
-      keyboardType="numeric"
-
+        keyboardType="numeric"
         style={{ fontFamily: langChoice(language, "en", "ar") }}
         placeholderTextColor={theme.setPlaceholder}
         placeholder={
@@ -59,15 +63,10 @@ function Set({ set, count }) {
             return newSets;
           });
         }}
-        className={
-         theme.set+ 
-          theme.setInputBorder +
-          " " +
-          theme.inputValue
-        }
+        className={theme.set + theme.setInputBorder + " " + theme.inputValue}
       />
       <TextInput
-      keyboardType="numeric"
+        keyboardType="numeric"
         style={{ fontFamily: langChoice(language, "en", "ar") }}
         placeholderTextColor={theme.setPlaceholder}
         placeholder={
@@ -89,12 +88,7 @@ function Set({ set, count }) {
             return newSets;
           });
         }}
-        className={
-          theme.set+
-          theme.setInputBorder +
-          " " +
-          theme.inputValue
-        }
+        className={theme.set + theme.setInputBorder + " " + theme.inputValue}
       />
       <TouchableOpacity
         onPress={() => {
@@ -103,6 +97,7 @@ function Set({ set, count }) {
             const listofSets = newSets[set.exerciseId];
             for (let i = 0; i < listofSets.length; i++) {
               if (listofSets[i].id === set.id) {
+                setSetChecked(!listofSets[i].checked);
                 listofSets[i].checked = !listofSets[i].checked;
                 break;
               }
