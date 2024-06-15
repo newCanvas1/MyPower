@@ -15,15 +15,33 @@ import { ARABIC, ENGLISH } from "../../src/utility/labels";
 import { useRouter } from "expo-router";
 import { ThemeContext } from "../../context/ThemeContext";
 import { DatabaseContext } from "../../context/DataContext";
+import CustomPopover from "../../src/Components/General/CustomPopover";
+import Warning from "../../src/Components/Workout/Warning";
 
 function workout(props) {
-  const { exercises, plan, save, timePassed, setTimePassed, cancel } =
-    useContext(WorkoutContext);
+  const {
+    exercises,
+    plan,
+    save,
+    timePassed,
+    setTimePassed,
+    cancel,
+    userHasCheckedSets,
+  } = useContext(WorkoutContext);
   const { theme } = useContext(ThemeContext);
   const [stopTimer, setStopTimer] = useState(false);
   const { language } = useContext(LanguageContext);
   const { getAllWorkouts, setWorkouts } = useContext(DatabaseContext);
+  const [showWarning, setShowWarning] = useState(false);
+  const [type, setType] = useState("");
   const router = useRouter();
+  function warning() {
+    if (type == "noSets") {
+      setShowWarning(true);
+    } else {
+      setShowWarning(true);
+    }
+  }
   return (
     <View
       className={
@@ -31,8 +49,8 @@ function workout(props) {
         theme.workoutScreen
       }
     >
-    <View className="h-1 w-10 mb-10 bg-slate-500"></View>
-    <View className="flex-row justify-between w-[100%] items-center">
+      <View className="h-1 w-10 mb-10 bg-slate-500"></View>
+      <View className="flex-row justify-between w-[100%] items-center">
         <View className="flex flex-col">
           <Text className={"text-2xl self-start " + theme.textPrimary}>
             {plan.name}
@@ -45,6 +63,12 @@ function workout(props) {
         </View>
         <TouchableOpacity
           onPress={async () => {
+            console.log("userHasCheckedSets", userHasCheckedSets());
+            if (!userHasCheckedSets()) {
+              setType("noSets");
+              warning();
+              return;
+            }
             setStopTimer(!stopTimer);
             const saved = await save(timePassed);
             if (saved) {
@@ -71,8 +95,8 @@ function workout(props) {
       />
       <TouchableOpacity
         onPress={() => {
-          cancel();
-          router.back();
+          setType("cancel");
+          warning();
         }}
         className="mt-3 justify-center bg-red-400 w-[60%] h-10  items-center p-1 rounded"
       >
@@ -80,6 +104,13 @@ function workout(props) {
           {langChoice(language, ENGLISH.CANCEL, ARABIC.CANCEL)}
         </Text>
       </TouchableOpacity>
+      <CustomPopover
+        showPopover={showWarning}
+        setShowPopover={setShowWarning}
+        popOverheight={0.5}
+        popOverwidth={0.8}
+        content={<Warning type={type} setShowWarning={setShowWarning} />}
+      />
     </View>
   );
 }

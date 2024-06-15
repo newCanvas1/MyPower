@@ -54,12 +54,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
       <View className="mt-3 z-10">
         <CategoryDropdown value={category} setValue={setCategory} />
       </View>
-      {/* <TextInput
-        style={{ fontFamily: "appFont" }}
-        className={styles.userTextInput}
-        placeholder="Icon"
-        onChangeText={(text) => setIcon(text)}
-      /> */}
+
       <Text
         className={`${langChoice(language, "self-start", "self-end")} mt-2   `}
         style={{ fontFamily: langChoice(language, "en", "ar") }}

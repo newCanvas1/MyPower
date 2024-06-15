@@ -44,6 +44,7 @@ export const WorkoutContextProvider = ({ children }) => {
     for (const exercise of exercises) {
       // for every set in the set array
       for (const set of sets[exercise.exerciseId]) {
+        console.log("set", set);
         // insert the set into the database
         if (set.checked) {
           await insertSets(
@@ -87,6 +88,17 @@ export const WorkoutContextProvider = ({ children }) => {
     return true;
   }
 
+  function userHasCheckedSets() {
+    for (const exercise of exercises) {
+      for (const set of sets[exercise.exerciseId]) {
+        if (!set.checked) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   useEffect(() => {
     async function getInfo() {
       try {
@@ -117,6 +129,7 @@ export const WorkoutContextProvider = ({ children }) => {
         setActiveWorkout,
         activeWorkout,
         cancel,
+        userHasCheckedSets,
       }}
     >
       {children}

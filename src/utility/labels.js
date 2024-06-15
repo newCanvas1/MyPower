@@ -55,6 +55,11 @@ export const ARABIC = {
   CHARTS: "الرسوم",
   HISTORY: "التاريخ",
   NO_REGISTERED_SETS: "لا يوجد مجموعات مسجلة لهذا التمرين 🧑‍💻",
+  RESUME: "استئناف التمرين",
+  CANCEL_WORKOUT: "إلغاء التمارين",
+
+  NO_SETS_CONFIRMED: "يوجد مجموعات غير مؤكدة لهذا التمرين 🧑‍💻",
+  CANCEL_CONFIRM: "هل تريد إلغاء التمارين؟",
 };
 
 export const ENGLISH = {
@@ -115,4 +120,8 @@ export const ENGLISH = {
   CHARTS: "Charts",
   HISTORY: "History",
   NO_REGISTERED_SETS: "No registered sets found for this exercise 🧑‍💻",
+  RESUME: "Resume Workout",
+  CANCEL_WORKOUT: "Cancel Workout",
+  NO_SETS_CONFIRMED: "You have unconfirmed sets for this exercise 🧑‍💻",
+  CANCEL_CONFIRM: "Are you sure you want to cancel?",
 };
