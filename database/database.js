@@ -261,7 +261,7 @@ export const insertWorkout = async (duration, notes, date, planId) => {
     `${date}`,
     `${planId}`
   );
-
+  // 2024-06-15T20:24:01.863Z
   // update plan last used
   await updatePlanLastUsed(planId, date);
 
@@ -433,3 +433,28 @@ export const getNumberOfTimesUserHasDoneExercise = async (exerciseId) => {
   return { bestSet, count };
 };
 
+export const getExerciseChartInfo = async (exerciseId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  let data = await db.getAllAsync(
+    `SELECT weight,id,workoutId FROM sets  WHERE exerciseId = ${exerciseId}`
+  );
+
+  // get the workout date
+  const workout = await db.getAllAsync(`SELECT date,workoutId FROM workouts `);
+  for (let set of data) {
+    for (let i = 0; i < workout.length; i++) {
+      if (workout[i].workoutId == set.workoutId) {
+        set.date = workout[i].date;
+      }
+    }
+  }
+
+  const result = [];
+  for (let set of data) {
+    const date = set.date;
+    const weight = set.weight;
+    result.push({ x: date, y: weight });
+  }
+  console.log("result", result);
+  return result;
+};

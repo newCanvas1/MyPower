@@ -1,15 +1,20 @@
 import React, { useContext } from "react";
 import { Text, View } from "react-native";
 import { ThemeContext } from "../../../context/ThemeContext";
-
+import  formatDate from "../../utility/functions/formatDate";
 function WorkoutItem({ workout, exercise }) {
   const { theme } = useContext(ThemeContext);
   return (
     <View className="w-[100%] border border-white p-2 rounded mt-2">
       <View key={workout.workout.workoutId}>
-        <Text className={"text-xl " + theme.textPrimary}>
-          {workout.plan.name}
-        </Text>
+        <View className="flex-row justify-between">
+          <Text className={"text-xl " + theme.textPrimary}>
+            {workout.plan.name}
+          </Text>
+          <Text className={theme.textPrimary}>
+            {formatDate(workout.workout.date)}
+          </Text>
+        </View>
         {workout.exercises.map((e) => {
           return (
             <View key={e.exerciseId} className=" px-5">
@@ -24,7 +29,7 @@ function WorkoutItem({ workout, exercise }) {
                   {workout.sets[e.exerciseId]?.map((set, index) => {
                     return (
                       <View
-                        key={set.setId}
+                        key={set.id}
                         className="flex-row justify-between mt-2"
                       >
                         <Text className={theme.textPrimary}>{index + 1}</Text>

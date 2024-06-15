@@ -1,4 +1,3 @@
-
 export const ARABIC = {
   PLANS: "الخطط",
   NAME: "الإسم",
@@ -55,7 +54,7 @@ export const ARABIC = {
   INFO: "المعلومات",
   CHARTS: "الرسوم",
   HISTORY: "التاريخ",
-
+  NO_REGISTERED_SETS: "لا يوجد مجموعات مسجلة لهذا التمرين 🧑‍💻",
 };
 
 export const ENGLISH = {
@@ -115,5 +114,5 @@ export const ENGLISH = {
   INFO: "Info",
   CHARTS: "Charts",
   HISTORY: "History",
-
+  NO_REGISTERED_SETS: "No registered sets found for this exercise 🧑‍💻",
 };

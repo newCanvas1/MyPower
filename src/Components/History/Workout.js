@@ -24,7 +24,7 @@ function Workout({ item }) {
   }
   const { deleteWorkout } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
-
+console.log("workout", workout);
   return (
     <View className={"shadow w-full p-2 pb-4 rounded-xl " + theme.workoutCard}>
       <View className="flex-row items-center justify-between p-4">
