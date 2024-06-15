@@ -36,6 +36,8 @@ function Set({ set, count }) {
       </View>
 
       <TextInput
+      keyboardType="numeric"
+
         style={{ fontFamily: langChoice(language, "en", "ar") }}
         placeholderTextColor={theme.setPlaceholder}
         placeholder={
@@ -65,6 +67,7 @@ function Set({ set, count }) {
         }
       />
       <TextInput
+      keyboardType="numeric"
         style={{ fontFamily: langChoice(language, "en", "ar") }}
         placeholderTextColor={theme.setPlaceholder}
         placeholder={

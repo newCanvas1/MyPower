@@ -28,7 +28,7 @@ function Charts({ exercise }) {
       } else {
         setNoData(false);
       }
-      setMaxWeight(categorizedSets[categorizedSets.length - 1].y);
+      setMaxWeight(categorizedSets[categorizedSets.length - 1]?.y);
       setResult(categorizedSets);
     }
     getInfo();
