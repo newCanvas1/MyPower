@@ -14,9 +14,9 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import Feather from "@expo/vector-icons/Feather";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 function Set({ set, count }) {
-  const [reps, setReps] = useState(set.reps);
-  const [weight, setWeight] = useState(set.weight);
-  const [setOrder, setSetOrder] = useState(count);
+  const [reps] = useState(set.reps);
+  const [weight] = useState(set.weight);
+  const [setOrder] = useState(count);
   const [setChecked, setSetChecked] = useState(set?.checked);
   const [isDragging, setIsDragging] = useState(false);
 

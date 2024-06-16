@@ -25,7 +25,7 @@ function workout(props) {
     save,
     timePassed,
     setTimePassed,
-    cancel,
+
     userHasCheckedSets,
   } = useContext(WorkoutContext);
   const { theme } = useContext(ThemeContext);

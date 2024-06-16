@@ -90,7 +90,6 @@ export const WorkoutContextProvider = ({ children }) => {
 
   function userHasCheckedSets() {
     for (const exercise of exercises) {
-   
       for (const set of sets[exercise.exerciseId]) {
         if (set.checked) {
           return true;
@@ -138,6 +137,7 @@ export const WorkoutContextProvider = ({ children }) => {
         cancel,
         userHasCheckedSets,
         removeSet,
+        setExercises,
       }}
     >
       {children}

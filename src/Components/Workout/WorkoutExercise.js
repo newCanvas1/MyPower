@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import SetList from "./SetList";
 import { WorkoutContext } from "../../../context/WorkoutContext";
@@ -7,14 +7,55 @@ import { ARABIC, ENGLISH } from "../../utility/labels";
 import { langChoice } from "../../utility/functions/langChoice";
 import { ThemeContext } from "../../../context/ThemeContext";
 import Feather from "react-native-vector-icons/Feather";
+import Icon from "react-native-vector-icons/SimpleLineIcons";
+import { MaterialCommunityIcons } from "react-native-vector-icons";
+import Tooltip from "../General/Tooltip/Tooltip";
 function WorkoutExercise({ exercise }) {
-  const { setSets, sets } = useContext(WorkoutContext);
+  const { setSets, sets, setExercises } = useContext(WorkoutContext);
   const { language } = useContext(LanguageContext);
   const { theme } = useContext(ThemeContext);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const ref = useRef();
   return (
     <View className="flex flex-col">
-      <View className={"  p-2 shadow w-[100%] "}>
+      <View className={" flex-row justify-between p-2 shadow w-[100%] "}>
         <Text className={theme.textPrimary}>{exercise.name}</Text>
+        <TouchableOpacity
+          ref={ref}
+          onPress={() => setShowTooltip(true)}
+          className="self-end p-1 rounded bg-gray-400 shadow items-center justify-center"
+        >
+          <Icon name="options" size={15} color={theme.color} />
+        </TouchableOpacity>
+        <Tooltip
+          tooltipRef={ref}
+          showTooltip={showTooltip}
+          setShowTooltip={setShowTooltip}
+          buttons={[
+            {
+              func: () => {
+                setExercises((prev) => {
+                  const newExercises = prev.filter((e) => e.id !== exercise.id);
+                  return newExercises;
+                });
+                setSets((prev) => {
+                  const newSets = { ...prev };
+                  newSets[exercise.exerciseId] = [];
+                  return newSets;
+                });
+              },
+              label: langChoice(language, ENGLISH.DELETE, ARABIC.DELETE),
+              color: "red",
+              icon: (
+                <MaterialCommunityIcons
+                  name={"delete"}
+                  size={15}
+                  color={"red"}
+                />
+              ),
+            },
+          ]}
+        />
       </View>
       {!sets[exercise.exerciseId]?.length == 0 && (
         <View
