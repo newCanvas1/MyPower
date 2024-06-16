@@ -17,9 +17,10 @@ function Exercises(props) {
       setExercises(data);
     });
   }, [updateExercises]);
+
   // this component should list exercises of same category one after another , and set the category on top of its first element
   return (
-    <View className={theme.mainScreen}>
+    <View className={theme.mainScreen+ " h-[100%] "}>
       <Text
         className={"self-center text-2xl mt-5 " + theme.textPrimary}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
