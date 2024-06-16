@@ -455,6 +455,5 @@ export const getExerciseChartInfo = async (exerciseId) => {
     const weight = set.weight;
     result.push({ x: date, y: weight });
   }
-  console.log("result", result);
   return result;
 };

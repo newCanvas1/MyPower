@@ -19,7 +19,6 @@ function History({ exercise }) {
       const workoutsList = [];
       for (const workout of workouts) {
         if (workout.sets[exercise.exerciseId]) {
-          console.log("workout", workout.sets[exercise.exerciseId]);
           workoutsList.push(workout);
         }
       }

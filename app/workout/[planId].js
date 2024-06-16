@@ -63,7 +63,6 @@ function workout(props) {
         </View>
         <TouchableOpacity
           onPress={async () => {
-            console.log("userHasCheckedSets", userHasCheckedSets());
             if (!userHasCheckedSets()) {
               setType("noSets");
               warning();

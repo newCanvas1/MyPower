@@ -44,7 +44,6 @@ export const WorkoutContextProvider = ({ children }) => {
     for (const exercise of exercises) {
       // for every set in the set array
       for (const set of sets[exercise.exerciseId]) {
-        console.log("set", set);
         // insert the set into the database
         if (set.checked) {
           await insertSets(
