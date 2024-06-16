@@ -6,6 +6,7 @@ import { LanguageContextProvider } from "../context/LanguageContext";
 import { WorkoutContextProvider } from "../context/WorkoutContext";
 import { ThemeContext, ThemeProvider } from "../context/ThemeContext";
 import { useContext } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Layout() {
   const StackElement = () => {
@@ -30,16 +31,18 @@ export default function Layout() {
     );
   };
   return (
-    <LanguageContextProvider>
-      <FontContextProvider>
-        <DatabaseProvider>
-          <WorkoutContextProvider>
-            <ThemeProvider>
-              <StackElement />
-            </ThemeProvider>
-          </WorkoutContextProvider>
-        </DatabaseProvider>
-      </FontContextProvider>
-    </LanguageContextProvider>
+    <GestureHandlerRootView>
+      <LanguageContextProvider>
+        <FontContextProvider>
+          <DatabaseProvider>
+            <WorkoutContextProvider>
+              <ThemeProvider>
+                <StackElement />
+              </ThemeProvider>
+            </WorkoutContextProvider>
+          </DatabaseProvider>
+        </FontContextProvider>
+      </LanguageContextProvider>
+    </GestureHandlerRootView>
   );
 }

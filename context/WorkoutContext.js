@@ -90,13 +90,20 @@ export const WorkoutContextProvider = ({ children }) => {
 
   function userHasCheckedSets() {
     for (const exercise of exercises) {
+   
       for (const set of sets[exercise.exerciseId]) {
-        if (!set.checked) {
-          return false;
+        if (set.checked) {
+          return true;
         }
       }
     }
-    return true;
+    return false;
+  }
+  function removeSet(exerciseId, id) {
+    // remove the set from the sets array
+    const newSets = { ...sets };
+    newSets[exerciseId] = newSets[exerciseId].filter((set) => set.id !== id);
+    setSets(newSets);
   }
 
   useEffect(() => {
@@ -130,6 +137,7 @@ export const WorkoutContextProvider = ({ children }) => {
         activeWorkout,
         cancel,
         userHasCheckedSets,
+        removeSet,
       }}
     >
       {children}

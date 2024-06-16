@@ -121,6 +121,6 @@ export const ENGLISH = {
   NO_REGISTERED_SETS: "No registered sets found for this exercise 🧑‍💻",
   RESUME: "Resume Workout",
   CANCEL_WORKOUT: "Cancel Workout",
-  NO_SETS_CONFIRMED: "You have unconfirmed sets for this exercise 🧑‍💻",
+  NO_SETS_CONFIRMED: "You have unconfirmed sets 🧑‍💻",
   CANCEL_CONFIRM: "Are you sure you want to cancel?",
 };
