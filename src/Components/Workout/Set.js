@@ -18,8 +18,10 @@ function Set({ set, count }) {
   const [weight, setWeight] = useState(set.weight);
   const [setOrder, setSetOrder] = useState(count);
   const [setChecked, setSetChecked] = useState(set?.checked);
+  const [isDragging, setIsDragging] = useState(false);
+
   const { language } = useContext(LanguageContext);
-  const { removeSet,setSets } = useContext(WorkoutContext);
+  const { removeSet, setSets } = useContext(WorkoutContext);
   const { theme } = useContext(ThemeContext);
 
   const setBackground = setChecked ? "bg-green-400 opacity-60" : " ";
@@ -36,19 +38,29 @@ function Set({ set, count }) {
     { useNativeDriver: true }
   );
   const onHandlerStateChange = (event) => {
-    console.log(event.nativeEvent.oldState);
-    if (event.nativeEvent.state === State.END) {
-      // remove the set
-      removeSet(set.exerciseId, set.id);
+    // check if the set is being dragged
+    if (event.nativeEvent.state === State.ACTIVE) {
+      setIsDragging(true);
+    } else {
+      setIsDragging(false);
     }
 
-    console.log("dragging");
-
-    if (event.nativeEvent.oldState === State.ACTIVE) {
-      Animated.spring(translateX, {
-        toValue: 0,
-        useNativeDriver: true,
-      }).start();
+    // Check if the gesture state is END or CANCELLED (these values are 5 and 6)
+    if (
+      event.nativeEvent.state === State.END ||
+      event.nativeEvent.state === State.CANCELLED
+    ) {
+      // Check if the translation exceeds the threshold (e.g., 100)
+      if (Math.abs(event.nativeEvent.translationX) > 100) {
+        // Remove the set if the threshold is exceeded
+        removeSet(set.exerciseId, set.id);
+      } else {
+        // Reset the position if the threshold is not exceeded
+        Animated.spring(translateX, {
+          toValue: 0,
+          useNativeDriver: true,
+        }).start();
+      }
     }
   };
   return (
@@ -155,6 +167,11 @@ function Set({ set, count }) {
           >
             <Feather name="check" size={20} color={theme.color} />
           </TouchableOpacity>
+          {isDragging && (
+            <View className={` bg-red-400 p-1 shadow rounded`}>
+              <Feather name="x" size={20} color={theme.color} />
+            </View>
+          )}
         </View>
       </Animated.View>
     </PanGestureHandler>
