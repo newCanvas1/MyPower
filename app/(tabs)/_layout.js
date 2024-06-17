@@ -19,9 +19,11 @@ export default function TabLayout() {
     <SafeAreaView className={theme.mainScreen} style={{ height: "100%", width: "100%" }}>
       <Tabs
         screenOptions={{
+          lazy: false,
           tabBarActiveTintColor: theme.tabBarSelected,
           headerShown: false,
           tabBarStyle: {
+            
             backgroundColor: "transparent",
             borderTopWidth: 0,
           },
