@@ -50,7 +50,7 @@ function Charts({ exercise }) {
       date.getTime()
     );
   };
-  console.log(result);
+
   return (
     <View>
       {!noData ? (

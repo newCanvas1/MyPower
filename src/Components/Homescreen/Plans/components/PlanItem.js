@@ -24,6 +24,39 @@ function PlanItem({ item }) {
   const { theme } = useContext(ThemeContext);
   const { planId, activeWorkout } = useContext(WorkoutContext);
   const tooltipRef = useRef();
+  function getTime() {
+    const date = new Date(item.lastUsed);
+    const timePassed = new Date().getTime() - date.getTime();
+    const years = Math.floor(timePassed / (1000 * 60 * 60 * 24 * 365));
+    const months = Math.floor(timePassed / (1000 * 60 * 60 * 24 * 30));
+    const days = Math.floor(timePassed / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (timePassed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor((timePassed % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timePassed % (1000 * 60)) / 1000);
+
+    if (years > 0) {
+      return years + "y";
+    }
+    if (months > 0) {
+      return months + "m";
+    }
+    if (days > 0) {
+      return days + "d";
+    }
+    if (hours > 0) {
+      return hours + "h";
+    }
+    if (minutes > 0) {
+      return minutes + "m";
+    }
+    if (seconds > 0) {
+      return "Just now";
+    } else {
+      return "";
+    }
+  }
   const planToolTipButtons = [
     {
       func: () => deletePlan(item.id),
@@ -78,12 +111,20 @@ function PlanItem({ item }) {
         className={` p-2 rounded-lg w-40 h-28 m-3  ${theme.primary} shadow`}
       >
         <View className="flex-row justify-between">
-          <Text
-            style={{ fontFamily: langChoice(language, "en", "ar") }}
-            className={" font-bold " + theme.color}
-          >
-            {item.name}
-          </Text>
+          <View>
+            <Text
+              style={{ fontFamily: langChoice(language, "en", "ar") }}
+              className={" font-bold " + theme.color}
+            >
+              {item.name}
+            </Text>
+            <Text
+              style={{ fontFamily: langChoice(language, "en", "ar") }}
+              className={" font-bold opacity-60 " + theme.color}
+            >
+              {getTime()}
+            </Text>
+          </View>
           <TouchableOpacity
             ref={tooltipRef}
             className=" w-9 h-9  items-center justify-center "

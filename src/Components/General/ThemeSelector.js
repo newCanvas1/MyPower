@@ -8,7 +8,7 @@ import { ThemeContext } from "../../../context/ThemeContext";
 function ThemeSelector(props) {
   const { language } = useContext(LanguageContext);
   const { theme, toggleTheme,mode } = useContext(ThemeContext);
-  console.log( mode);
+
 
   return (
     <View className="self-start items-center min-w-[100]">

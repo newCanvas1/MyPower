@@ -20,14 +20,16 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
   return (
     <View className="flex-col items-center  h-screen">
       <Text
-        className={"text-xl "}
+        className={`text-xl ${theme.textPrimary} `}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.ADD_EXERCISE, ARABIC.ADD_EXCERCISE)}
       </Text>
       <View className="h-32"></View>
       <Text
-        className={`${langChoice(language, "self-start", "self-end")} `}
+        className={`${langChoice(language, "self-start", "self-end")} ${
+          theme.textPrimary
+        } `}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.NAME, ARABIC.NAME)}
@@ -46,7 +48,9 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         onChangeText={(text) => setName(text)}
       />
       <Text
-        className={`${langChoice(language, "self-start", "self-end")}  `}
+        className={`${langChoice(language, "self-start", "self-end")} ${
+          theme.textPrimary
+        }  `}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.CATEGORY, ARABIC.CATEGORY)}
@@ -56,7 +60,9 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
       </View>
 
       <Text
-        className={`${langChoice(language, "self-start", "self-end")} mt-2   `}
+        className={`${langChoice(language, "self-start", "self-end")} mt-2 ${
+          theme.textPrimary
+        }  `}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.DESCRIBTION, ARABIC.DESCRIBTION)}
@@ -75,7 +81,9 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         onChangeText={(text) => setDescription(text)}
       />
       <Text
-        className={`${langChoice(language, "self-start", "self-end")}  `}
+        className={`${langChoice(language, "self-start", "self-end")} ${
+          theme.textPrimary
+        } `}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.NOTES, ARABIC.NOTES)}
@@ -97,7 +105,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
       <View className="flex-col h-28 mt-10 justify-between">
         <Button
           color="green"
-          func={async() => {
+          func={async () => {
             await addExercise({
               name,
               icon,
@@ -105,7 +113,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
               notes,
               category,
             });
-            
+
             setShowAddingExcercise(false);
           }}
           label={langChoice(language, ENGLISH.CONFIRM, ARABIC.CONFIRM)}

@@ -104,7 +104,7 @@ export const WorkoutContextProvider = ({ children }) => {
     setSets(newSets);
   }
   async function addExercise(exercise) {
-    console.log(exercise);
+
     setExercises([...exercises, exercise]);
     setSets({ ...sets, [exercise.exerciseId]: [] });
   }

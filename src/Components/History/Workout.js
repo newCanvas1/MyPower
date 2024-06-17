@@ -32,7 +32,7 @@ function Workout({ item }) {
             className={"text-xl " + theme.textPrimary}
             style={{ fontFamily: langChoice(language, "en", "ar") }}
           >
-            {plan.name}
+            {plan?.name}
           </Text>
           <Text
             className={theme.textPrimary}
