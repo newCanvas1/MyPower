@@ -7,10 +7,10 @@ import Exercise from "../../../../ExercisesScreen/Exercise";
 import { styles } from "../../../../../styles/styles";
 import { ThemeContext } from "../../../../../../context/ThemeContext";
 
-function ExercisesAddList({ planId }) {
+function ExercisesAddList({ add }) {
   const { language } = useContext(LanguageContext);
   const { getSortedExercises, addExerciseToPlan } = useContext(DatabaseContext);
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const [exercises, setExercises] = useState({});
   useEffect(() => {
     getSortedExercises().then((data) => {
@@ -25,7 +25,7 @@ function ExercisesAddList({ planId }) {
           <View className="my-5" key={category}>
             <View className="border-l-4 border-green-500 px-2 rounded">
               <Text
-                className={"text-lg "+theme.textPrimary}
+                className={"text-lg " + theme.textPrimary}
                 style={{ fontFamily: langChoice(language, "en", "ar") }}
               >
                 {category}
@@ -40,12 +40,16 @@ function ExercisesAddList({ planId }) {
                   <Exercise exercise={exercise} key={exercise.name} />
                 </View>
                 <TouchableOpacity
-                  className={styles.addBtn+ " p-1 "+theme.primary}
+                  className={styles.addBtn + " p-1 " + theme.primary}
                   onPress={async () => {
-                    await addExerciseToPlan(planId, exercise.exerciseId);
+                    await add(exercise);
                   }}
                 >
-                  <Text className={" text-2xl text-center "+theme.textPrimary}>+ </Text>
+                  <Text
+                    className={" text-2xl text-center " + theme.textPrimary}
+                  >
+                    +{" "}
+                  </Text>
                 </TouchableOpacity>
               </View>
             ))}

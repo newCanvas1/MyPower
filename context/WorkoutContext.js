@@ -103,6 +103,11 @@ export const WorkoutContextProvider = ({ children }) => {
     newSets[exerciseId] = newSets[exerciseId].filter((set) => set.id !== id);
     setSets(newSets);
   }
+  async function addExercise(exercise) {
+    console.log(exercise);
+    setExercises([...exercises, exercise]);
+    setSets({ ...sets, [exercise.exerciseId]: [] });
+  }
 
   useEffect(() => {
     async function getInfo() {
@@ -137,6 +142,7 @@ export const WorkoutContextProvider = ({ children }) => {
         userHasCheckedSets,
         removeSet,
         setExercises,
+        addExercise,
       }}
     >
       {children}

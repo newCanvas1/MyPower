@@ -17,7 +17,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { DatabaseContext } from "../../context/DataContext";
 import CustomPopover from "../../src/Components/General/CustomPopover";
 import Warning from "../../src/Components/Workout/Warning";
-
+import ExercisesAddList from "../../src/Components/Homescreen/Plans/components/Excercise/ExercisesAddList.js";
 function workout(props) {
   const {
     exercises,
@@ -32,7 +32,9 @@ function workout(props) {
   const [stopTimer, setStopTimer] = useState(false);
   const { language } = useContext(LanguageContext);
   const { getAllWorkouts, setWorkouts } = useContext(DatabaseContext);
+  const { addExercise } = useContext(WorkoutContext);
   const [showWarning, setShowWarning] = useState(false);
+  const [showAddExercise, setShowAddExercise] = useState(false);
   const [type, setType] = useState("");
   const router = useRouter();
   function warning() {
@@ -41,6 +43,9 @@ function workout(props) {
     } else {
       setShowWarning(true);
     }
+  }
+  function add(exercise) {
+    addExercise(exercise);
   }
   return (
     <View
@@ -91,7 +96,21 @@ function workout(props) {
         ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
         renderItem={({ item }) => <WorkoutExercise exercise={item} />}
         keyExtractor={(item) => item.exerciseId}
+        ListFooterComponent={
+          <TouchableOpacity
+            className={` self-center mt-4 justify-center  w-[60%] h-10  items-center p-1 rounded border border-sky-300 shadow`}
+            onPress={() => setShowAddExercise(true)}
+          >
+            <Text
+              className={theme.textPrimary}
+              style={{ fontFamily: langChoice(language, "en", "ar") }}
+            >
+              {langChoice(language, ENGLISH.ADD_EXERCISE, ARABIC.ADD_EXCERCISE)}
+            </Text>
+          </TouchableOpacity>
+        }
       />
+
       <TouchableOpacity
         onPress={() => {
           setType("cancel");
@@ -109,6 +128,17 @@ function workout(props) {
         popOverheight={0.5}
         popOverwidth={0.8}
         content={<Warning type={type} setShowWarning={setShowWarning} />}
+      />
+      <CustomPopover
+        showPopover={showAddExercise}
+        setShowPopover={setShowAddExercise}
+        popOverheight={0.8}
+        popOverwidth={0.9}
+        content={
+          <View className="p-4">
+            <ExercisesAddList add={add} />
+          </View>
+        }
       />
     </View>
   );

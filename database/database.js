@@ -189,6 +189,7 @@ export const getPlansExercise = async (planId) => {
   const data = await db.getAllAsync(
     `SELECT * FROM PlansExercises LEFT JOIN exercises ON PlansExercises.exerciseId = exercises.exerciseId WHERE PlansExercises.planId = ${planId}`
   );
+  console.log(data);
 
   return data;
 };
