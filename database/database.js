@@ -315,6 +315,9 @@ export const getWorkouts = async () => {
     workouts.push({ workout, sets: categorizedSets, exercises, plan: plan[0] });
   }
 
+  // order workouts by date descending
+  workouts.sort((a, b) => new Date(b.workout.date) - new Date(a.workout.date));
+
   return workouts;
 };
 
