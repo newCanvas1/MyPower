@@ -19,7 +19,7 @@ function ExercisesAddList({ add }) {
   }, []);
 
   return (
-    <ScrollView>
+    <ScrollView className="mt-10">
       <View>
         {Object.keys(exercises).map((category) => (
           <View className="my-5" key={category}>

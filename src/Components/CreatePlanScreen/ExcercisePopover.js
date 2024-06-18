@@ -55,7 +55,7 @@ function ExcercisePopover(props) {
     setDisplayExcercises(orgnized);
   }, [exercises]);
   return (
-    <View className="p-3">
+    <View className="p-3 py-16">
       {!showAddingExcercise && (
         <TouchableOpacity
           className={

@@ -14,7 +14,7 @@ function CustomPopover({
   const { theme } = useContext(ThemeContext);
   return (
     <Popover
-    popoverStyle={{borderRadius: 50}}
+      popoverStyle={{ borderRadius: 50 }}
       isVisible={showPopover}
       onRequestClose={() => setShowPopover(false)}
     >
@@ -26,6 +26,14 @@ function CustomPopover({
           padding: 0,
         }}
       >
+        <TouchableOpacity
+          className={
+            "bg-red-500 shadow w-12 h-16 absolute top-[-25] z-50 items-center  justify-end self-start rounded-xl flex-col  "
+          }
+          onPress={() => setShowPopover(false)}
+        >
+          <Text className="text-2xl left-[5]">X</Text>
+        </TouchableOpacity>
         {content}
       </View>
     </Popover>
