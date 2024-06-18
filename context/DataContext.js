@@ -69,7 +69,8 @@ export const DatabaseProvider = ({ children }) => {
       ...exercises,
       { ...exercise, exerciseId: result.lastInsertRowId },
     ]);
-    setUpdateExercises(!updateExercises);
+    // setUpdateExercises(!updateExercises);
+    reloadExercises();
     return result.lastInsertRowId;
   };
 
@@ -133,6 +134,11 @@ export const DatabaseProvider = ({ children }) => {
       setWorkouts(data);
     });
   }
+  function reloadExercises() {
+    getTable("exercises").then((data) => {
+      setExercises(data);
+    });
+  }
   return (
     <DatabaseContext.Provider
       value={{
@@ -156,7 +162,8 @@ export const DatabaseProvider = ({ children }) => {
         updateExercises,
         setUpdateExercises,
         deleteWorkout,
-        updateWorkouts
+        updateWorkouts,
+        reloadExercises
       }}
     >
       {children}

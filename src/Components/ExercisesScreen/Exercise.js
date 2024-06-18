@@ -27,7 +27,7 @@ function Exercise({ exercise }) {
     getInfo();
   }, [workouts]);
   return (
-    <View>
+    <View className=" h-20">
       {info.count > 0 && (
         <View className={`${theme.countTag} items-center justify-center w-4 h-4 rounded self-end absolute shadow-lg z-10 mt-2` }>
           <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
@@ -43,7 +43,7 @@ function Exercise({ exercise }) {
         }
       >
         <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
-          {exercise.name}
+          {exercise?.name}
         </Text>
         <View className="flex-col justify-between items-center">
           {info.bestSet != undefined && (

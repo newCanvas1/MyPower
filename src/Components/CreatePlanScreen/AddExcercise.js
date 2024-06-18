@@ -11,11 +11,12 @@ import { ThemeContext } from "../../../context/ThemeContext";
 
 function AddExcercise({ setShowAddingExcercise, addExercise }) {
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("biceps");
+  const [category, setCategory] = useState("Back");
   const [icon, setIcon] = useState("");
   const [description, setDescription] = useState("");
   const [notes, setNotes] = useState("");
   const { language } = useContext(LanguageContext);
+  const { reloadExercises } = useContext(DatabaseContext);
   const { theme } = useContext(ThemeContext);
   return (
     <View className="flex-col items-center  h-screen">
@@ -106,13 +107,14 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         <Button
           color="green"
           func={async () => {
-            await addExercise({
+            const added = await addExercise({
               name,
               icon,
               description,
               notes,
               category,
             });
+            reloadExercises();
 
             setShowAddingExcercise(false);
           }}

@@ -7,20 +7,20 @@ import { ThemeContext } from "../../context/ThemeContext";
 import Exercise from "../Components/ExercisesScreen/Exercise";
 import { langChoice } from "../utility/functions/langChoice";
 import { ENGLISH, ARABIC } from "../utility/labels";
-function Exercises(props) {
+function Exercises() {
   const { language } = useContext(LanguageContext);
-  const { getSortedExercises, updateExercises } = useContext(DatabaseContext);
+  const { getSortedExercises, updateExercises ,exercises} = useContext(DatabaseContext);
   const { theme } = useContext(ThemeContext);
-  const [exercises, setExercises] = useState([]);
+  const [exercisesList, setExercisesList] = useState([]);
   useEffect(() => {
     getSortedExercises().then((data) => {
-      setExercises(data);
+      setExercisesList(data);
     });
-  }, [updateExercises]);
+  }, [updateExercises, exercises]);
 
   // this component should list exercises of same category one after another , and set the category on top of its first element
   return (
-    <View className={theme.mainScreen+ " h-[100%] "}>
+    <View className={theme.mainScreen + " h-[100%] "}>
       <Text
         className={"self-center text-2xl mt-5 " + theme.textPrimary}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
@@ -28,7 +28,7 @@ function Exercises(props) {
         {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
       </Text>
       <ScrollView className="px-5 mt-5">
-        {Object.keys(exercises).map((category) => (
+        {Object.keys(exercisesList).map((category) => (
           <View className="my-5" key={category}>
             <View className={"border-l-4 px-2 rounded " + theme.border}>
               <Text
@@ -38,7 +38,7 @@ function Exercises(props) {
                 {category}
               </Text>
             </View>
-            {exercises[category].map((exercise) => (
+            {exercisesList[category].map((exercise) => (
               <Exercise exercise={exercise} key={exercise.name} />
             ))}
           </View>

@@ -39,6 +39,7 @@ function ExcercisePopover(props) {
         { ...exercise, exerciseId: id },
       ],
     });
+    return id;
   }
   function organizeExercises(exercises) {
     const categoriezedExercises = {};
