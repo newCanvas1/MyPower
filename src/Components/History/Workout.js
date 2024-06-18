@@ -11,6 +11,8 @@ import { getBestSetOfExerciseOfWorkout } from "../../../database/database";
 import formatDate from "../../utility/functions/formatDate";
 import Tooltip from "../General/Tooltip/Tooltip";
 import { DatabaseContext } from "../../../context/DataContext";
+import CustomPopover from "../General/CustomPopover";
+import EditWorkout from "./EditWorkout";
 function Workout({ item }) {
   const [workout, setWorkout] = useState(item.workout);
   const [exercises, setExercises] = useState(item.exercises);
@@ -24,6 +26,7 @@ function Workout({ item }) {
   }
   const { deleteWorkout } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
+  const [showEdit, setShowEdit] = useState(false);
   return (
     <View className={"shadow w-full p-2 pb-4 rounded-xl " + theme.workoutCard}>
       <View className="flex-row items-center justify-between p-4">
@@ -71,6 +74,23 @@ function Workout({ item }) {
               <MaterialCommunityIcons name={"delete"} size={15} color={"red"} />
             ),
           },
+          {
+            func: () => {
+              setShowTooltip(false);
+              setTimeout(() => {
+                setShowEdit(true);
+              }, 500);
+            },
+            label: langChoice(language, ENGLISH.EDIT, ARABIC.EDIT),
+            color: "blue",
+            icon: (
+              <MaterialCommunityIcons
+                name={"application-edit"}
+                size={15}
+                color={"green"}
+              />
+            ),
+          },
         ]}
       />
       <View className="flex-row items-center px-10 justify-between mb-2">
@@ -115,6 +135,14 @@ function Workout({ item }) {
           )
         );
       })}
+
+      <CustomPopover
+        showPopover={showEdit}
+        setShowPopover={setShowEdit}
+        content={<EditWorkout workout={workout} />}
+        popOverheight={0.8}
+        popOverwidth={0.9}
+      />
     </View>
   );
 }
