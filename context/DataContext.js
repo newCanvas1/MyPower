@@ -13,6 +13,7 @@ import {
   getWorkouts,
   deleteWorkoutFromDatabase,
 } from "../database/database";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 export const DatabaseContext = createContext(null);
 
 export const DatabaseProvider = ({ children }) => {
@@ -116,7 +117,7 @@ export const DatabaseProvider = ({ children }) => {
   };
   const getAllWorkouts = async () => {
     const data = await getWorkouts();
-    
+
     return data;
   };
   const deleteWorkout = async (workoutId) => {
@@ -126,6 +127,12 @@ export const DatabaseProvider = ({ children }) => {
         workouts.filter((workout) => workout.workout.workoutId !== workoutId)
       );
   };
+
+  function updateWorkouts() {
+    getAllWorkouts().then((data) => {
+      setWorkouts(data);
+    });
+  }
   return (
     <DatabaseContext.Provider
       value={{
@@ -149,6 +156,7 @@ export const DatabaseProvider = ({ children }) => {
         updateExercises,
         setUpdateExercises,
         deleteWorkout,
+        updateWorkouts
       }}
     >
       {children}

@@ -139,7 +139,7 @@ function Workout({ item }) {
       <CustomPopover
         showPopover={showEdit}
         setShowPopover={setShowEdit}
-        content={<EditWorkout workout={workout} />}
+        content={<EditWorkout workout={workout} setWorkout={setWorkout} />}
         popOverheight={0.8}
         popOverwidth={0.9}
       />

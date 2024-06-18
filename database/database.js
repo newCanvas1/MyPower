@@ -461,3 +461,13 @@ export const getExerciseChartInfo = async (exerciseId) => {
   }
   return result;
 };
+
+export const updateWorkoutDate = async (workoutId, date) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  await db.runAsync(
+    "UPDATE workouts SET date = ? WHERE workoutId = ?",
+    `${date}`,
+    `${workoutId}`
+  );
+  return true;
+};

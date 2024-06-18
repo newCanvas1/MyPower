@@ -33,7 +33,8 @@
     "react-native-svg": "^15.2.0",
     "react-native-swipeable": "^0.6.0",
     "react-native-vector-icons": "^10.1.0",
-    "victory-native": "^37.0.3-next.0"
+    "victory-native": "^37.0.3-next.0",
+    "@react-native-community/datetimepicker": "8.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
