@@ -190,7 +190,6 @@ export const getPlansExercise = async (planId) => {
     `SELECT * FROM PlansExercises LEFT JOIN exercises ON PlansExercises.exerciseId = exercises.exerciseId WHERE PlansExercises.planId = ${planId}`
   );
 
-
   return data;
 };
 
@@ -471,3 +470,27 @@ export const updateWorkoutDate = async (workoutId, date) => {
   );
   return true;
 };
+
+export async function getWorkoutDates() {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync(`SELECT date FROM workouts`);
+  const result = {};
+  for (let i = 0; i < data.length; i++) {
+    // date format should be from Sat Jun 15 2024 00:41:43 GMT+0300 to 2024-06-01
+
+    const date = new Date(data[i].date);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const dateString = `${year}-${month < 10 ? "0" : ""}${month}-${
+      day < 10 ? "0" : ""
+    }${day}`;
+    result[dateString] = {
+      selected: true,
+      marked: true,
+      selectedColor: "blue",
+    };
+  }
+  console.log("result", result);
+  return result;
+}
