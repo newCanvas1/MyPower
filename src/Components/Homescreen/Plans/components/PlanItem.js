@@ -15,6 +15,7 @@ import PlanPopover from "./Plan/PlanPopover";
 import { WorkoutContext } from "../../../../../context/WorkoutContext";
 import { ThemeContext } from "../../../../../context/ThemeContext";
 function PlanItem({ item }) {
+
   const { deletePlan } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -26,6 +27,10 @@ function PlanItem({ item }) {
   const tooltipRef = useRef();
   function getTime() {
     const date = new Date(item.lastUsed);
+    if (item.lastUsed === null) {
+      return "";
+      
+    }
     const timePassed = new Date().getTime() - date.getTime();
     const years = Math.floor(timePassed / (1000 * 60 * 60 * 24 * 365));
     const months = Math.floor(timePassed / (1000 * 60 * 60 * 24 * 30));
