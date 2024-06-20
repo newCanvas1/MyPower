@@ -29,7 +29,7 @@ function CarouselElement() {
   return (
     <View className={"mt-10  h-[50%]"}>
       <Carousel
-      defaultIndex={currentIndex}
+        defaultIndex={currentIndex || 0}
         loop
         width={width}
         data={charts}
