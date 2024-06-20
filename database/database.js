@@ -494,3 +494,54 @@ export async function getWorkoutDates() {
   console.log("result", result);
   return result;
 }
+
+export async function getWorkoutsOfDay(day) {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  // get workouts between the beginning of the day and the end of the day
+
+
+  const data = await db.getAllAsync(
+    `SELECT * FROM workouts JOIN plans ON workouts.planId = plans.id  `
+  );
+  const modifiesWorkouts = data.filter((workout) => {
+    let startOfDay = new Date(day);
+    startOfDay.setHours(0, 0, 0, 0);
+    let endOfDay = new Date(day);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const isBetween =
+      new Date(workout.date) > startOfDay && new Date(workout.date) < endOfDay;
+
+    return isBetween;
+  });
+console.log("modifiesWorkouts", modifiesWorkouts);
+
+  const workouts = [];
+  for (const workout of modifiesWorkouts) {
+    const sets = await db.getAllAsync(
+      `SELECT * FROM sets WHERE workoutId = ${workout.workoutId}`
+    );
+
+    // categorize sets by exerciseId
+    const categorizedSets = {};
+    for (const set of sets) {
+      if (categorizedSets[set.exerciseId]) {
+        categorizedSets[set.exerciseId].push(set);
+      } else {
+        categorizedSets[set.exerciseId] = [set];
+      }
+    }
+    const plan = await db.getAllAsync(
+      `SELECT * FROM plans WHERE id = ${workout.planId}`
+    );
+    const exercises = await db.getAllAsync(
+      `SELECT * FROM exercises WHERE exerciseId IN (SELECT exerciseId FROM sets)`
+    );
+    workouts.push({ workout, sets: categorizedSets, exercises, plan: plan[0] });
+  }
+
+  // order workouts by date descending
+  workouts.sort((a, b) => b.workout.date - a.workout.date);
+
+  return workouts;
+}
