@@ -14,7 +14,7 @@ function DayPopover({ day }) {
   return (
     <View className="h-full w-full justify-center items-center py-10">
       <FlatList
-      className="h-full w-[80%]"
+        className="h-full w-[80%]"
         data={workouts}
         ItemSeparatorComponent={
           <View
@@ -23,8 +23,7 @@ function DayPopover({ day }) {
             }}
           />
         }
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Workout item={item} />}
+        renderItem={({ item }) => <Workout key={item.id} item={item} />}
       />
     </View>
   );
