@@ -3,13 +3,21 @@ import { Dimensions, Text, View } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import WorkoutsCalender from "../WorkoutsCalender/WorkoutsCalender";
 import Charts from "../../ExerciseInfo/Charts";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DatabaseContext } from "../../../../context/DataContext";
 
 function CarouselElement() {
   const width = Dimensions.get("window").width;
   const { chartExercises } = useContext(DatabaseContext);
   const [charts, setCharts] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   useEffect(() => {
+    AsyncStorage.getItem("currentCarouselIndex").then((index) => {
+      if (index) {
+        setCurrentIndex(parseInt(index));
+      }
+    });
     setCharts((prev) => [
       <WorkoutsCalender />,
       ...chartExercises.map((chart) => (
@@ -17,16 +25,19 @@ function CarouselElement() {
       )),
     ]);
   }, [chartExercises]);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
     <View className={"mt-10  h-[50%]"}>
       <Carousel
+      defaultIndex={currentIndex}
         loop
         width={width}
         data={charts}
         scrollAnimationDuration={300}
-        onSnapToItem={(index) => setCurrentIndex(index)}
+        onSnapToItem={async (index) => {
+          setCurrentIndex(index);
+          await AsyncStorage.setItem("currentCarouselIndex", index.toString());
+        }}
         renderItem={({ index }) => (
           <View key={index} className="h-full">
             {charts[index]}
