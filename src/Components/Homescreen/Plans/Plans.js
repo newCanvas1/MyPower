@@ -12,7 +12,7 @@ function Plans(props) {
     });
   }, []);
   return (
-    <View className="mt-56 px-5">
+    <View className="mt-5 px-5">
       <Title />
       <PlansList />
     </View>

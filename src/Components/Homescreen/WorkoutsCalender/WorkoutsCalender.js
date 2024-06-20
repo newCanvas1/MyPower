@@ -6,7 +6,7 @@ import { DatabaseContext } from "../../../../context/DataContext";
 import { langChoice } from "../../../utility/functions/langChoice";
 import { LanguageContext } from "../../../../context/LanguageContext";
 import CustomPopover from "../../General/CustomPopover";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import DayPopover from "./DayPopover";
 function WorkoutsCalender() {
   const [dates, setDates] = useState({});
@@ -20,7 +20,7 @@ function WorkoutsCalender() {
     });
   }, [updateWorkouts]);
   return (
-    <>
+    <View className="mt-5">
       <Calendar
         style={{ height: 100, width: 350, alignSelf: "center" }}
         theme={{
@@ -52,7 +52,7 @@ function WorkoutsCalender() {
         popOverheight={0.8}
         popOverwidth={0.9}
       />
-    </>
+    </View>
   );
 }
 

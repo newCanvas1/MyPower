@@ -19,7 +19,7 @@ function Greeting(props) {
     getUserName();
   }, []);
   return (
-    <View className="px-10 py-10 items-center justify-center">
+    <View className="px-10 py-2 items-center justify-center">
       <Text
         style={{ fontFamily: "appFont" }}
         className={`text-4xl ${theme.textPrimary} ${langChoice(
