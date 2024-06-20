@@ -9,7 +9,8 @@ import { langChoice } from "../utility/functions/langChoice";
 import { ENGLISH, ARABIC } from "../utility/labels";
 function Exercises() {
   const { language } = useContext(LanguageContext);
-  const { getSortedExercises, updateExercises ,exercises} = useContext(DatabaseContext);
+  const { getSortedExercises, updateExercises, exercises } =
+    useContext(DatabaseContext);
   const { theme } = useContext(ThemeContext);
   const [exercisesList, setExercisesList] = useState([]);
   useEffect(() => {

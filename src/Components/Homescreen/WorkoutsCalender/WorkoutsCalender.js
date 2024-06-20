@@ -20,7 +20,7 @@ function WorkoutsCalender() {
     });
   }, [updateWorkouts]);
   return (
-    <View className="mt-5">
+    <View>
       <Calendar
         style={{ height: 100, width: 350, alignSelf: "center" }}
         theme={{

@@ -41,9 +41,13 @@ export const initDatabase = async () => {
         PRAGMA journal_mode = WAL;
         CREATE TABLE IF NOT EXISTS PlansExercises (id INTEGER PRIMARY KEY AUTOINCREMENT,planId INTEGER,exerciseId INTEGER);
         `);
-  console.log("Database created");
+  await db.execAsync(`
+        PRAGMA journal_mode = WAL;
+        CREATE TABLE IF NOT EXISTS charts (id INTEGER PRIMARY KEY AUTOINCREMENT, exerciseId INTEGER);
+        `);
 
   prepareExercises();
+  console.log("Database created");
   console.log("Excercises added");
 };
 async function resetDatabase() {
@@ -56,6 +60,7 @@ async function resetDatabase() {
         DROP TABLE IF EXISTS sets;
         DROP TABLE IF EXISTS plans;
         DROP TABLE IF EXISTS PlansExercises;
+         DROP TABLE IF EXISTS charts;
         `);
 }
 async function prepareExercises() {
@@ -491,14 +496,12 @@ export async function getWorkoutDates() {
       selectedColor: "blue",
     };
   }
-  console.log("result", result);
   return result;
 }
 
 export async function getWorkoutsOfDay(day) {
   const db = await SQLite.openDatabaseAsync("databaseName");
   // get workouts between the beginning of the day and the end of the day
-
 
   const data = await db.getAllAsync(
     `SELECT * FROM workouts JOIN plans ON workouts.planId = plans.id  `
@@ -514,7 +517,6 @@ export async function getWorkoutsOfDay(day) {
 
     return isBetween;
   });
-console.log("modifiesWorkouts", modifiesWorkouts);
 
   const workouts = [];
   for (const workout of modifiesWorkouts) {
@@ -545,3 +547,35 @@ console.log("modifiesWorkouts", modifiesWorkouts);
 
   return workouts;
 }
+
+export const getCharts = async () => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+
+  const data = await db.getAllAsync(`SELECT * FROM charts `);
+
+  return data;
+};
+
+export const insertChart = async (exerciseId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const result = await db.runAsync(
+    "INSERT INTO charts (exerciseId) VALUES (?)",
+    `${exerciseId}`
+  );
+  return result;
+};
+
+export const deleteChart = async (id) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  await db.runAsync(`DELETE FROM charts WHERE exerciseId = ${id}` );
+  return true;
+};
+
+// exercise has a row in the charts table
+export const isExerciseInCharts = async (exerciseId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync(
+    `SELECT * FROM charts WHERE exerciseId = ${exerciseId}`
+  );
+  return data.length > 0;
+};

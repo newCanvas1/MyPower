@@ -1,28 +1,40 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Dimensions, Text, View } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import WorkoutsCalender from "../WorkoutsCalender/WorkoutsCalender";
+import Charts from "../../ExerciseInfo/Charts";
+import { DatabaseContext } from "../../../../context/DataContext";
 
-function CarouselElement(props) {
+function CarouselElement() {
   const width = Dimensions.get("window").width;
-  const list = [<WorkoutsCalender />, <Text>test</Text>];
-  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const { chartExercises } = useContext(DatabaseContext);
+  const [charts, setCharts] = useState([]);
+  useEffect(() => {
+    setCharts((prev) => [
+      <WorkoutsCalender />,
+      ...chartExercises.map((chart) => (
+        <Charts exercise={{ exerciseId: chart.exerciseId }} />
+      )),
+    ]);
+  }, [chartExercises]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   return (
-    <View className={"mt-20  h-[50%]"}>
+    <View className={"mt-10  h-[50%]"}>
       <Carousel
         loop
         width={width}
-        data={list}
-        scrollAnimationDuration={500}
+        data={charts}
+        scrollAnimationDuration={300}
         onSnapToItem={(index) => setCurrentIndex(index)}
         renderItem={({ index }) => (
           <View key={index} className="h-full">
-            {list[index]}
+            {charts[index]}
           </View>
         )}
       />
       <View className="flex flex-row justify-center">
-        {list.map((item, index) => (
+        {charts.map((item, index) => (
           <View
             key={index}
             className={` ${

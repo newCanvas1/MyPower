@@ -12,6 +12,7 @@ import {
   getPlanInfo,
   getWorkouts,
   deleteWorkoutFromDatabase,
+  getCharts,
 } from "../database/database";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 export const DatabaseContext = createContext(null);
@@ -22,6 +23,7 @@ export const DatabaseProvider = ({ children }) => {
   const [workouts, setWorkouts] = useState([]);
   const [excerciseToAdd, setExcerciseToAdd] = useState([]);
   const [updateExercises, setUpdateExercises] = useState(false);
+  const [chartExercises, setChartExercises] = useState([]);
   useEffect(() => {
     getTable("plans").then((data) => {
       setPlans(data);
@@ -31,6 +33,9 @@ export const DatabaseProvider = ({ children }) => {
     });
     getAllWorkouts().then((data) => {
       setWorkouts(data);
+    });
+    getCharts().then((data) => {
+      setChartExercises(data);
     });
   }, []);
   // add plan to database
@@ -139,6 +144,11 @@ export const DatabaseProvider = ({ children }) => {
       setExercises(data);
     });
   }
+  function updateCharts() {
+    getCharts().then((data) => {
+      setChartExercises(data);
+    });
+  }
   return (
     <DatabaseContext.Provider
       value={{
@@ -163,7 +173,9 @@ export const DatabaseProvider = ({ children }) => {
         setUpdateExercises,
         deleteWorkout,
         updateWorkouts,
-        reloadExercises
+        reloadExercises,
+        updateCharts,
+        chartExercises
       }}
     >
       {children}

@@ -5,36 +5,58 @@ import { langChoice } from "../../utility/functions/langChoice";
 import { useRouter } from "expo-router";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { DatabaseContext } from "../../../context/DataContext";
-import { getNumberOfTimesUserHasDoneExercise } from "../../../database/database";
+import { Feather } from "@expo/vector-icons";
+import {
+  getNumberOfTimesUserHasDoneExercise,
+  isExerciseInCharts,
+} from "../../../database/database";
 
 function Exercise({ exercise }) {
   const { language } = useContext(LanguageContext);
   const { theme } = useContext(ThemeContext);
-  const {workouts} = useContext(DatabaseContext);
+  const { workouts } = useContext(DatabaseContext);
   const router = useRouter();
   const [info, setInfo] = useState({});
+  const [addedToHomescreen, setAddedToHomescreen] = useState(false);
   const goToExerciseModal = () => {
     router.push(`/exercise/info/${exercise.exerciseId}`);
   };
   useEffect(() => {
     async function getInfo() {
+      isExerciseInCharts(exercise.exerciseId).then((isInCharts) => {
+        setAddedToHomescreen(isInCharts);
+      });
       const info = await getNumberOfTimesUserHasDoneExercise(
         exercise.exerciseId
       );
-      setInfo(info);
 
+      setInfo(info);
     }
     getInfo();
   }, [workouts]);
   return (
     <View className=" h-20">
-      {info.count > 0 && (
-        <View className={`${theme.countTag} items-center justify-center w-4 h-4 rounded self-end absolute shadow-lg z-10 mt-2` }>
-          <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
-            {info.count}
-          </Text>
-        </View>
-      )}
+      <View
+        className={` flex-row items-center justify-center  self-end absolute z-10 mt-2`}
+      >
+        {addedToHomescreen && (
+          <View
+            className={`${theme.countTag} rounded w-4 h-4 mx-1 items-center justify-center  shadow-lg `}
+          >
+            <Feather size={12} name="home" color={"white"} />
+          </View>
+        )}
+        {info.count > 0 && (
+          <View
+            className={`${theme.countTag} rounded w-4 h-4  items-center justify-center  shadow-lg `}
+          >
+            <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
+              {info.count}
+            </Text>
+          </View>
+        )}
+      </View>
+
       <TouchableOpacity
         onPress={goToExerciseModal}
         className={
