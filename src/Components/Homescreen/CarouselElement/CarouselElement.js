@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Dimensions, Text, View } from "react-native";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Animated, Dimensions, Text, View } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import WorkoutsCalender from "../WorkoutsCalender/WorkoutsCalender";
 import Charts from "../../ExerciseInfo/Charts";
@@ -35,6 +35,7 @@ function CarouselElement() {
         loop={false}
         scrollAnimationDuration={300}
         onSnapToItem={async (index) => {
+          widthAnimation.setValue(width);
           setCurrentIndex(index);
           await AsyncStorage.setItem("currentCarouselIndex", index.toString());
         }}
@@ -48,8 +49,11 @@ function CarouselElement() {
         {charts.map((item, index) => (
           <View
             key={index}
+            style={{
+              width: currentIndex == index ? 20 : 10,
+            }}
             className={` ${
-              currentIndex == index ? "w-3 bg-slate-500" : "w-2 bg-sky-300"
+              currentIndex == index ? " bg-sky-300" : "  bg-slate-500"
             } h-2  self-center rounded  mx-1`}
           ></View>
         ))}
