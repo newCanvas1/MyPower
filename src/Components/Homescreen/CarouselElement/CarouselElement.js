@@ -27,12 +27,12 @@ function CarouselElement() {
   }, [chartExercises]);
 
   return (
-    <View className={"mt-10  h-[50%]"}>
+    <View className={"mt-10  h-[80%]"}>
       <Carousel
         defaultIndex={currentIndex || 0}
-        loop
         width={width}
         data={charts}
+        loop={false}
         scrollAnimationDuration={300}
         onSnapToItem={async (index) => {
           setCurrentIndex(index);

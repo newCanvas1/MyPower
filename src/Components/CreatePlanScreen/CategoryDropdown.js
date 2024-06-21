@@ -21,6 +21,7 @@ function CategoryDropdown({ value, setValue }) {
 
   return (
     <DropDownPicker
+      style={{ width: "90%" }}
       placeholderStyle={{
         textAlign: langChoice(language, "left", "right"),
         fontFamily: langChoice(language, "en", "ar"),

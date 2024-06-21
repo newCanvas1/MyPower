@@ -9,8 +9,8 @@ import ExerciseItem from "./ExerciseItem";
 import { TouchableOpacity } from "react-native";
 import { WorkoutContext } from "../../../../../../context/WorkoutContext";
 import { ThemeContext } from "../../../../../../context/ThemeContext";
-import Swipeable from "react-native-gesture-handler/Swipeable";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import StartButton from "./StartButton";
 function PlanPopover({ planId, setShowPopover }) {
   const { getPlanExcercise, getPlan } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
@@ -28,7 +28,14 @@ function PlanPopover({ planId, setShowPopover }) {
     }
     getInfo();
   }, []);
-
+  async function startWorkout() {
+    setShowPopover(false);
+    setTimeout(() => {
+      setPlanId(planId);
+      setActiveWorkout(true);
+      router.push(`workout/${planId}`);
+    }, 400);
+  }
   return (
     <View className=" mt-10 items-center justify-center flex-col">
       <Text
@@ -61,24 +68,7 @@ function PlanPopover({ planId, setShowPopover }) {
           renderItem={({ item }) => <ExerciseItem exercise={item} />}
         />
       </View>
-      <TouchableOpacity
-        className={"  py-2 px-10 rounded " + theme.primary}
-        onPress={() => {
-          setShowPopover(false);
-          setTimeout(() => {
-            setPlanId(planId);
-            setActiveWorkout(true);
-            router.push(`workout/${planId}`);
-          }, 400);
-        }}
-      >
-        <Text
-          className={"text-xl " + theme.color}
-          style={{ fontFamily: langChoice(language, "en", "ar") }}
-        >
-          {langChoice(language, ENGLISH.START_WORKOUT, ARABIC.START_WORKOUT)}
-        </Text>
-      </TouchableOpacity>
+      <StartButton startWorkout={startWorkout} />
     </View>
   );
 }
