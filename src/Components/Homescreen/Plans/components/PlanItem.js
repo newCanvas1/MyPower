@@ -1,5 +1,5 @@
-import React, { act, useContext, useRef, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Text, TouchableOpacity, View, Animated } from "react-native";
 import { DatabaseContext } from "../../../../../context/DataContext";
 import CustomPopover from "../../../General/CustomPopover";
 import Excercises from "./Excercise/Excercises";
@@ -14,8 +14,8 @@ import { router, useRouter } from "expo-router";
 import PlanPopover from "./Plan/PlanPopover";
 import { WorkoutContext } from "../../../../../context/WorkoutContext";
 import { ThemeContext } from "../../../../../context/ThemeContext";
-function PlanItem({ item }) {
 
+function PlanItem({ item }) {
   const { deletePlan } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -25,11 +25,23 @@ function PlanItem({ item }) {
   const { theme } = useContext(ThemeContext);
   const { planId, activeWorkout } = useContext(WorkoutContext);
   const tooltipRef = useRef();
+
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial opacity value is 0
+
+  useEffect(() => {
+    // Start the fade-in animation when the component mounts
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 400,
+      delay: 300,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
   function getTime() {
     const date = new Date(item.lastUsed);
     if (item.lastUsed === null) {
       return "";
-      
     }
     const timePassed = new Date().getTime() - date.getTime();
     const years = Math.floor(timePassed / (1000 * 60 * 60 * 24 * 365));
@@ -62,6 +74,7 @@ function PlanItem({ item }) {
       return "";
     }
   }
+
   const planToolTipButtons = [
     {
       func: () => deletePlan(item.id),
@@ -86,7 +99,6 @@ function PlanItem({ item }) {
         />
       ),
     },
-
     {
       func: () => {
         setShowTooltip(false);
@@ -101,82 +113,85 @@ function PlanItem({ item }) {
       ),
     },
   ];
+
   return (
-    <TouchableOpacity
-      className={`flex-col`}
-      onPress={() => {
-        if (activeWorkout) {
-          router.push(`workout/${planId}`);
-          return;
-        }
-        setShowStartPopover(true);
-      }}
+    <Animated.View // Use Animated.View for the fade-in effect
+      style={{ opacity: fadeAnim }}
     >
-      <View
-        className={` p-2 rounded-lg w-40 h-28 m-3  ${theme.primary} shadow`}
+      <TouchableOpacity
+        className={`flex-col`}
+        onPress={() => {
+          if (activeWorkout) {
+            router.push(`workout/${planId}`);
+            return;
+          }
+          setShowStartPopover(true);
+        }}
       >
-        <View className="flex-row justify-between">
-          <View>
-            <Text
-              style={{ fontFamily: langChoice(language, "en", "ar") }}
-              className={" font-bold " + theme.color}
-            >
-              {item.name}
-            </Text>
-            <Text
-              style={{ fontFamily: langChoice(language, "en", "ar") }}
-              className={" font-bold opacity-60 " + theme.color}
-            >
-              {getTime()}
-            </Text>
-          </View>
-          <TouchableOpacity
-            ref={tooltipRef}
-            className=" w-9 h-9  items-center justify-center "
-            onPress={() => setShowTooltip(true)}
-          >
-            <View className="p-1 rounded bg-gray-400 shadow w-6 items-center justify-center">
-              <Icon name="options" size={13} color="white" />
-              <Tooltip
-                setShowTooltip={setShowTooltip}
-                showTooltip={showTooltip}
-                tooltipRef={tooltipRef}
-                buttons={planToolTipButtons}
-              />
+        <View className={` p-2 rounded-lg w-40 h-28 m-3  ${theme.primary} shadow`}>
+          <View className="flex-row justify-between">
+            <View>
+              <Text
+                style={{ fontFamily: langChoice(language, "en", "ar") }}
+                className={" font-bold " + theme.color}
+              >
+                {item.name}
+              </Text>
+              <Text
+                style={{ fontFamily: langChoice(language, "en", "ar") }}
+                className={" font-bold opacity-60 " + theme.color}
+              >
+                {getTime()}
+              </Text>
             </View>
-          </TouchableOpacity>
+            <TouchableOpacity
+              ref={tooltipRef}
+              className=" w-9 h-9  items-center justify-center "
+              onPress={() => setShowTooltip(true)}
+            >
+              <View className="p-1 rounded bg-gray-400 shadow w-6 items-center justify-center">
+                <Icon name="options" size={13} color="white" />
+                <Tooltip
+                  setShowTooltip={setShowTooltip}
+                  showTooltip={showTooltip}
+                  tooltipRef={tooltipRef}
+                  buttons={planToolTipButtons}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-      <CustomPopover
-        showPopover={showEditPopover}
-        setShowPopover={setShowEditPopover}
-        content={<Excercises name={item.name} planId={item.id} />}
-        popOverheight={0.8}
-        popOverwidth={0.9}
-      />
-      <CustomPopover
-        showPopover={showRenamePopover}
-        setShowPopover={setShowRenamePopover}
-        content={
-          <RenamePopover
-            oldName={item.name}
-            setShowRenamePopover={setShowRenamePopover}
-            planId={item.id}
-          />
-        }
-        popOverheight={0.3}
-        popOverwidth={0.8}
-      />
-      <CustomPopover
-        showPopover={showStartPopover}
-        setShowPopover={setShowStartPopover}
-        content={
-          <PlanPopover planId={item.id} setShowPopover={setShowStartPopover} />
-        }
-        popOverheight={0.6}
-        popOverwidth={0.9}
-      />
-    </TouchableOpacity>
+        <CustomPopover
+          showPopover={showEditPopover}
+          setShowPopover={setShowEditPopover}
+          content={<Excercises name={item.name} planId={item.id} />}
+          popOverheight={0.8}
+          popOverwidth={0.9}
+        />
+        <CustomPopover
+          showPopover={showRenamePopover}
+          setShowPopover={setShowRenamePopover}
+          content={
+            <RenamePopover
+              oldName={item.name}
+              setShowRenamePopover={setShowRenamePopover}
+              planId={item.id}
+            />
+          }
+          popOverheight={0.3}
+          popOverwidth={0.8}
+        />
+        <CustomPopover
+          showPopover={showStartPopover}
+          setShowPopover={setShowStartPopover}
+          content={
+            <PlanPopover planId={item.id} setShowPopover={setShowStartPopover} />
+          }
+          popOverheight={0.6}
+          popOverwidth={0.9}
+        />
+      </TouchableOpacity>
+    </Animated.View>
   );
 }
 

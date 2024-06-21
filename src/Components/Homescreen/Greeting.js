@@ -12,6 +12,7 @@ function Greeting(props) {
   const { theme } = useContext(ThemeContext);
   const position = useRef(new Animated.Value(-100)).current; // Start above the screen
   const waveAnimation = useRef(new Animated.Value(0)).current; // For wave animation
+  const waveLoop = useRef(null); // Reference to store the animation loop
 
   useEffect(() => {
     async function getUserName() {
@@ -21,11 +22,11 @@ function Greeting(props) {
       // Slide in animation
       Animated.timing(position, {
         toValue: 0,
-        duration: 1000,
+        duration: 500,
         useNativeDriver: true,
       }).start(() => {
         // Wave animation
-        Animated.loop(
+        waveLoop.current = Animated.loop(
           Animated.sequence([
             Animated.timing(waveAnimation, {
               toValue: 1,
@@ -38,9 +39,17 @@ function Greeting(props) {
               useNativeDriver: true,
             }),
           ])
-        ).start();
+        );
+
+        waveLoop.current.start();
+
+        // Stop the wave animation after 2 seconds
+        setTimeout(() => {
+          waveLoop.current.stop();
+        }, 2000);
       });
     }
+
     getUserName();
   }, []);
 
@@ -55,28 +64,32 @@ function Greeting(props) {
         transform: [{ translateY: position }],
         paddingHorizontal: 40,
         paddingVertical: 10,
-        alignItems: "center",
+
         justifyContent: "center",
       }}
     >
-      <Text
-        style={{ fontFamily: "appFont" }}
-        className={`text-4xl ${theme.textPrimary} ${langChoice(
-          language,
-          "self-start",
-          "self-end"
-        )}`}
+      <View
+        className={`flex-row ${langChoice(language, "self-start", "self-end")}`}
       >
-        {langChoice(language, ENGLISH.HI, ARABIC.HI)} {userName} ⚡️
+        <Text
+          style={{ fontFamily: "appFont" }}
+          className={`text-4xl ${theme.textPrimary} ${langChoice(
+            language,
+            "self-start",
+            "self-end"
+          )}`}
+        >
+          {langChoice(language, ENGLISH.HI, ARABIC.HI)} {userName} ⚡️
+        </Text>
         <Animated.Text
+          className="text-4xl"
           style={{
             transform: [{ rotate: waveInterpolation }],
-            display: "inline-block",
           }}
         >
           👋
         </Animated.Text>
-      </Text>
+      </View>
     </Animated.View>
   );
 }

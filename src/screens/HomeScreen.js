@@ -5,14 +5,25 @@ import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import WorkoutsCalender from "../Components/Homescreen/WorkoutsCalender/WorkoutsCalender";
 import CarouselElement from "../Components/Homescreen/CarouselElement/CarouselElement";
+import AnimatedView from "../Components/General/AnimatedView";
 function Homescreen(props) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <ScrollView className={" h-full " + theme.mainScreen}>
       <Greeting />
-      <CarouselElement />
-      <Plans />
+      <AnimatedView
+        content={<CarouselElement />}
+        animationType="enterFromLeft"
+        duration={500}
+        wait={500}
+      />
+      <AnimatedView
+        content={<Plans />}
+        animationType="enterFromRight"
+        duration={500}
+        wait={500}
+      />
     </ScrollView>
   );
 }
