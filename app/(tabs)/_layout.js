@@ -1,29 +1,39 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Feather from "@expo/vector-icons/Feather";
 import { Tabs, router } from "expo-router";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { LanguageContext } from "../../context/LanguageContext";
 import { langChoice } from "../../src/utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../src/utility/labels";
 import Octicons from "@expo/vector-icons/Octicons";
-import { SafeAreaView, Text, Touchable, TouchableOpacity } from "react-native";
+import {
+  LogBox,
+  SafeAreaView,
+  Text,
+  Touchable,
+  TouchableOpacity,
+} from "react-native";
 
 import BottomWorkoutIndicator from "../../src/Components/General/BottomWorkoutIndicator";
 import { ThemeContext } from "../../context/ThemeContext";
 export default function TabLayout() {
   const { language } = useContext(LanguageContext);
-  const {theme} = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
+  useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested inside"]);
+  }, []);
 
-   
   return (
-    <SafeAreaView className={theme.mainScreen} style={{ height: "100%", width: "100%" }}>
+    <SafeAreaView
+      className={theme.mainScreen}
+      style={{ height: "100%", width: "100%" }}
+    >
       <Tabs
         screenOptions={{
-          lazy: false,
+          // lazy: false,
           tabBarActiveTintColor: theme.tabBarSelected,
           headerShown: false,
           tabBarStyle: {
-            
             backgroundColor: "transparent",
             borderTopWidth: 0,
           },
@@ -63,9 +73,7 @@ export default function TabLayout() {
         />
         <Tabs.Screen
           name="history"
-        
           options={{
-            
             title: langChoice(language, ENGLISH.HISTORY, ARABIC.HISTORY),
             tabBarLabelStyle: {
               fontFamily: langChoice(language, "en", "ar"),

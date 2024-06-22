@@ -5,13 +5,11 @@ import FontContextProvider from "../context/FontContext";
 import { LanguageContextProvider } from "../context/LanguageContext";
 import { WorkoutContextProvider } from "../context/WorkoutContext";
 import { ThemeContext, ThemeProvider } from "../context/ThemeContext";
-import { useContext, useEffect } from "react";
+import { useContext,  } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { LogBox } from "react-native";
+
 export default function Layout() {
-  useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
+ 
   const StackElement = () => {
     const { theme } = useContext(ThemeContext);
 

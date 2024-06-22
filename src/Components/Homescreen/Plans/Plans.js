@@ -4,15 +4,16 @@ import { getTable } from "../../../../database/database";
 import { useState, useEffect } from "react";
 import Title from "./components/Title";
 import PlansList from "./components/PlansList";
-function Plans(props) {
+function Plans() {
   const [plans, setPlans] = useState([]);
+  console.log("plans");
   useEffect(() => {
     getTable("plans").then((data) => {
       setPlans(data);
     });
   }, []);
   return (
-    <View className="mt-5 px-5">
+    <View className=" px-5">
       <Title />
       <PlansList />
     </View>

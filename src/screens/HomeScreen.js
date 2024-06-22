@@ -11,20 +11,21 @@ function Homescreen(props) {
 
   return (
     <ScrollView className={" h-full " + theme.mainScreen}>
-      <Greeting />
+      {/* <Greeting /> */}
       <AnimatedView
         content={<CarouselElement />}
         enterFromRight
         fadeIn
         duration={500}
-        wait={500}
+        wait={700}
       />
       <AnimatedView
+      style={{ marginTop: 50 }}
         content={<Plans />}
         enterFromLeft
         fadeIn
         duration={500}
-        wait={500}
+        wait={700}
       />
     </ScrollView>
   );

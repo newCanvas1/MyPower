@@ -32,22 +32,24 @@ function Set({ set, count }) {
   function getLastSetInfo() {
     if (set.weight == 0 || set.reps == 0) {
       const lastSet = sets[set.exerciseId][sets[set.exerciseId].length - 2];
-      console.log(lastSet);
-      setSets((prev) => {
-        const newSets = { ...prev };
-        const listofSets = newSets[set.exerciseId];
-        for (let i = 0; i < listofSets.length; i++) {
-          if (listofSets[i].id === set.id) {
-            listofSets[i].weight = lastSet.weight;
-            listofSets[i].reps = lastSet.reps;
-            break;
+      if (lastSet != undefined) {
+        setSets((prev) => {
+          const newSets = { ...prev };
+          const listofSets = newSets[set.exerciseId];
+          for (let i = 0; i < listofSets.length; i++) {
+            if (listofSets[i].id === set.id) {
+              listofSets[i].weight = lastSet.weight;
+              listofSets[i].reps = lastSet.reps;
+              break;
+            }
           }
-        }
-        newSets[set.exerciseId] = listofSets;
-        return newSets;
-      });
-      setReps(lastSet.reps);
-      setWeight(lastSet.weight);
+          newSets[set.exerciseId] = listofSets;
+          return newSets;
+        });
+      }
+
+      setReps(lastSet == undefined ? 0 : lastSet.reps);
+      setWeight(lastSet == undefined ? 0 : lastSet.weight);
     }
   }
   useEffect(() => {

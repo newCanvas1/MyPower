@@ -1,7 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import { Animated, View } from "react-native";
 
-const AnimatedView = ({ content, fadeIn, fadeOut, enterFromRight, enterFromLeft, duration, wait, opacity }) => {
+const AnimatedView = ({
+  content,
+  fadeIn,
+  fadeOut,
+  enterFromRight,
+  enterFromLeft,
+  duration,
+  wait,
+  style,
+}) => {
   const opacityValue = useRef(new Animated.Value(fadeIn ? 0 : 1)).current;
   const translateXValue = useRef(new Animated.Value(0)).current;
 
@@ -69,7 +78,7 @@ const AnimatedView = ({ content, fadeIn, fadeOut, enterFromRight, enterFromLeft,
   };
 
   return (
-    <Animated.View style={[getAnimationStyle()]}>
+    <Animated.View style={[getAnimationStyle(),style] }>
       {content}
     </Animated.View>
   );

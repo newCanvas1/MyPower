@@ -6,28 +6,34 @@ import { LanguageContext } from "../../context/LanguageContext";
 import { langChoice } from "../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../utility/labels";
 import { ThemeContext } from "../../context/ThemeContext";
+import AnimatedView from "../Components/General/AnimatedView";
 
-function History(props) {
+function History() {
   const { theme } = useContext(ThemeContext);
   const { language } = useContext(LanguageContext);
   const { workouts } = useContext(DatabaseContext);
-  useEffect(() => {
-
-  }, [workouts]);
+  // useEffect(() => {}, [workouts]);
   return (
-    <View className={" p-3 h-[100%] w-[100%] " + theme.mainScreen}>
+    <View className={" p-3  " + theme.mainScreen}>
       <Text
         style={{ fontFamily: langChoice(language, "en", "ar") }}
         className={`  text-2xl text-center ${theme.textPrimary}`}
       >
-        {langChoice(language, ENGLISH.HISTORY, ARABIC.HISTORY)} 
+        {langChoice(language, ENGLISH.HISTORY, ARABIC.HISTORY)}
       </Text>
-      <FlatList 
-        data={workouts}
-        renderItem={({ item }) => <Workout item={item} />}
-        className={"  mt-10 "}
-        keyExtractor={(item) => item.workout.workoutId}
-        ItemSeparatorComponent={() => <View style={{ height: 30 }}></View>}
+      <AnimatedView
+      
+        fadeIn
+        content={
+          <FlatList
+            data={workouts}
+            renderItem={({ item, index }) => (
+              <Workout key={index} item={item} />
+            )}
+            className="  mt-10 "
+            ItemSeparatorComponent={() => <View style={{ height: 30 }}></View>}
+          />
+        }
       />
     </View>
   );

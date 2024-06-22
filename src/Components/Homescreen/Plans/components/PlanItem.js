@@ -115,9 +115,7 @@ function PlanItem({ item }) {
   ];
 
   return (
-    <Animated.View // Use Animated.View for the fade-in effect
-      style={{ opacity: fadeAnim }}
-    >
+    <Animated.View>
       <TouchableOpacity
         className={`flex-col`}
         onPress={() => {
@@ -128,7 +126,9 @@ function PlanItem({ item }) {
           setShowStartPopover(true);
         }}
       >
-        <View className={` p-2 rounded-lg w-40 h-28 m-3  ${theme.primary} shadow`}>
+        <View
+          className={` p-2 rounded-lg w-40 h-28 m-3  ${theme.primary} shadow`}
+        >
           <View className="flex-row justify-between">
             <View>
               <Text
@@ -185,7 +185,10 @@ function PlanItem({ item }) {
           showPopover={showStartPopover}
           setShowPopover={setShowStartPopover}
           content={
-            <PlanPopover planId={item.id} setShowPopover={setShowStartPopover} />
+            <PlanPopover
+              planId={item.id}
+              setShowPopover={setShowStartPopover}
+            />
           }
           popOverheight={0.6}
           popOverwidth={0.9}

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, FlatList } from "react-native";
 import { LanguageContext } from "../../context/LanguageContext";
 import { DatabaseContext } from "../../context/DataContext";
 import { ThemeContext } from "../../context/ThemeContext";
-
+import AnimatedView from "../Components/General/AnimatedView";
 import Exercise from "../Components/ExercisesScreen/Exercise";
 import { langChoice } from "../utility/functions/langChoice";
 import { ENGLISH, ARABIC } from "../utility/labels";
@@ -39,9 +39,17 @@ function Exercises() {
                 {category}
               </Text>
             </View>
-            {exercisesList[category].map((exercise) => (
-              <Exercise exercise={exercise} key={exercise.name} />
-            ))}
+            <FlatList
+              data={exercisesList[category]}
+              renderItem={({ item }) => (
+                <AnimatedView
+                  duration={400}
+                  fadeIn
+                  content={<Exercise exercise={item} />}
+                />
+              )}
+              keyExtractor={(item) => item.name}
+            />
           </View>
         ))}
       </ScrollView>
