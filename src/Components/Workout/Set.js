@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   TextInput,
@@ -15,19 +15,44 @@ import Feather from "@expo/vector-icons/Feather";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import AnimatedView from "../General/AnimatedView";
 function Set({ set, count }) {
-  const [reps] = useState(set.reps);
-  const [weight] = useState(set.weight);
+  const [reps, setReps] = useState(set.reps);
+  const [weight, setWeight] = useState(set.weight);
   const [setOrder] = useState(count);
   const [setChecked, setSetChecked] = useState(set?.checked);
   const [isDragging, setIsDragging] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
 
   const { language } = useContext(LanguageContext);
-  const { removeSet, setSets } = useContext(WorkoutContext);
+  const { removeSet, setSets, sets } = useContext(WorkoutContext);
   const { theme } = useContext(ThemeContext);
 
   const setBackground = setChecked ? "bg-green-400 opacity-60" : " ";
   const translateX = React.useRef(new Animated.Value(0)).current;
+
+  function getLastSetInfo() {
+    if (set.weight == 0 || set.reps == 0) {
+      const lastSet = sets[set.exerciseId][sets[set.exerciseId].length - 2];
+      console.log(lastSet);
+      setSets((prev) => {
+        const newSets = { ...prev };
+        const listofSets = newSets[set.exerciseId];
+        for (let i = 0; i < listofSets.length; i++) {
+          if (listofSets[i].id === set.id) {
+            listofSets[i].weight = lastSet.weight;
+            listofSets[i].reps = lastSet.reps;
+            break;
+          }
+        }
+        newSets[set.exerciseId] = listofSets;
+        return newSets;
+      });
+      setReps(lastSet.reps);
+      setWeight(lastSet.weight);
+    }
+  }
+  useEffect(() => {
+    getLastSetInfo();
+  }, []);
 
   const onGestureEvent = Animated.event(
     [
@@ -68,6 +93,7 @@ function Set({ set, count }) {
       }
     }
   };
+
   return (
     <AnimatedView
       content={

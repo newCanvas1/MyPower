@@ -25,7 +25,7 @@ function workout(props) {
     save,
     timePassed,
     setTimePassed,
-
+    cancel,
     userHasCheckedSets,
   } = useContext(WorkoutContext);
   const { theme } = useContext(ThemeContext);
@@ -113,6 +113,11 @@ function workout(props) {
 
       <TouchableOpacity
         onPress={() => {
+          if (!userHasCheckedSets()) {
+            cancel();
+            router.back();
+            return;
+          }
           setType("cancel");
           warning();
         }}

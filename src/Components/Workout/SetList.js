@@ -14,7 +14,6 @@ function SetList({ exerciseId }) {
       renderItem={({ item, index }) => (
         <AnimatedView
           duration={400}
-          enterFromLeft
           fadeIn
           content={<Set set={item} count={index + 1} />}
         />

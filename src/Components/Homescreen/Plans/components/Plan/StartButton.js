@@ -51,9 +51,9 @@ function StartButton({ startWorkout }) {
           }}
         >
           {isPlayIcon ? (
-            <FontAwesome6 name="play" size={20} color={"#06926f"} />
-          ) : (
             langChoice(language, ENGLISH.START_WORKOUT, ARABIC.START_WORKOUT)
+          ) : (
+            <FontAwesome6 name="play" size={20} color={"green"} />
           )}
         </Text>
       </Animated.View>
