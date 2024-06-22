@@ -13,12 +13,14 @@ import { WorkoutContext } from "../../../context/WorkoutContext";
 import { ThemeContext } from "../../../context/ThemeContext";
 import Feather from "@expo/vector-icons/Feather";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
+import AnimatedView from "../General/AnimatedView";
 function Set({ set, count }) {
   const [reps] = useState(set.reps);
   const [weight] = useState(set.weight);
   const [setOrder] = useState(count);
   const [setChecked, setSetChecked] = useState(set?.checked);
   const [isDragging, setIsDragging] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
 
   const { language } = useContext(LanguageContext);
   const { removeSet, setSets } = useContext(WorkoutContext);
@@ -53,7 +55,10 @@ function Set({ set, count }) {
       // Check if the translation exceeds the threshold (e.g., 100)
       if (Math.abs(event.nativeEvent.translationX) > 100) {
         // Remove the set if the threshold is exceeded
-        removeSet(set.exerciseId, set.id);
+        setFadeOut(true);
+        setTimeout(() => {
+          removeSet(set.exerciseId, set.id);
+        }, 300);
       } else {
         // Reset the position if the threshold is not exceeded
         Animated.spring(translateX, {
@@ -64,117 +69,124 @@ function Set({ set, count }) {
     }
   };
   return (
-    <PanGestureHandler
-      onGestureEvent={onGestureEvent}
-      onHandlerStateChange={onHandlerStateChange}
-    >
-      <Animated.View style={[{ transform: [{ translateX }] }]}>
-        <View
-          className={`${setBackground} p-1 shadow w-[100%] flex-row justify-between items-center `}
+    <AnimatedView
+      content={
+        <PanGestureHandler
+          onGestureEvent={onGestureEvent}
+          onHandlerStateChange={onHandlerStateChange}
         >
-          <Text
-            className={theme.textPrimary}
-            style={{ fontFamily: langChoice(language, "en", "ar") }}
-          >
-            {setOrder}
-          </Text>
-          <View className="w-20 items-center ">
-            {weight == 0 || reps == 0 ? (
-              <View className="bg-slate-500  w-[50%] h-1"></View>
-            ) : (
+          <Animated.View style={[{ transform: [{ translateX }] }]}>
+            <View
+              className={`${setBackground} p-1 shadow w-[100%] flex-row justify-between items-center `}
+            >
               <Text
                 className={theme.textPrimary}
                 style={{ fontFamily: langChoice(language, "en", "ar") }}
               >
-                {`${weight} kg x ${reps}`}
+                {setOrder}
               </Text>
-            )}
-          </View>
+              <View className="w-20 items-center ">
+                {weight == 0 || reps == 0 ? (
+                  <View className="bg-slate-500  w-[50%] h-1"></View>
+                ) : (
+                  <Text
+                    className={theme.textPrimary}
+                    style={{ fontFamily: langChoice(language, "en", "ar") }}
+                  >
+                    {`${weight} kg x ${reps}`}
+                  </Text>
+                )}
+              </View>
 
-          <TextInput
-            keyboardType="numeric"
-            style={{ fontFamily: langChoice(language, "en", "ar") }}
-            placeholderTextColor={theme.setPlaceholder}
-            placeholder={
-              weight == 0
-                ? langChoice(language, ENGLISH.WEIGHT, ARABIC.WEIGHT)
-                : weight.toString()
-            }
-            onChangeText={(text) => {
-              setSets((prev) => {
-                const newSets = { ...prev };
-                const listofSets = newSets[set.exerciseId];
-                for (let i = 0; i < listofSets.length; i++) {
-                  if (listofSets[i].id === set.id) {
-                    listofSets[i].weight = text;
-                    break;
-                  }
+              <TextInput
+                keyboardType="numeric"
+                style={{ fontFamily: langChoice(language, "en", "ar") }}
+                placeholderTextColor={theme.setPlaceholder}
+                placeholder={
+                  weight == 0
+                    ? langChoice(language, ENGLISH.WEIGHT, ARABIC.WEIGHT)
+                    : weight.toString()
                 }
-                newSets[set.exerciseId] = listofSets;
-                return newSets;
-              });
-            }}
-            className={
-              theme.set + theme.setInputBorder + " " + theme.inputValue
-            }
-          />
-          <TextInput
-            keyboardType="numeric"
-            style={{ fontFamily: langChoice(language, "en", "ar") }}
-            placeholderTextColor={theme.setPlaceholder}
-            placeholder={
-              reps == 0
-                ? langChoice(language, ENGLISH.REPS, ARABIC.REPS)
-                : reps.toString()
-            }
-            onChangeText={(text) => {
-              setSets((prev) => {
-                const newSets = { ...prev };
-                const listofSets = newSets[set.exerciseId];
-                for (let i = 0; i < listofSets.length; i++) {
-                  if (listofSets[i].id === set.id) {
-                    listofSets[i].reps = text;
-                    break;
-                  }
+                onChangeText={(text) => {
+                  setSets((prev) => {
+                    const newSets = { ...prev };
+                    const listofSets = newSets[set.exerciseId];
+                    for (let i = 0; i < listofSets.length; i++) {
+                      if (listofSets[i].id === set.id) {
+                        listofSets[i].weight = text;
+                        break;
+                      }
+                    }
+                    newSets[set.exerciseId] = listofSets;
+                    return newSets;
+                  });
+                }}
+                className={
+                  theme.set + theme.setInputBorder + " " + theme.inputValue
                 }
-                newSets[set.exerciseId] = listofSets;
-                return newSets;
-              });
-            }}
-            className={
-              theme.set + theme.setInputBorder + " " + theme.inputValue
-            }
-          />
-          <TouchableOpacity
-            onPress={() => {
-              setSets((prev) => {
-                const newSets = { ...prev };
-                const listofSets = newSets[set.exerciseId];
-                for (let i = 0; i < listofSets.length; i++) {
-                  if (listofSets[i].id === set.id) {
-                    setSetChecked(!listofSets[i].checked);
-                    listofSets[i].checked = !listofSets[i].checked;
-                    break;
-                  }
+              />
+              <TextInput
+                keyboardType="numeric"
+                style={{ fontFamily: langChoice(language, "en", "ar") }}
+                placeholderTextColor={theme.setPlaceholder}
+                placeholder={
+                  reps == 0
+                    ? langChoice(language, ENGLISH.REPS, ARABIC.REPS)
+                    : reps.toString()
                 }
-                newSets[set.exerciseId] = listofSets;
-                return newSets;
-              });
-            }}
-            className={`${
-              set.checked ? "bg-green-400" : " "
-            } rounded border shadow p-[1px]`}
-          >
-            <Feather name="check" size={20} color={theme.color} />
-          </TouchableOpacity>
-          {isDragging && (
-            <View className={` bg-red-400 p-1 shadow rounded`}>
-              <Feather name="x" size={20} color={theme.color} />
+                onChangeText={(text) => {
+                  setSets((prev) => {
+                    const newSets = { ...prev };
+                    const listofSets = newSets[set.exerciseId];
+                    for (let i = 0; i < listofSets.length; i++) {
+                      if (listofSets[i].id === set.id) {
+                        listofSets[i].reps = text;
+                        break;
+                      }
+                    }
+                    newSets[set.exerciseId] = listofSets;
+                    return newSets;
+                  });
+                }}
+                className={
+                  theme.set + theme.setInputBorder + " " + theme.inputValue
+                }
+              />
+              <TouchableOpacity
+                onPress={() => {
+                  setSets((prev) => {
+                    const newSets = { ...prev };
+                    const listofSets = newSets[set.exerciseId];
+                    for (let i = 0; i < listofSets.length; i++) {
+                      if (listofSets[i].id === set.id) {
+                        setSetChecked(!listofSets[i].checked);
+                        listofSets[i].checked = !listofSets[i].checked;
+                        break;
+                      }
+                    }
+                    newSets[set.exerciseId] = listofSets;
+                    return newSets;
+                  });
+                }}
+                className={`${
+                  set.checked ? "bg-green-400" : " "
+                } rounded border shadow p-[1px]`}
+              >
+                <Feather name="check" size={20} color={theme.color} />
+              </TouchableOpacity>
+              {isDragging ||
+                (fadeOut && (
+                  <View className={` bg-red-400 p-1 shadow rounded`}>
+                    <Feather name="x" size={20} color={theme.color} />
+                  </View>
+                ))}
             </View>
-          )}
-        </View>
-      </Animated.View>
-    </PanGestureHandler>
+          </Animated.View>
+        </PanGestureHandler>
+      }
+      fadeOut={fadeOut}
+      duration={400}
+    />
   );
 }
 

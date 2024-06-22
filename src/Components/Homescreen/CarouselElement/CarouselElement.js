@@ -27,7 +27,7 @@ function CarouselElement() {
   }, [chartExercises]);
 
   return (
-    <View className={"mt-10  h-[80%]"}>
+    <View className={"mt-4  h-[100%]"}>
       <Carousel
         defaultIndex={currentIndex || 0}
         width={width}
@@ -35,7 +35,6 @@ function CarouselElement() {
         loop={false}
         scrollAnimationDuration={300}
         onSnapToItem={async (index) => {
-          widthAnimation.setValue(width);
           setCurrentIndex(index);
           await AsyncStorage.setItem("currentCarouselIndex", index.toString());
         }}

@@ -14,13 +14,15 @@ function Homescreen(props) {
       <Greeting />
       <AnimatedView
         content={<CarouselElement />}
-        animationType="enterFromLeft"
+        enterFromRight
+        fadeIn
         duration={500}
         wait={500}
       />
       <AnimatedView
         content={<Plans />}
-        animationType="enterFromRight"
+        enterFromLeft
+        fadeIn
         duration={500}
         wait={500}
       />
