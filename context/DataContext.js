@@ -131,6 +131,7 @@ export const DatabaseProvider = ({ children }) => {
       setWorkouts(
         workouts.filter((workout) => workout.workout.workoutId !== workoutId)
       );
+      updateWorkouts();
   };
 
   function updateWorkouts() {

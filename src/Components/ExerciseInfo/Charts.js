@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import { getExerciseChartInfo, getExerciseChartOfPeriod } from "../../../database/database";
+import { getExerciseChartOfPeriod } from "../../../database/database";
 import { LanguageContext } from "../../../context/LanguageContext";
 import { ThemeContext } from "../../../context/ThemeContext";
-import { ARABIC, ENGLISH } from "../../utility/labels";
 
 import { langChoice } from "../../utility/functions/langChoice";
 import {
@@ -13,16 +12,24 @@ import {
   VictoryLine,
   VictoryLabel,
 } from "victory-native";
+import { DatabaseContext } from "../../../context/DataContext";
 
-function Charts({ exercise,type }) {
+function Charts({ exercise, type, homescreen }) {
   const [result, setResult] = useState([]);
   const [maxWeight, setMaxWeight] = useState(0);
   const { language } = useContext(LanguageContext);
+  const { exercises } = useContext(DatabaseContext);
   const { theme } = useContext(ThemeContext);
+  const [exerciseName, setExerciseName] = useState("");
   const [noData, setNoData] = useState(false);
   useEffect(() => {
     async function getInfo() {
-      const categorizedSets = await getExerciseChartOfPeriod(exercise.exerciseId, type);
+      setExerciseName(exercises[exercise.exerciseId].name);
+
+      const categorizedSets = await getExerciseChartOfPeriod(
+        exercise.exerciseId,
+        type
+      );
       if (categorizedSets.length == 0) {
         setNoData(true);
       } else {
@@ -33,11 +40,16 @@ function Charts({ exercise,type }) {
     }
     getInfo();
   }, []);
-
- 
-
   return (
-    <View>
+    <View className="items-center justify-center">
+      {homescreen && (
+        <Text
+          style={{ fontFamily: langChoice(language, "en", "ar") }}
+          className="text-white text-center   top-[20]"
+        >
+          {exerciseName}
+        </Text>
+      )}
       {!noData ? (
         <VictoryChart>
           <VictoryAxis
@@ -46,7 +58,6 @@ function Charts({ exercise,type }) {
               ticks: { stroke: "#756f6a" }, // Color of the tick marks
               tickLabels: { fill: "#756f6a" }, // Color of the tick labels
             }}
-           
           />
           <VictoryAxis
             style={{
@@ -77,13 +88,7 @@ function Charts({ exercise,type }) {
         <Text
           className={`text-${theme.color} text-center`}
           style={{ fontSize: 20, fontFamily: langChoice(language, "en", "ar") }}
-        >
-          {/* {langChoice(
-            language,
-            ENGLISH.NO_REGISTERED_SETS,
-            ARABIC.NO_REGISTERED_SETS
-          )} */}
-        </Text>
+        ></Text>
       )}
     </View>
   );

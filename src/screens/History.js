@@ -12,7 +12,7 @@ function History() {
   const { theme } = useContext(ThemeContext);
   const { language } = useContext(LanguageContext);
   const { workouts } = useContext(DatabaseContext);
-  // useEffect(() => {}, [workouts]);
+
   return (
     <View className={" p-3 h-[100%] " + theme.mainScreen}>
       <Text
@@ -22,16 +22,16 @@ function History() {
         {langChoice(language, ENGLISH.HISTORY, ARABIC.HISTORY)}
       </Text>
       <AnimatedView
-      
         fadeIn
         content={
           <FlatList
             data={workouts}
             renderItem={({ item, index }) => (
-              <Workout key={index} item={item} />
+              <Workout key={item.workout.workoutId} item={item} />
             )}
             className="  mt-10 "
             ItemSeparatorComponent={() => <View style={{ height: 30 }}></View>}
+            keyExtractor={(item) => item.workout.workoutId}
           />
         }
       />

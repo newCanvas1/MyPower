@@ -16,7 +16,7 @@ function CarouselElement() {
     setCharts(() => [
       <WorkoutsCalender />,
       ...chartExercises.map((chart) => (
-        <Charts exercise={{ exerciseId: chart.exerciseId }} type={chart.type} />
+        <Charts homescreen exercise={{ exerciseId: chart.exerciseId }} type={chart.type} />
       )),
     ]);
     // set the initial index to the last chart

@@ -12,10 +12,16 @@ import {
 } from "../../../database/database";
 import { DatabaseContext } from "../../../context/DataContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { langChoice } from "../../utility/functions/langChoice";
+import { ARABIC, ENGLISH } from "../../utility/labels";
+import { LanguageContext } from "../../../context/LanguageContext";
+import { ThemeContext } from "../../../context/ThemeContext";
 function Content({ content, exercise, exerciseId }) {
   const [isThisMonth, setIsThisMonth] = useState(false);
   const [isThisYear, setIsThisYear] = useState(false);
   const [isYearly, setIsYearly] = useState(false);
+  const { language } = useContext(LanguageContext);
+  const { theme } = useContext(ThemeContext);
   const { updateCharts, updateWorkouts } = useContext(DatabaseContext);
   useEffect(() => {
     async function getInfo() {
@@ -122,18 +128,36 @@ function Content({ content, exercise, exerciseId }) {
           <Info exercise={exercise} />
         ) : content == "charts" ? (
           <>
-            <View>
-              <ChartButton type={"thisMonth"} check={isThisMonth} />
-              <Charts exercise={exercise} type={"thisMonth"} />
-            </View>
-            <View>
-              <ChartButton type={"thisYear"} check={isThisYear} />
-              <Charts exercise={exercise} type={"thisYear"} />
-            </View>
-            <View>
-              <ChartButton type={"yearly"} check={isYearly} />
-              <Charts exercise={exercise} type={"yearly"} />
-            </View>
+            {isThisMonth || isThisYear || isYearly ? (
+              <>
+                <View>
+                  <ChartButton type={"thisMonth"} check={isThisMonth} />
+                  <Charts exercise={exercise} type={"thisMonth"} />
+                </View>
+                <View>
+                  <ChartButton type={"thisYear"} check={isThisYear} />
+                  <Charts exercise={exercise} type={"thisYear"} />
+                </View>
+                <View>
+                  <ChartButton type={"yearly"} check={isYearly} />
+                  <Charts exercise={exercise} type={"yearly"} />
+                </View>
+              </>
+            ) : (
+              <Text
+                className={`text-${theme.color} text-center`}
+                style={{
+                  fontSize: 20,
+                  fontFamily: langChoice(language, "en", "ar"),
+                }}
+              >
+                {langChoice(
+                  language,
+                  ENGLISH.NO_REGISTERED_SETS,
+                  ARABIC.NO_REGISTERED_SETS
+                )}
+              </Text>
+            )}
           </>
         ) : (
           <History exercise={exercise} />

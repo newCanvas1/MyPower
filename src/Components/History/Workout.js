@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import formateTime from "../../utility/functions/formatTime";
 import { LanguageContext } from "../../../context/LanguageContext";
 import { ThemeContext } from "../../../context/ThemeContext";
@@ -13,6 +13,7 @@ import Tooltip from "../General/Tooltip/Tooltip";
 import { DatabaseContext } from "../../../context/DataContext";
 import CustomPopover from "../General/CustomPopover";
 import EditWorkout from "./EditWorkout";
+import Set from "./Set";
 function Workout({ item }) {
   const [workout, setWorkout] = useState(item.workout);
   const [exercises, setExercises] = useState(item.exercises);
@@ -20,10 +21,6 @@ function Workout({ item }) {
   const [showTooltip, setShowTooltip] = useState(false);
   const tooltipRef = useRef();
   const { theme } = useContext(ThemeContext);
-  async function getBestSet(exerciseId, workoutId) {
-    const bestSet = await getBestSetOfExerciseOfWorkout(exerciseId, workoutId);
-    return bestSet;
-  }
   const { deleteWorkout } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
   const [showEdit, setShowEdit] = useState(false);
@@ -108,33 +105,18 @@ function Workout({ item }) {
         </Text>
       </View>
 
-      {exercises.map(async (exercise, index) => {
-        const bestSet = await getBestSet(
-          exercise.exerciseId,
-          workout.workoutId
-        );
-        return (
-          bestSet != undefined && (
-            <View
-              key={index}
-              className="flex-row items-center px-10 justify-between"
-            >
-              <Text
-                className={theme.textPrimary}
-                style={{ fontFamily: langChoice(language, "en", "ar") }}
-              >
-                {exercise.name}
-              </Text>
-              <Text
-                className={theme.textPrimary}
-                style={{ fontFamily: langChoice(language, "en", "ar") }}
-              >
-                {bestSet?.weight} kg x {bestSet?.reps}
-              </Text>
-            </View>
-          )
-        );
-      })}
+      <FlatList
+        data={exercises}
+        renderItem={({ item, index }) => (
+          <Set
+            key={index}
+            exercise={item}
+            index={index}
+            workoutId={workout.workoutId}
+          />
+        )}
+        ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
+      />
 
       <CustomPopover
         showPopover={showEdit}
