@@ -28,7 +28,7 @@ export const initDatabase = async () => {
 
   await db.execAsync(`
         PRAGMA journal_mode = WAL;
-        CREATE TABLE IF NOT EXISTS sets (id INTEGER PRIMARY KEY AUTOINCREMENT,  exerciseId INTEGER, reps INTEGER,weight DOUBLE,type TEXT,planId INTEGER,workoutId INTEGER);
+        CREATE TABLE IF NOT EXISTS sets (id INTEGER PRIMARY KEY AUTOINCREMENT,  exerciseId INTEGER, reps INTEGER,weight DOUBLE,type TEXT,planId INTEGER,workoutId INTEGER,date TEXT);
         `);
   // create plans table
   await db.execAsync(`
@@ -43,7 +43,7 @@ export const initDatabase = async () => {
         `);
   await db.execAsync(`
         PRAGMA journal_mode = WAL;
-        CREATE TABLE IF NOT EXISTS charts (id INTEGER PRIMARY KEY AUTOINCREMENT, exerciseId INTEGER);
+        CREATE TABLE IF NOT EXISTS charts (id INTEGER PRIMARY KEY AUTOINCREMENT, exerciseId INTEGER, type TEXT);
         `);
 
   prepareExercises();
@@ -143,13 +143,14 @@ export const insertSets = async (
 ) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const result = await db.runAsync(
-    "INSERT INTO sets (exerciseId,reps,weight,type,planId,workoutId) VALUES (?,?,?,?,?,?)",
+    "INSERT INTO sets (exerciseId,reps,weight,type,planId,workoutId,date) VALUES (?,?,?,?,?,?,?)",
     `${exerciseId}`,
     `${reps}`,
     `${weight}`,
     `${type}`,
     `${planId}`,
-    `${workoutId}`
+    `${workoutId}`,
+    `${new Date()}`
   );
 
   return result;
@@ -473,6 +474,12 @@ export const updateWorkoutDate = async (workoutId, date) => {
     `${date}`,
     `${workoutId}`
   );
+  // update the sets of the workout
+  await db.runAsync(
+    "UPDATE sets SET date = ? WHERE workoutId = ?",
+    `${date}`,
+    `${workoutId}`
+  );
   return true;
 };
 
@@ -552,30 +559,112 @@ export const getCharts = async () => {
   const db = await SQLite.openDatabaseAsync("databaseName");
 
   const data = await db.getAllAsync(`SELECT * FROM charts `);
+  console.log(data);
 
   return data;
 };
 
-export const insertChart = async (exerciseId) => {
+export const insertChart = async (exerciseId, type) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const result = await db.runAsync(
-    "INSERT INTO charts (exerciseId) VALUES (?)",
-    `${exerciseId}`
+    "INSERT INTO charts (exerciseId,type) VALUES (?,?)",
+    `${exerciseId}`,
+    `${type || "thisMonth"}`
   );
   return result;
 };
 
-export const deleteChart = async (id) => {
+export const deleteChart = async (id, type) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
-  await db.runAsync(`DELETE FROM charts WHERE exerciseId = ${id}` );
+  await db.runAsync(
+    `DELETE FROM charts WHERE exerciseId = ${id} AND type = "${type}"`
+  );
   return true;
 };
 
 // exercise has a row in the charts table
-export const isExerciseInCharts = async (exerciseId) => {
+export const isExerciseInCharts = async (exerciseId, type) => {
+  console.log(exerciseId, type);
   const db = await SQLite.openDatabaseAsync("databaseName");
   const data = await db.getAllAsync(
-    `SELECT * FROM charts WHERE exerciseId = ${exerciseId}`
+    `SELECT * FROM charts WHERE exerciseId = ${exerciseId} ${
+      type ? `AND type = "${type}"` : ""
+    }`
   );
+  console.log(data);
   return data.length > 0;
+};
+
+export const getExerciseChartOfPeriod = async (exerciseId, type) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  // type could be thisMonth, thisYear or yearly
+  const data = await db.getAllAsync(
+    `SELECT * FROM sets WHERE exerciseId = ${exerciseId}`
+  );
+  const result = {};
+
+  if (type === "thisMonth") {
+    const thisMonth = new Date().getMonth();
+    const thisMonthWorkouts = data.filter((set) => {
+      const setMonth = new Date(set.date).getMonth();
+      return setMonth === thisMonth;
+    });
+    for (const set of thisMonthWorkouts) {
+      const date = new Date(set.date).toLocaleDateString("en-US", {
+        day: "numeric",
+      });
+      // for sets of the same day, take the one with the highest weight
+      if (result[date]) {
+        if (set.weight > result[date]) {
+          result[date] = set.weight;
+        }
+      } else {
+        result[date] = set.weight;
+      }
+    }
+  }
+
+  if (type === "thisYear") {
+    const thisYear = new Date().getFullYear();
+    const thisYearWorkouts = data.filter((set) => {
+      const setYear = new Date(set.date).getFullYear();
+      return setYear === thisYear;
+    });
+    for (const set of thisYearWorkouts) {
+      const date = new Date(set.date).toLocaleDateString("en-US", {
+        month: "short",
+      });
+      // for sets of the same month, take the one with the highest weight
+      if (result[date]) {
+        if (set.weight > result[date]) {
+          result[date] = set.weight;
+        }
+      } else {
+        result[date] = set.weight;
+      }
+    }
+  }
+
+  if (type === "yearly") {
+    for (const set of data) {
+      const date = new Date(set.date).toLocaleDateString("en-US", {
+        year: "numeric",
+      });
+      // for sets of the same year, take the one with the highest weight
+      if (result[date]) {
+        if (set.weight > result[date]) {
+          result[date] = set.weight;
+        }
+      } else {
+        result[date] = set.weight;
+      }
+    }
+  }
+
+  // Transform result into an array of objects with x and y properties
+  const chartData = Object.keys(result).map((date) => ({
+    x: date,
+    y: result[date],
+  }));
+  return chartData;
 };

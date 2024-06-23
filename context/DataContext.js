@@ -145,6 +145,7 @@ export const DatabaseProvider = ({ children }) => {
     });
   }
   function updateCharts() {
+    setChartExercises([]);
     getCharts().then((data) => {
       setChartExercises(data);
     });

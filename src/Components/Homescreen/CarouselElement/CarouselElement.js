@@ -18,18 +18,18 @@ function CarouselElement() {
         setCurrentIndex(parseInt(index));
       }
     });
-    setCharts((prev) => [
+    setCharts(() => [
       <WorkoutsCalender />,
       ...chartExercises.map((chart) => (
-        <Charts exercise={{ exerciseId: chart.exerciseId }} />
+        <Charts exercise={{ exerciseId: chart.exerciseId }} type={chart.type} />
       )),
     ]);
   }, [chartExercises]);
-
+console.log(chartExercises);
   return (
     <View className={"mt-4  h-[100%]"}>
       <Carousel
-        defaultIndex={currentIndex || 0}
+        defaultIndex={0}
         width={width}
         data={charts}
         loop={false}

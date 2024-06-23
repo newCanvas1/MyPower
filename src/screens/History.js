@@ -14,7 +14,7 @@ function History() {
   const { workouts } = useContext(DatabaseContext);
   // useEffect(() => {}, [workouts]);
   return (
-    <View className={" p-3  " + theme.mainScreen}>
+    <View className={" p-3 h-[100%] " + theme.mainScreen}>
       <Text
         style={{ fontFamily: langChoice(language, "en", "ar") }}
         className={`  text-2xl text-center ${theme.textPrimary}`}

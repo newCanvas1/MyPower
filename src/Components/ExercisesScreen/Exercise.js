@@ -7,6 +7,7 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import { DatabaseContext } from "../../../context/DataContext";
 import { Feather } from "@expo/vector-icons";
 import {
+  getExerciseChartOfPeriod,
   getNumberOfTimesUserHasDoneExercise,
   isExerciseInCharts,
 } from "../../../database/database";

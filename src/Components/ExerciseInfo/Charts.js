@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import { getExerciseChartInfo } from "../../../database/database";
+import { getExerciseChartInfo, getExerciseChartOfPeriod } from "../../../database/database";
 import { LanguageContext } from "../../../context/LanguageContext";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { ARABIC, ENGLISH } from "../../utility/labels";
@@ -14,7 +14,7 @@ import {
   VictoryLabel,
 } from "victory-native";
 
-function Charts({ exercise }) {
+function Charts({ exercise,type }) {
   const [result, setResult] = useState([]);
   const [maxWeight, setMaxWeight] = useState(0);
   const { language } = useContext(LanguageContext);
@@ -22,7 +22,7 @@ function Charts({ exercise }) {
   const [noData, setNoData] = useState(false);
   useEffect(() => {
     async function getInfo() {
-      const categorizedSets = await getExerciseChartInfo(exercise.exerciseId);
+      const categorizedSets = await getExerciseChartOfPeriod(exercise.exerciseId, type);
       if (categorizedSets.length == 0) {
         setNoData(true);
       } else {
@@ -34,22 +34,7 @@ function Charts({ exercise }) {
     getInfo();
   }, []);
 
-  const getTickValues = () => {
-    const currentDate = new Date();
-    const previousMonth = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth() - 1,
-      1
-    );
-    const nextMonth = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth() + 1,
-      1
-    );
-    return [previousMonth, currentDate, nextMonth].map((date) =>
-      date.getTime()
-    );
-  };
+ 
 
   return (
     <View>
@@ -61,12 +46,7 @@ function Charts({ exercise }) {
               ticks: { stroke: "#756f6a" }, // Color of the tick marks
               tickLabels: { fill: "#756f6a" }, // Color of the tick labels
             }}
-            tickValues={getTickValues()}
-            tickFormat={(t) =>
-              new Date(t).toLocaleDateString("en-US", {
-                month: "short",
-              })
-            } // Format the date on the x-axis
+           
           />
           <VictoryAxis
             style={{
@@ -98,11 +78,11 @@ function Charts({ exercise }) {
           className={`text-${theme.color} text-center`}
           style={{ fontSize: 20, fontFamily: langChoice(language, "en", "ar") }}
         >
-          {langChoice(
+          {/* {langChoice(
             language,
             ENGLISH.NO_REGISTERED_SETS,
             ARABIC.NO_REGISTERED_SETS
-          )}
+          )} */}
         </Text>
       )}
     </View>
