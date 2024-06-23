@@ -11,6 +11,7 @@ import {
   isExerciseInCharts,
 } from "../../../database/database";
 import { DatabaseContext } from "../../../context/DataContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 function Content({ content, exercise, exerciseId }) {
   const [isThisMonth, setIsThisMonth] = useState(false);
   const [isThisYear, setIsThisYear] = useState(false);
@@ -21,19 +22,33 @@ function Content({ content, exercise, exerciseId }) {
       const isInCharts = await isExerciseInCharts(exerciseId, "thisMonth");
       setIsThisMonth(isInCharts);
 
-      const isInCharts2 = await isExerciseInCharts(
-exerciseId,
-        "thisYear"
-      );
+      const isInCharts2 = await isExerciseInCharts(exerciseId, "thisYear");
       setIsThisYear(isInCharts2);
-      const isInCharts3 = await isExerciseInCharts(
-exerciseId,
-        "yearly"
-      );
+      const isInCharts3 = await isExerciseInCharts(exerciseId, "yearly");
       setIsYearly(isInCharts3);
     }
     getInfo();
   }, []);
+
+  const ChartButton = ({ type, check }) => {
+    return (
+      <TouchableOpacity
+        onPress={async () => {
+          handleClick(type);
+        }}
+        className="flex-row w-14 absolute top-[40] right-8 h-8 items-center justify-center rounded z-10 border border-sky-400"
+      >
+        {check ? (
+          <Text className="text-white">-</Text>
+        ) : (
+          <>
+            <Text className="text-white">+</Text>
+            <Feather size={12} name="home" color="white" />
+          </>
+        )}
+      </TouchableOpacity>
+    );
+  };
 
   async function handleClick(type) {
     if (type == "thisMonth") {
@@ -41,8 +56,19 @@ exerciseId,
       if (isInCharts) {
         await deleteChart(exerciseId, type);
         setIsThisMonth(false);
+        const prevIndex = await AsyncStorage.getItem("currentCarouselIndex");
+        await AsyncStorage.setItem(
+          "currentCarouselIndex",
+          (parseInt(prevIndex) - 1).toString()
+        );
       } else {
         await insertChart(exerciseId, "thisMonth");
+        const prevIndex = await AsyncStorage.getItem("currentCarouselIndex");
+        await AsyncStorage.setItem(
+          "currentCarouselIndex",
+          (parseInt(prevIndex) + 1).toString()
+        );
+
         setIsThisMonth(true);
       }
     } else if (type == "thisYear") {
@@ -50,18 +76,38 @@ exerciseId,
 
       if (isInCharts) {
         await deleteChart(exerciseId, type);
+        const prevIndex = await AsyncStorage.getItem("currentCarouselIndex");
+        await AsyncStorage.setItem(
+          "currentCarouselIndex",
+          (parseInt(prevIndex) - 1).toString()
+        );
         setIsThisYear(false);
       } else {
         await insertChart(exerciseId, "thisYear");
+        const prevIndex = await AsyncStorage.getItem("currentCarouselIndex");
+        await AsyncStorage.setItem(
+          "currentCarouselIndex",
+          (parseInt(prevIndex) + 1).toString()
+        );
         setIsThisYear(true);
       }
     } else if (type == "yearly") {
       const isInCharts = await isExerciseInCharts(exerciseId, type);
       if (isInCharts) {
         await deleteChart(exerciseId, type);
+        const prevIndex = await AsyncStorage.getItem("currentCarouselIndex");
+        await AsyncStorage.setItem(
+          "currentCarouselIndex",
+          (parseInt(prevIndex) - 1).toString()
+        );
         setIsYearly(false);
       } else {
         await insertChart(exerciseId, "yearly");
+        const prevIndex = await AsyncStorage.getItem("currentCarouselIndex");
+        await AsyncStorage.setItem(
+          "currentCarouselIndex",
+          (parseInt(prevIndex) + 1).toString()
+        );
         setIsYearly(true);
       }
     }
@@ -77,57 +123,15 @@ exerciseId,
         ) : content == "charts" ? (
           <>
             <View>
-              <TouchableOpacity
-                onPress={async () => {
-                  handleClick("thisMonth");
-                }}
-                className="bg-slate-400 flex-row w-14 absolute top-[40] right-8 h-8 items-center justify-center rounded z-10"
-              >
-                {isThisMonth ? (
-                  <Text className="text-white">-</Text>
-                ) : (
-                  <>
-                    <Text className="text-white">+</Text>
-                    <Feather size={12} name="home" color="white" />
-                  </>
-                )}
-              </TouchableOpacity>
+              <ChartButton type={"thisMonth"} check={isThisMonth} />
               <Charts exercise={exercise} type={"thisMonth"} />
             </View>
             <View>
-              <TouchableOpacity
-                onPress={async () => {
-                  handleClick("thisYear");
-                }}
-                className="bg-slate-400 flex-row w-14 absolute top-[40] right-8 h-8 items-center justify-center rounded z-10"
-              >
-                {isThisYear ? (
-                  <Text className="text-white">-</Text>
-                ) : (
-                  <>
-                    <Text className="text-white">+</Text>
-                    <Feather size={12} name="home" color="white" />
-                  </>
-                )}
-              </TouchableOpacity>
+              <ChartButton type={"thisYear"} check={isThisYear} />
               <Charts exercise={exercise} type={"thisYear"} />
             </View>
             <View>
-              <TouchableOpacity
-                onPress={async () => {
-                  handleClick("yearly");
-                }}
-                className="bg-slate-400 flex-row w-14 absolute top-[40] right-8 h-8 items-center justify-center rounded z-10"
-              >
-                {isYearly ? (
-                  <Text className="text-white">-</Text>
-                ) : (
-                  <>
-                    <Text className="text-white">+</Text>
-                    <Feather size={12} name="home" color="white" />
-                  </>
-                )}
-              </TouchableOpacity>
+              <ChartButton type={"yearly"} check={isYearly} />
               <Charts exercise={exercise} type={"yearly"} />
             </View>
           </>

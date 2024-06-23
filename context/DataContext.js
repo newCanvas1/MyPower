@@ -14,7 +14,6 @@ import {
   deleteWorkoutFromDatabase,
   getCharts,
 } from "../database/database";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 export const DatabaseContext = createContext(null);
 
 export const DatabaseProvider = ({ children }) => {

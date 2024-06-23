@@ -559,7 +559,7 @@ export const getCharts = async () => {
   const db = await SQLite.openDatabaseAsync("databaseName");
 
   const data = await db.getAllAsync(`SELECT * FROM charts `);
-  console.log(data);
+
 
   return data;
 };
@@ -584,14 +584,14 @@ export const deleteChart = async (id, type) => {
 
 // exercise has a row in the charts table
 export const isExerciseInCharts = async (exerciseId, type) => {
-  console.log(exerciseId, type);
+
   const db = await SQLite.openDatabaseAsync("databaseName");
   const data = await db.getAllAsync(
     `SELECT * FROM charts WHERE exerciseId = ${exerciseId} ${
       type ? `AND type = "${type}"` : ""
     }`
   );
-  console.log(data);
+
   return data.length > 0;
 };
 

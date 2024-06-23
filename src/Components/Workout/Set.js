@@ -105,7 +105,7 @@ function Set({ set, count }) {
         >
           <Animated.View style={[{ transform: [{ translateX }] }]}>
             <View
-              className={`${setBackground} p-1 shadow w-[100%] flex-row justify-between items-center `}
+              className={`${setBackground} p-1 shadow w-[100%] flex-row justify-between items-center rounded `}
             >
               <Text
                 className={theme.textPrimary}
@@ -202,12 +202,11 @@ function Set({ set, count }) {
               >
                 <Feather name="check" size={20} color={theme.color} />
               </TouchableOpacity>
-              {isDragging ||
-                (fadeOut && (
-                  <View className={` bg-red-400 p-1 shadow rounded`}>
-                    <Feather name="x" size={20} color={theme.color} />
-                  </View>
-                ))}
+              {(fadeOut || isDragging) && (
+                <View className={` bg-red-400 p-1 shadow rounded`}>
+                  <Feather name="x" size={20} color={theme.color} />
+                </View>
+              )}
             </View>
           </Animated.View>
         </PanGestureHandler>

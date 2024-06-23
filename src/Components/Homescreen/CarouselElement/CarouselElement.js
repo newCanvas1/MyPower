@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Animated, Dimensions, Text, View } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import WorkoutsCalender from "../WorkoutsCalender/WorkoutsCalender";
@@ -13,23 +13,31 @@ function CarouselElement() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    AsyncStorage.getItem("currentCarouselIndex").then((index) => {
-      if (index) {
-        setCurrentIndex(parseInt(index));
-      }
-    });
     setCharts(() => [
       <WorkoutsCalender />,
       ...chartExercises.map((chart) => (
         <Charts exercise={{ exerciseId: chart.exerciseId }} type={chart.type} />
       )),
     ]);
+    // set the initial index to the last chart
+    AsyncStorage.getItem("currentCarouselIndex").then((index) => {
+      if (index) {
+        // otherwise set the index to the value in the storage
+        setCurrentIndex(parseInt(index));
+      }
+    });
   }, [chartExercises]);
-console.log(chartExercises);
+
+  function getIndex(params) {
+    if (currentIndex > charts.length - 1) {
+      return 0;
+    }
+    return currentIndex;
+  }
   return (
     <View className={"mt-4  h-[100%]"}>
       <Carousel
-        defaultIndex={0}
+        defaultIndex={getIndex()}
         width={width}
         data={charts}
         loop={false}
