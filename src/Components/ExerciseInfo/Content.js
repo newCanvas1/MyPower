@@ -63,10 +63,12 @@ function Content({ content, exercise, exerciseId }) {
         await deleteChart(exerciseId, type);
         setIsThisMonth(false);
         const prevIndex = await AsyncStorage.getItem("currentCarouselIndex");
-        await AsyncStorage.setItem(
-          "currentCarouselIndex",
-          (parseInt(prevIndex) - 1).toString()
-        );
+        if (prevIndex != "0") {
+          await AsyncStorage.setItem(
+            "currentCarouselIndex",
+            (parseInt(prevIndex) - 1).toString()
+          );
+        }
       } else {
         await insertChart(exerciseId, "thisMonth");
         const prevIndex = await AsyncStorage.getItem("currentCarouselIndex");
@@ -83,10 +85,13 @@ function Content({ content, exercise, exerciseId }) {
       if (isInCharts) {
         await deleteChart(exerciseId, type);
         const prevIndex = await AsyncStorage.getItem("currentCarouselIndex");
-        await AsyncStorage.setItem(
-          "currentCarouselIndex",
-          (parseInt(prevIndex) - 1).toString()
-        );
+        if (prevIndex != "0") {
+          await AsyncStorage.setItem(
+            "currentCarouselIndex",
+            (parseInt(prevIndex) - 1).toString()
+          );
+        }
+
         setIsThisYear(false);
       } else {
         await insertChart(exerciseId, "thisYear");
@@ -102,10 +107,13 @@ function Content({ content, exercise, exerciseId }) {
       if (isInCharts) {
         await deleteChart(exerciseId, type);
         const prevIndex = await AsyncStorage.getItem("currentCarouselIndex");
-        await AsyncStorage.setItem(
-          "currentCarouselIndex",
-          (parseInt(prevIndex) - 1).toString()
-        );
+        if (prevIndex != "0") {
+          await AsyncStorage.setItem(
+            "currentCarouselIndex",
+            (parseInt(prevIndex) - 1).toString()
+          );
+        }
+
         setIsYearly(false);
       } else {
         await insertChart(exerciseId, "yearly");
@@ -128,7 +136,7 @@ function Content({ content, exercise, exerciseId }) {
           <Info exercise={exercise} />
         ) : content == "charts" ? (
           <>
-            {isThisMonth || isThisYear || isYearly ? (
+            {true ? (
               <>
                 <View>
                   <ChartButton type={"thisMonth"} check={isThisMonth} />

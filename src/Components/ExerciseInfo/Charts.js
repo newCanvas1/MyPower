@@ -24,7 +24,11 @@ function Charts({ exercise, type, homescreen }) {
   const [noData, setNoData] = useState(false);
   useEffect(() => {
     async function getInfo() {
-      setExerciseName(exercises[exercise.exerciseId].name);
+      for (const e of exercises) {
+        if (exercise.exerciseId == e.exerciseId) {
+          setExerciseName(e.name);
+        }
+      }
 
       const categorizedSets = await getExerciseChartOfPeriod(
         exercise.exerciseId,
