@@ -17,8 +17,8 @@ export default function FontContextProvider({ children }) {
     PoppinsBold: require("../assets/fonts/Poppins/Poppins-Bold.ttf"),
     PoppinsSemiBold: require("../assets/fonts/Poppins/Poppins-SemiBold.ttf"),
     PoppinsExtraBold: require("../assets/fonts/Poppins/Poppins-ExtraBold.ttf"),
-    en: require("../assets/fonts/Poppins/Poppins-Regular.ttf"),
-    ar: require("../assets/fonts/Almarai/Almarai-Regular.ttf"),
+    en: require("../assets/fonts/Tajawal/Tajawal-Regular.ttf"),
+    ar: require("../assets/fonts/Tajawal/Tajawal-Regular.ttf"),
   });
 
   if (!fontLoaded) {

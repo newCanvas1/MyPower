@@ -42,14 +42,14 @@ function Exercise({ exercise }) {
       >
         {addedToHomescreen && (
           <View
-            className={`${theme.countTag} rounded w-4 h-4 mx-1 items-center justify-center  shadow-lg `}
+            className={`${theme.countTag} rounded w-4 h-6 mx-1 items-center justify-center  shadow-lg `}
           >
             <Feather size={12} name="home" color={"white"} />
           </View>
         )}
         {info.count > 0 && (
           <View
-            className={`${theme.countTag} rounded w-4 h-4  items-center justify-center  shadow-lg `}
+            className={`${theme.countTag} rounded w-4 h-6  items-center justify-center  shadow-lg `}
           >
             <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
               {info.count}

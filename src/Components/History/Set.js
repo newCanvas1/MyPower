@@ -24,7 +24,7 @@ function Set({ exercise, index, workoutId }) {
 
   return (
     bestSet != undefined && (
-      <View key={index} className="flex-row items-center px-10 justify-between">
+      <View key={index} className="flex-row items-center px-10 justify-between mb-3">
         <Text
           className={theme.textPrimary}
           style={{ fontFamily: langChoice(language, "en", "ar") }}

@@ -16,7 +16,11 @@ function CarouselElement() {
     setCharts(() => [
       <WorkoutsCalender />,
       ...chartExercises.map((chart) => (
-        <Charts homescreen exercise={{ exerciseId: chart.exerciseId }} type={chart.type} />
+        <Charts
+          homescreen
+          exercise={{ exerciseId: chart.exerciseId }}
+          type={chart.type}
+        />
       )),
     ]);
     // set the initial index to the last chart
@@ -29,7 +33,7 @@ function CarouselElement() {
   }, [chartExercises]);
 
   function getIndex(params) {
-    if (currentIndex > charts.length - 1) {
+    if (currentIndex > charts.length - 1||isNaN(currentIndex)) {
       return 0;
     }
     return currentIndex;

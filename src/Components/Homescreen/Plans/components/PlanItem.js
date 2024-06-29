@@ -130,7 +130,7 @@ function PlanItem({ item }) {
           className={` p-2 rounded-lg w-40 h-28 m-3  ${theme.primary} shadow`}
         >
           <View className="flex-row justify-between">
-            <View>
+            <View className="h-6">
               <Text
                 style={{ fontFamily: langChoice(language, "en", "ar") }}
                 className={" font-bold " + theme.color}

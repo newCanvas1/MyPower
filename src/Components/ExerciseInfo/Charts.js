@@ -13,6 +13,7 @@ import {
   VictoryLabel,
 } from "victory-native";
 import { DatabaseContext } from "../../../context/DataContext";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 function Charts({ exercise, type, homescreen }) {
   const [result, setResult] = useState([]);
@@ -22,6 +23,15 @@ function Charts({ exercise, type, homescreen }) {
   const { theme } = useContext(ThemeContext);
   const [exerciseName, setExerciseName] = useState("");
   const [noData, setNoData] = useState(false);
+  const GetTimeLabel = () => {
+    const label =
+      type == "thisMonth"
+        ? "This Month"
+        : type == "thisYear"
+        ? "This Year"
+        : "All Time";
+    return label;
+  };
   useEffect(() => {
     async function getInfo() {
       for (const e of exercises) {
@@ -54,6 +64,14 @@ function Charts({ exercise, type, homescreen }) {
           {exerciseName}
         </Text>
       )}
+
+      <Text
+        style={{ fontFamily: langChoice(language, "en", "ar") }}
+        className={`text-white text-center  top-[20] ${homescreen ? " opacity-25" : ""}`}
+      >
+        {GetTimeLabel()}
+      </Text>
+
       {!noData ? (
         <VictoryChart>
           <VictoryAxis

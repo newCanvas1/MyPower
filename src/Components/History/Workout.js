@@ -25,7 +25,7 @@ function Workout({ item }) {
   const { language } = useContext(LanguageContext);
   const [showEdit, setShowEdit] = useState(false);
   return (
-    <View className={"shadow w-full p-2 pb-4 rounded-xl " + theme.workoutCard}>
+    <View className={"shadow w-full p-2 rounded-xl " + theme.workoutCard}>
       <View className="flex-row items-center justify-between p-4">
         <View>
           <Text
@@ -115,7 +115,6 @@ function Workout({ item }) {
             workoutId={workout.workoutId}
           />
         )}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
       />
 
       <CustomPopover

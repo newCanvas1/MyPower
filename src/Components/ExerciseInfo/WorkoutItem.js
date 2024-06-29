@@ -5,7 +5,7 @@ import  formatDate from "../../utility/functions/formatDate";
 function WorkoutItem({ workout, exercise }) {
   const { theme } = useContext(ThemeContext);
   return (
-    <View className="w-[100%] border border-white p-2 rounded mt-4">
+    <View className="w-[100%] border border-white p-2 rounded-xl mt-4">
       <View key={workout.workout.workoutId}>
         <View className="flex-row justify-between">
           <Text className={"text-xl " + theme.textPrimary}>
