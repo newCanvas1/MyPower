@@ -5,11 +5,10 @@ import FontContextProvider from "../context/FontContext";
 import { LanguageContextProvider } from "../context/LanguageContext";
 import { WorkoutContextProvider } from "../context/WorkoutContext";
 import { ThemeContext, ThemeProvider } from "../context/ThemeContext";
-import { useContext,  } from "react";
+import { useContext } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Layout() {
- 
   const StackElement = () => {
     const { theme } = useContext(ThemeContext);
 
@@ -28,6 +27,7 @@ export default function Layout() {
           name="workout/[planId]"
           options={{ presentation: "modal" }}
         />
+        <Stack.Screen name="workouts/[day]" options={{ presentation: "modal" }} />
       </Stack>
     );
   };

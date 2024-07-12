@@ -8,6 +8,7 @@ import { LanguageContext } from "../../../../context/LanguageContext";
 import CustomPopover from "../../General/CustomPopover";
 import { Text, View } from "react-native";
 import DayPopover from "./DayPopover";
+import { router } from "expo-router";
 function WorkoutsCalender() {
   const [dates, setDates] = useState({});
   const { updateWorkouts } = useContext(DatabaseContext);
@@ -40,7 +41,9 @@ function WorkoutsCalender() {
         headerStyle={{ backgroundColor: "transparent" }}
         onDayPress={(day) => {
           setSelectedDay(new Date(day.timestamp).toString());
-          setShowWorkoutsPopover(true);
+          // setShowWorkoutsPopover(true);
+          router.push(`/workouts/${new Date(day.timestamp).toString()}`);
+
         }}
         hideExtraDays
         markedDates={dates}
