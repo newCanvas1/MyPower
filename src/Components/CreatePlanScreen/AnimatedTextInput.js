@@ -34,7 +34,7 @@ const AnimatedSearchInput = ({style, className,onChangeText,searchWords}) => {
     return () => clearInterval(interval);
   }, []);
 
-  return <TextInput style={style} className={className} placeholder={placeholder} onChangeText={onChangeText} />;
+  return <TextInput placeholderTextColor={"gray"} style={style} className={className} placeholder={placeholder} onChangeText={onChangeText} />;
 };
 
 export default AnimatedSearchInput;

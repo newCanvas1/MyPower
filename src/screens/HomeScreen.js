@@ -10,22 +10,22 @@ function Homescreen(props) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <ScrollView className={ theme.mainScreen}>
-      {/* <Greeting /> */}
+    <ScrollView className={theme.mainScreen}>
+      <Greeting />
       <AnimatedView
         content={<CarouselElement />}
         enterFromRight
         fadeIn
         duration={500}
-        wait={700}
+        wait={500}
       />
       <AnimatedView
-      style={{ marginTop: 10 }}
+        style={{ marginTop: 10 }}
         content={<Plans />}
         enterFromLeft
         fadeIn
         duration={500}
-        wait={700}
+        wait={500}
       />
     </ScrollView>
   );

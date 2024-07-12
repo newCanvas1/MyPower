@@ -23,6 +23,7 @@ function RenamePopover({ setShowRenamePopover, planId,oldName }) {
         className={styles.userTextInput + " mt-10" +` ${langChoice(language, "text-left", "text-right")}`}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
         placeholder={langChoice(language, ENGLISH.NEW_NAME, ARABIC.NEW_NAME)}
+        placeholderTextColor={"gray"}
         onChangeText={(text) => setNewName(text)}
         value={newName}
       />

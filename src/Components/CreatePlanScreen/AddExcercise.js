@@ -19,7 +19,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
   const { reloadExercises } = useContext(DatabaseContext);
   const { theme } = useContext(ThemeContext);
   return (
-    <View className="flex-col items-center mt-10">
+    <View className="flex-col items-center mt-10 px-4">
       <Text
         className={`text-xl ${theme.textPrimary} `}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
@@ -36,6 +36,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         {langChoice(language, ENGLISH.NAME, ARABIC.NAME)}
       </Text>
       <TextInput
+        placeholderTextColor={"gray"}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
         className={
           styles.userTextInput +
@@ -49,7 +50,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         onChangeText={(text) => setName(text)}
       />
       <Text
-        className={`${langChoice(language, "self-start", "self-end")} ${
+        className={`${langChoice(language, "self-start", "self-end")} mt-2 ${
           theme.textPrimary
         }  `}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
@@ -69,6 +70,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         {langChoice(language, ENGLISH.DESCRIBTION, ARABIC.DESCRIBTION)}
       </Text>
       <TextInput
+        placeholderTextColor={"gray"}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
         className={
           styles.userTextInput +
@@ -82,7 +84,7 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         onChangeText={(text) => setDescription(text)}
       />
       <Text
-        className={`${langChoice(language, "self-start", "self-end")} ${
+        className={`${langChoice(language, "self-start", "self-end")} mt-2 ${
           theme.textPrimary
         } `}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
@@ -90,10 +92,11 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
         {langChoice(language, ENGLISH.NOTES, ARABIC.NOTES)}
       </Text>
       <TextInput
+        placeholderTextColor={"gray"}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
         className={
           styles.userTextInput +
-          `${langChoice(language, " text-left", " text-right")}`
+          `${langChoice(language, " text-left", " text-right")} `
         }
         placeholder={langChoice(
           language,

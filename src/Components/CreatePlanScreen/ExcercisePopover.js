@@ -67,7 +67,12 @@ function ExcercisePopover(props) {
             setShowAddingExcercise(true);
           }}
         >
-          <Text className={" font-bold " + theme.textPrimary}>Add New</Text>
+          <Text
+            style={{ fontFamily: langChoice(language, "en", "ar") }}
+            className={" font-bold " + theme.textPrimary}
+          >
+            {langChoice(language, ENGLISH.ADD, ARABIC.ADD)}
+          </Text>
         </TouchableOpacity>
       )}
 
