@@ -14,6 +14,7 @@ import {
 } from "victory-native";
 import { DatabaseContext } from "../../../context/DataContext";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import { ARABIC, ENGLISH } from "../../utility/labels";
 
 function Charts({ exercise, type, homescreen }) {
   const [result, setResult] = useState([]);
@@ -26,10 +27,10 @@ function Charts({ exercise, type, homescreen }) {
   const GetTimeLabel = () => {
     const label =
       type == "thisMonth"
-        ? "This Month"
+        ? langChoice(language, ENGLISH.THIS_MONTH, ARABIC.THIS_MONTH)
         : type == "thisYear"
-        ? "This Year"
-        : "All Time";
+        ? langChoice(language, ENGLISH.THIS_YEAR, ARABIC.THIS_YEAR)
+        : langChoice(language, ENGLISH.ALL_TIME, ARABIC.ALL_TIME);
     return label;
   };
   useEffect(() => {
@@ -67,7 +68,9 @@ function Charts({ exercise, type, homescreen }) {
 
       <Text
         style={{ fontFamily: langChoice(language, "en", "ar") }}
-        className={`text-white text-center  top-[20] ${homescreen ? " opacity-25" : ""}`}
+        className={`text-white text-center  top-[20] ${
+          homescreen ? " opacity-25" : ""
+        }`}
       >
         {GetTimeLabel()}
       </Text>

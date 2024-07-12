@@ -19,14 +19,14 @@ function AddExcercise({ setShowAddingExcercise, addExercise }) {
   const { reloadExercises } = useContext(DatabaseContext);
   const { theme } = useContext(ThemeContext);
   return (
-    <View className="flex-col items-center  h-screen">
+    <View className="flex-col items-center mt-10">
       <Text
         className={`text-xl ${theme.textPrimary} `}
         style={{ fontFamily: langChoice(language, "en", "ar") }}
       >
         {langChoice(language, ENGLISH.ADD_EXERCISE, ARABIC.ADD_EXCERCISE)}
       </Text>
-      <View className="h-32"></View>
+      <View className="h-20"></View>
       <Text
         className={`${langChoice(language, "self-start", "self-end")} ${
           theme.textPrimary

@@ -61,7 +61,7 @@ function Exercise({ exercise }) {
       <TouchableOpacity
         onPress={goToExerciseModal}
         className={
-          " flex-1 flex-row justify-between  p-5 rounded-lg shadow mt-3 " +
+          " flex-1 flex-row justify-between items-center px-2  rounded-lg shadow mt-3  " +
           theme.primary
         }
       >

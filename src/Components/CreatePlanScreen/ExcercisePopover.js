@@ -70,77 +70,90 @@ function ExcercisePopover(props) {
           <Text className={" font-bold " + theme.textPrimary}>Add New</Text>
         </TouchableOpacity>
       )}
-      {showAddingExcercise && (
+
+      {showAddingExcercise ? (
         <AddExcercise
-          addExercise={add}
           setShowAddingExcercise={setShowAddingExcercise}
+          addExercise={add}
         />
-      )}
+      ) : (
+        <>
+          <View className="  rounded p-1  h-full ">
+            <Text
+              style={{ fontFamily: langChoice(language, "en", "ar") }}
+              className={`text-xl text-center ${theme.textSecondary}`}
+            >
+              {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
+            </Text>
+            <AnimatedSearchInput
+              searchWords={[
+                langChoice(
+                  language,
+                  `${ENGLISH.SEARCH}  `,
+                  `${ARABIC.SEARCH}  `
+                ),
+                "Biceps  ",
+                "Legs ",
+                "Chest ",
+              ]}
+              style={{ fontFamily: langChoice(language, "en", "ar") }}
+              className={
+                styles.userTextInput +
+                " text-xs text-center self-center  " +
+                `${langChoice(language, " text-left", " text-right")}`
+              }
+              onChangeText={(text) => {
+                setSearchText(text);
+                // search using the item name and muscle and category
+                const searchResults = exercises.filter(
+                  (item) =>
+                    item.name?.toLowerCase().includes(text.toLowerCase()) ||
+                    item.muscle?.toLowerCase().includes(text.toLowerCase()) ||
+                    item.category?.toLowerCase().includes(text.toLowerCase())
+                );
 
-      <View className="  rounded p-1  h-full ">
-        <Text
-          style={{ fontFamily: langChoice(language, "en", "ar") }}
-          className={`text-xl text-center ${theme.textSecondary}`}
-        >
-          {langChoice(language, ENGLISH.EXCERCISES, ARABIC.EXCERCISES)}
-        </Text>
-        <AnimatedSearchInput
-          searchWords={[
-            langChoice(language, `${ENGLISH.SEARCH}  `, `${ARABIC.SEARCH}  `),
-            "Biceps  ",
-            "Legs ",
-            "Chest ",
-          ]}
-          style={{ fontFamily: langChoice(language, "en", "ar") }}
-          className={
-            styles.userTextInput +
-            " text-xs text-center self-center  " +
-            `${langChoice(language, " text-left", " text-right")}`
-          }
-          onChangeText={(text) => {
-            setSearchText(text);
-            // search using the item name and muscle and category
-            const searchResults = exercises.filter(
-              (item) =>
-                item.name?.toLowerCase().includes(text.toLowerCase()) ||
-                item.muscle?.toLowerCase().includes(text.toLowerCase()) ||
-                item.category?.toLowerCase().includes(text.toLowerCase())
-            );
+                const orgnized = organizeExercises(searchResults);
+                setDisplayExcercises(organizeExercises(searchResults));
+              }}
+            />
 
-            const orgnized = organizeExercises(searchResults);
-            setDisplayExcercises(organizeExercises(searchResults));
-          }}
-        />
-
-        {Object.keys(displayExcercises).length == 0 ? (
-          <Text
-            style={{ fontFamily: langChoice(language, "en", "ar") }}
-            className=" self-center mt-5 text-gray-400"
-          >
-            {langChoice(language, ENGLISH.NO_EXERCISES, ARABIC.NO_EXERCISES)}
-          </Text>
-        ) : (
-          <ScrollView>
-            {Object.keys(displayExcercises).map((category) => (
-              <View className="mt-5" key={category}>
-                <View
-                  className={"border-l-4 px-2 rounded  " + theme.setInputBorder}
-                >
-                  <Text
-                    className={"text-lg " + theme.textPrimary}
-                    style={{ fontFamily: langChoice(language, "en", "ar") }}
-                  >
-                    {category}
-                  </Text>
-                </View>
-                {displayExcercises[category].map((item) => (
-                  <ExerciseItem key={item.exerciseId} exercise={item} />
+            {Object.keys(displayExcercises).length == 0 ? (
+              <Text
+                style={{ fontFamily: langChoice(language, "en", "ar") }}
+                className=" self-center mt-5 text-gray-400"
+              >
+                {langChoice(
+                  language,
+                  ENGLISH.NO_EXERCISES,
+                  ARABIC.NO_EXERCISES
+                )}
+              </Text>
+            ) : (
+              <ScrollView>
+                {Object.keys(displayExcercises).map((category) => (
+                  <View className="mt-5" key={category}>
+                    <View
+                      className={
+                        "border-l-4 px-2 rounded  " + theme.setInputBorder
+                      }
+                    >
+                      <Text
+                        className={"text-lg " + theme.textPrimary}
+                        style={{ fontFamily: langChoice(language, "en", "ar") }}
+                      >
+                        {category}
+                      </Text>
+                    </View>
+                    {displayExcercises[category].map((item) => (
+                      <ExerciseItem key={item.exerciseId} exercise={item} />
+                    ))}
+                  </View>
                 ))}
-              </View>
-            ))}
-          </ScrollView>
-        )}
-      </View>
+              </ScrollView>
+            )}
+          </View>
+        </>
+      )}
     </View>
   );
 }

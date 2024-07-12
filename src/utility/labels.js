@@ -59,6 +59,10 @@ export const ARABIC = {
   CANCEL_WORKOUT: "إلغاء التمارين",
   NO_SETS_CONFIRMED: "يوجد مجموعات غير مؤكدة لهذا التمرين 🧑‍💻",
   CANCEL_CONFIRM: "هل تريد إلغاء التمارين؟",
+  ADD: "أضف جديد",
+  THIS_MONTH: "هذا الشهر",
+  THIS_YEAR: "هذه السنة",
+  ALL_TIME: " كل الوقت",
 };
 
 export const ENGLISH = {
@@ -123,4 +127,8 @@ export const ENGLISH = {
   CANCEL_WORKOUT: "Cancel Workout",
   NO_SETS_CONFIRMED: "You have unconfirmed sets 🧑‍💻",
   CANCEL_CONFIRM: "Are you sure you want to cancel?",
+  ADD: "Add New",
+  THIS_MONTH: "This Month",
+  THIS_YEAR: "This Year",
+  ALL_TIME: " All Time",
 };
