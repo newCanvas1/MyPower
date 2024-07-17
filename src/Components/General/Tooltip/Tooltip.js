@@ -7,6 +7,7 @@ import { View } from "react-native";
 function Tooltip({ setShowTooltip, showTooltip, tooltipRef, buttons }) {
   return (
     <Popover
+    animationConfig={{ duration: 50,delay:0 }}
       from={tooltipRef}
       placement={PopoverPlacement.TOP}
       arrowSize={{ width: 0, height: 0 }}
