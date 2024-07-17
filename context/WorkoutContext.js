@@ -104,16 +104,15 @@ export const WorkoutContextProvider = ({ children }) => {
     setSets(newSets);
   }
   async function addExercise(exercise) {
-
     setExercises([...exercises, exercise]);
     setSets({ ...sets, [exercise.exerciseId]: [] });
   }
 
   useEffect(() => {
-    async function getInfo() {
+    async function getInfo(id) {
       try {
-        const data = await getPlanExcercise(planId);
-        const plan = await getPlan(planId);
+        const data = await getPlanExcercise(id);
+        const plan = await getPlan(id);
         setExercises(data);
         await prepareSets(data);
         setPlan(plan);
@@ -122,7 +121,7 @@ export const WorkoutContextProvider = ({ children }) => {
       }
     }
 
-    getInfo();
+    getInfo(planId);
   }, [planId]);
   return (
     <WorkoutContext.Provider
