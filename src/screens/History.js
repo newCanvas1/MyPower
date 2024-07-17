@@ -21,20 +21,31 @@ function History() {
       >
         {langChoice(language, ENGLISH.HISTORY, ARABIC.HISTORY)}
       </Text>
-      <AnimatedView
-        fadeIn
-        content={
-          <FlatList
-            data={workouts}
-            renderItem={({ item, index }) => (
-              <Workout key={item.workout.workoutId} item={item} />
-            )}
-            className="  mt-10 "
-            ItemSeparatorComponent={() => <View style={{ height: 30 }}></View>}
-            keyExtractor={(item) => item.workout.workoutId}
-          />
-        }
-      />
+      {workouts.length == 0 ? (
+        <Text
+          style={{ fontFamily: "ar" }}
+          className={` text-sm opacity-40 mt-10 text-center text-white`}
+        >
+          {langChoice(language, ENGLISH.NO_WORKOUTS, ARABIC.NO_WORKOUTS)}
+        </Text>
+      ) : (
+        <AnimatedView
+          fadeIn
+          content={
+            <FlatList
+              data={workouts}
+              renderItem={({ item, index }) => (
+                <Workout key={item.workout.workoutId} item={item} />
+              )}
+              className="  mt-10 "
+              ItemSeparatorComponent={() => (
+                <View style={{ height: 30 }}></View>
+              )}
+              keyExtractor={(item) => item.workout.workoutId}
+            />
+          }
+        />
+      )}
     </View>
   );
 }

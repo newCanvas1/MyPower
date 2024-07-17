@@ -24,6 +24,31 @@ function Workout({ item }) {
   const { deleteWorkout } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
   const [showEdit, setShowEdit] = useState(false);
+  const toolTipButtons = [
+    {
+      func: () => deleteWorkout(workout.workoutId),
+      label: langChoice(language, ENGLISH.DELETE, ARABIC.DELETE),
+      color: "red",
+      icon: <MaterialCommunityIcons name={"delete"} size={15} color={"red"} />,
+    },
+    {
+      func: () => {
+        setShowTooltip(false);
+        setTimeout(() => {
+          setShowEdit(true);
+        }, 500);
+      },
+      label: langChoice(language, ENGLISH.EDIT, ARABIC.EDIT),
+      color: "blue",
+      icon: (
+        <MaterialCommunityIcons
+          name={"application-edit"}
+          size={15}
+          color={"green"}
+        />
+      ),
+    },
+  ];
   return (
     <View className={"shadow w-full p-2 rounded-xl " + theme.workoutCard}>
       <View className="flex-row items-center justify-between p-4">
@@ -62,33 +87,7 @@ function Workout({ item }) {
         setShowTooltip={setShowTooltip}
         showTooltip={showTooltip}
         tooltipRef={tooltipRef}
-        buttons={[
-          {
-            func: () => deleteWorkout(workout.workoutId),
-            label: langChoice(language, ENGLISH.DELETE, ARABIC.DELETE),
-            color: "red",
-            icon: (
-              <MaterialCommunityIcons name={"delete"} size={15} color={"red"} />
-            ),
-          },
-          {
-            func: () => {
-              setShowTooltip(false);
-              setTimeout(() => {
-                setShowEdit(true);
-              }, 500);
-            },
-            label: langChoice(language, ENGLISH.EDIT, ARABIC.EDIT),
-            color: "blue",
-            icon: (
-              <MaterialCommunityIcons
-                name={"application-edit"}
-                size={15}
-                color={"green"}
-              />
-            ),
-          },
-        ]}
+        buttons={toolTipButtons}
       />
       <View className="flex-row items-center px-10 justify-between mb-2">
         <Text
