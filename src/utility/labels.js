@@ -64,6 +64,7 @@ export const ARABIC = {
   THIS_YEAR: "هذه السنة",
   ALL_TIME: " كل الوقت",
   NO_WORKOUTS: "لم يتم العثور على تمارين 🧑، التمارين المسجلة ستظهر هنا",
+  NO_WORKOUTS_FOR_THIS_DAY: "لم يتم العثور على تمارين لهذا اليوم 🧑‍💻",
 };
 
 export const ENGLISH = {
@@ -133,4 +134,5 @@ export const ENGLISH = {
   THIS_YEAR: "This Year",
   ALL_TIME: " All Time",
   NO_WORKOUTS: "No workouts found 🧑‍💻, start a workout to appear here",
+  NO_WORKOUTS_FOR_THIS_DAY: "No workouts found for this day 🧑‍💻",
 };

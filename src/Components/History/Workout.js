@@ -14,7 +14,7 @@ import { DatabaseContext } from "../../../context/DataContext";
 import CustomPopover from "../General/CustomPopover";
 import EditWorkout from "./EditWorkout";
 import Set from "./Set";
-function Workout({ item }) {
+function Workout({ item, removeFromFrontend }) {
   const [workout, setWorkout] = useState(item.workout);
   const [exercises, setExercises] = useState(item.exercises);
   const [plan, setPlan] = useState(item.plan);
@@ -26,7 +26,12 @@ function Workout({ item }) {
   const [showEdit, setShowEdit] = useState(false);
   const toolTipButtons = [
     {
-      func: () => deleteWorkout(workout.workoutId),
+      func: () => {
+        deleteWorkout(workout.workoutId);
+        if (removeFromFrontend) {
+          removeFromFrontend(workout.workoutId);
+        }
+      },
       label: langChoice(language, ENGLISH.DELETE, ARABIC.DELETE),
       color: "red",
       icon: <MaterialCommunityIcons name={"delete"} size={15} color={"red"} />,
