@@ -14,7 +14,7 @@ import { router, useRouter } from "expo-router";
 import PlanPopover from "./Plan/PlanPopover";
 import { WorkoutContext } from "../../../../../context/WorkoutContext";
 import { ThemeContext } from "../../../../../context/ThemeContext";
-
+import Entypo from "react-native-vector-icons/Entypo";
 function PlanItem({ item }) {
   const { deletePlan } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
@@ -137,12 +137,15 @@ function PlanItem({ item }) {
               >
                 {item.name}
               </Text>
-              <Text
-                style={{ fontFamily: langChoice(language, "en", "ar") }}
-                className={" font-bold opacity-60 " + theme.color}
-              >
-                {getTime()}
-              </Text>
+              <View className="flex-row-reverse items-center justify-center">
+                <Text
+                  style={{ fontFamily: langChoice(language, "en", "ar") }}
+                  className={" font-bold opacity-60 mx-1 " + theme.color}
+                >
+                  {getTime()}
+                </Text>
+                <Entypo name="back-in-time" size={13} color="black" />
+              </View>
             </View>
             <TouchableOpacity
               ref={tooltipRef}
