@@ -3,6 +3,7 @@ import { View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { updateWorkoutDate } from "../../../database/database";
 import { DatabaseContext } from "../../../context/DataContext";
+import Edit from "../Workout/Edit/Edit";
 function EditWorkout({ workout, setWorkout }) {
   const date = new Date(workout.date);
   const { updateWorkouts } = useContext(DatabaseContext);
@@ -21,7 +22,11 @@ function EditWorkout({ workout, setWorkout }) {
   }
 
   return (
-    <View className="justify-center items-center h-[100%]">
+    <View className=" items-center h-[100%] py-5">
+      <View className="h-[20%]">
+        <Edit workoutId={workout.workoutId} />
+      </View>
+
       <View className="bg-white rounded-lg p-4 w-[70%] justify-center items-center">
         <DateTimePicker
           mode="datetime"

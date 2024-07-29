@@ -277,7 +277,7 @@ export const insertWorkout = async (duration, notes, date, planId) => {
 export const getWorkoutInfo = async (id) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const data = await db.getAllAsync(
-    `SELECT * FROM workouts JOIN plans ON workouts.planId = plans.id WHERE workouts.id = ${id}`
+    `SELECT * FROM workouts JOIN plans ON workouts.planId = plans.id WHERE workouts.workoutId = ${id}`
   );
   const sets = await db.getAllAsync(
     `SELECT * FROM sets WHERE workoutId = ${id}`
