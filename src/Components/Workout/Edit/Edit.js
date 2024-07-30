@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import {
   deleteExercisesAndSets,
   getWorkoutInfo,
+  insertNewEditSets,
 } from "../../../../database/database";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import WorkoutExercise from "../../Workout/Edit/WorkoutExercise";
@@ -18,6 +19,9 @@ function Edit({ workoutId }) {
 
   function saveEdition() {
     deleteExercisesAndSets(exercisesToDelete, setsToDelete, workoutId);
+    // insert new sets
+    insertNewEditSets(setsToUpdate,workoutId);
+
   }
   const [exercisesToDelete, setExercisesToDelete] = useState([]);
   useEffect(() => {

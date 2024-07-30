@@ -680,4 +680,29 @@ export const deleteExercisesAndSets = async (
       `DELETE FROM sets WHERE exerciseId = ${exerciseId} AND workoutId = ${workoutId}`
     );
   }
+
+  // delete sets
+  for (const setId of setsToDelete) {
+    await db.runAsync(`DELETE FROM sets WHERE id = ${setId} `);
+  }
+};
+
+export const insertNewEditSets = async (setsToUpdate, workoutId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  for (const exerciseId of Object.keys(setsToUpdate)) {
+    for (const set of setsToUpdate[exerciseId]) {
+      if (set.type == "new") {
+        await db.runAsync(
+          `INSERT INTO sets (exerciseId, reps, weight, type, planId, workoutId, date) VALUES (?,?,?,?,?,?,?)`,
+          `${exerciseId}`,
+          `${set.reps}`,
+          `${set.weight}`,
+          `regular`,
+          `${set.planId}`,
+          `${workoutId}`,
+          `${new Date()}`
+        );
+      }
+    }
+  }
 };
