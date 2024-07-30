@@ -10,21 +10,27 @@ import WorkoutExercise from "../../Workout/Edit/WorkoutExercise";
 import { langChoice } from "../../../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../../utility/labels";
 import { LanguageContext } from "../../../../context/LanguageContext";
+import { DatabaseContext } from "../../../../context/DataContext";
 function Edit({ workoutId }) {
   const { language } = useContext(LanguageContext);
   const [excercises, setExcercises] = useState([]);
+  const { setWorkouts ,getAllWorkouts} = useContext(DatabaseContext);
+
   // {exerciseId: {setId: set}}
   const [setsToUpdate, setSetsToUpdate] = useState({});
   // [setId]
   const [setsToDelete, setSetsToDelete] = useState([]);
 
-  function saveEdition() {
+  async function saveEdition() {
     // delete removed sets
-    deleteExercisesAndSets(exercisesToDelete, setsToDelete, workoutId);
+    await deleteExercisesAndSets(exercisesToDelete, setsToDelete, workoutId);
     // insert new sets
-    insertNewEditSets(setsToUpdate, workoutId);
+    await insertNewEditSets(setsToUpdate, workoutId);
     // update sets
-    updateEditedSets(setsToUpdate);
+    await updateEditedSets(setsToUpdate);
+    getAllWorkouts().then((data) => {
+      setWorkouts(data);
+    });
   }
   const [exercisesToDelete, setExercisesToDelete] = useState([]);
   useEffect(() => {

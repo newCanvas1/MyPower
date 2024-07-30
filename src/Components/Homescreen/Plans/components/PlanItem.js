@@ -144,7 +144,9 @@ function PlanItem({ item }) {
                 >
                   {getTime()}
                 </Text>
-                <Entypo name="back-in-time" size={13} color="black" />
+                {getTime() != "" && (
+                  <Entypo name="back-in-time" size={13} color="black" />
+                )}
               </View>
             </View>
             <TouchableOpacity

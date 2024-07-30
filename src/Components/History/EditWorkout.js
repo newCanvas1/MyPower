@@ -4,12 +4,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { updateWorkoutDate } from "../../../database/database";
 import { DatabaseContext } from "../../../context/DataContext";
 import Edit from "../Workout/Edit/Edit";
-import { TouchableOpacity } from "react-native";
-import { langChoice } from "../../utility/functions/langChoice";
-import { LanguageContext } from "../../../context/LanguageContext";
-import { ARABIC, ENGLISH } from "../../utility/labels";
+
 function EditWorkout({ workout, setWorkout }) {
-  const { language } = useContext(LanguageContext);
   const date = new Date(workout.date);
   const { updateWorkouts } = useContext(DatabaseContext);
   async function updateDate(date) {

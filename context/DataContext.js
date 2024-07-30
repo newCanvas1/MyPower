@@ -122,7 +122,6 @@ export const DatabaseProvider = ({ children }) => {
   };
   const getAllWorkouts = async () => {
     const data = await getWorkouts();
-
     return data;
   };
   const deleteWorkout = async (workoutId) => {
