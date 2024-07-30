@@ -14,7 +14,7 @@ import { ThemeContext } from "../../../../context/ThemeContext";
 import Feather from "@expo/vector-icons/Feather";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import AnimatedView from "../../General/AnimatedView";
-function Set({ set, count }) {
+function Set({ set, count, setSetsToUpdate, setsToUpdate, setSetsToDelete }) {
   const [reps, setReps] = useState(set.reps);
   const [weight, setWeight] = useState(set.weight);
   const [setOrder] = useState(count);
@@ -23,38 +23,12 @@ function Set({ set, count }) {
   const [fadeOut, setFadeOut] = useState(false);
 
   const { language } = useContext(LanguageContext);
-  const { removeSet, setSets, sets } = useContext(WorkoutContext);
   const { theme } = useContext(ThemeContext);
 
   const setBackground = setChecked ? "bg-green-400 opacity-60" : " ";
   const translateX = React.useRef(new Animated.Value(0)).current;
 
-  function getLastSetInfo() {
-    if (set.weight == 0 || set.reps == 0) {
-      const lastSet = sets[set.exerciseId][sets[set.exerciseId].length - 2];
-      if (lastSet != undefined) {
-        setSets((prev) => {
-          const newSets = { ...prev };
-          const listofSets = newSets[set.exerciseId];
-          for (let i = 0; i < listofSets.length; i++) {
-            if (listofSets[i].id === set.id) {
-              listofSets[i].weight = lastSet.weight;
-              listofSets[i].reps = lastSet.reps;
-              break;
-            }
-          }
-          newSets[set.exerciseId] = listofSets;
-          return newSets;
-        });
-      }
-
-      setReps(lastSet == undefined ? 0 : lastSet.reps);
-      setWeight(lastSet == undefined ? 0 : lastSet.weight);
-    }
-  }
-  useEffect(() => {
-    getLastSetInfo();
-  }, []);
+  useEffect(() => {}, []);
 
   const onGestureEvent = Animated.event(
     [
@@ -84,7 +58,25 @@ function Set({ set, count }) {
         // Remove the set if the threshold is exceeded
         setFadeOut(true);
         setTimeout(() => {
-          removeSet(set.exerciseId, set.id);
+          setSetsToUpdate((prev) => {
+            const newSets = { ...prev };
+            const listofSets = newSets[set.exerciseId];
+            for (let i = 0; i < listofSets.length; i++) {
+              if (listofSets[i].id === set.id) {
+                listofSets.splice(i, 1);
+                break;
+              }
+            }
+            newSets[set.exerciseId] = listofSets;
+            return newSets;
+          });
+          if (set.type != "new") {
+            setSetsToDelete((prev) => {
+              const newSets =prev ;
+              newSets.push(set.id);
+              return newSets;
+            });
+          }
         }, 300);
       } else {
         // Reset the position if the threshold is not exceeded
@@ -136,7 +128,7 @@ function Set({ set, count }) {
                     : weight.toString()
                 }
                 onChangeText={(text) => {
-                  setSets((prev) => {
+                  setSetsToUpdate((prev) => {
                     const newSets = { ...prev };
                     const listofSets = newSets[set.exerciseId];
                     for (let i = 0; i < listofSets.length; i++) {
@@ -163,7 +155,7 @@ function Set({ set, count }) {
                     : reps.toString()
                 }
                 onChangeText={(text) => {
-                  setSets((prev) => {
+                  setSetsToUpdate((prev) => {
                     const newSets = { ...prev };
                     const listofSets = newSets[set.exerciseId];
                     for (let i = 0; i < listofSets.length; i++) {
@@ -182,7 +174,7 @@ function Set({ set, count }) {
               />
               <TouchableOpacity
                 onPress={() => {
-                  setSets((prev) => {
+                  setSetsToUpdate((prev) => {
                     const newSets = { ...prev };
                     const listofSets = newSets[set.exerciseId];
                     for (let i = 0; i < listofSets.length; i++) {

@@ -10,8 +10,7 @@ import Feather from "react-native-vector-icons/Feather";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import Tooltip from "../../General/Tooltip/Tooltip";
-function WorkoutExercise({ exercise }) {
-  const { setSets, sets, setExercises } = useContext(WorkoutContext);
+function WorkoutExercise({ exercise, setsToUpdate, setSetsToUpdate , setSetsToDelete }) {
   const { language } = useContext(LanguageContext);
   const { theme } = useContext(ThemeContext);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -57,7 +56,7 @@ function WorkoutExercise({ exercise }) {
           ]}
         />
       </View>
-      {!sets[exercise.exerciseId]?.length == 0 && (
+      {setsToUpdate[exercise.exerciseId]?.length == 0 && (
         <View
           className={
             " p-2 shadow w-[80%] flex-row justify-between items-center self-end " +
@@ -87,7 +86,12 @@ function WorkoutExercise({ exercise }) {
           </View>
         </View>
       )}
-      <SetList exerciseId={exercise.exerciseId} />
+      <SetList
+        exerciseId={exercise.exerciseId}
+        setsToUpdate={setsToUpdate}
+        setSetsToUpdate={setSetsToUpdate}
+        setSetsToDelete = {setSetsToDelete}
+      />
 
       <TouchableOpacity
         onPress={() => {
@@ -95,11 +99,11 @@ function WorkoutExercise({ exercise }) {
             id: Math.random() * 1000,
             reps: 0,
             weight: 0,
-            type: "regular",
+            type: "new",
             exerciseId: exercise.exerciseId,
             planId: exercise.planId,
           };
-          setSets((sets) => {
+          setSetsToUpdate((sets) => {
             const newSets = { ...sets };
             newSets[exercise.exerciseId].push(initialSet);
             return newSets;
