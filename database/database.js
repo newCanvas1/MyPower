@@ -674,7 +674,6 @@ export const deleteExercisesAndSets = async (
 ) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   // delete exercises
-  console.log(exercisesToDelete, workoutId);
   for (const exerciseId of exercisesToDelete) {
     await db.runAsync(
       `DELETE FROM sets WHERE exerciseId = ${exerciseId} AND workoutId = ${workoutId}`
@@ -685,6 +684,7 @@ export const deleteExercisesAndSets = async (
   for (const setId of setsToDelete) {
     await db.runAsync(`DELETE FROM sets WHERE id = ${setId} `);
   }
+  return true;
 };
 
 export const insertNewEditSets = async (setsToUpdate, workoutId) => {
@@ -705,6 +705,7 @@ export const insertNewEditSets = async (setsToUpdate, workoutId) => {
       }
     }
   }
+  return true;
 };
 
 export const updateEditedSets = async (setsToUpdate) => {
@@ -721,4 +722,5 @@ export const updateEditedSets = async (setsToUpdate) => {
       }
     }
   }
+  return true;
 };

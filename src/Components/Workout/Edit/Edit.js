@@ -14,7 +14,7 @@ import { DatabaseContext } from "../../../../context/DataContext";
 function Edit({ workoutId }) {
   const { language } = useContext(LanguageContext);
   const [excercises, setExcercises] = useState([]);
-  const { setWorkouts ,getAllWorkouts} = useContext(DatabaseContext);
+  const { updateWorkouts } = useContext(DatabaseContext);
 
   // {exerciseId: {setId: set}}
   const [setsToUpdate, setSetsToUpdate] = useState({});
@@ -28,9 +28,6 @@ function Edit({ workoutId }) {
     await insertNewEditSets(setsToUpdate, workoutId);
     // update sets
     await updateEditedSets(setsToUpdate);
-    getAllWorkouts().then((data) => {
-      setWorkouts(data);
-    });
   }
   const [exercisesToDelete, setExercisesToDelete] = useState([]);
   useEffect(() => {
@@ -57,7 +54,7 @@ function Edit({ workoutId }) {
   console.log(exercisesToDelete);
 
   return (
-    <View className=" p-5 h-[500]">
+    <View className=" p-5 h-[500] justify-center items-center w-[100%]">
       <FlatList
         data={excercises}
         renderItem={({ item }) => (
@@ -71,14 +68,15 @@ function Edit({ workoutId }) {
             setSetsToDelete={setSetsToDelete}
           />
         )}
-        className="  h-5"
+        keyExtractor={(item) => item.exerciseId}
       />
       <TouchableOpacity
-        onPress={() => {
+        onPress={async () => {
           // save the editted workout
-          saveEdition();
+          await saveEdition();
+          updateWorkouts();
         }}
-        className="bg-green-400 rounded justify-center items-center mt-2 p-2 w-20 h-10"
+        className="bg-green-400 rounded justify-center items-center mt-2 p-2 w-[250] h-10"
       >
         <Text style={{ fontFamily: "ar" }}>
           {langChoice(language, ENGLISH.SAVE, ARABIC.SAVE)}

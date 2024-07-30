@@ -4,12 +4,13 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import  formatDate from "../../utility/functions/formatDate";
 function WorkoutItem({ workout, exercise }) {
   const { theme } = useContext(ThemeContext);
+  console.log(workout);
   return (
     <View className="w-[100%] border border-white p-2 rounded-xl mt-4">
       <View key={workout.workout.workoutId}>
         <View className="flex-row justify-between">
           <Text className={"text-xl " + theme.textPrimary}>
-            {workout.plan.name}
+            {workout.plan?.name}
           </Text>
           <Text className={theme.textPrimary}>
             {formatDate(workout.workout.date)}

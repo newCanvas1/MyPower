@@ -24,10 +24,8 @@ function EditWorkout({ workout, setWorkout }) {
 
   return (
     <View className=" items-center h-[100%] py-5">
-      <View className="rounded-lg p-4 justify-center items-center">
-        <Edit workoutId={workout.workoutId} />
-
-        <View className="bg-white rounded  justify-center items-center">
+      <View className=" p-4 justify-center items-center">
+        <View className="bg-slate-300 rounded w-[250] justify-center py-2 items-center pr-2">
           <DateTimePicker
             mode="datetime"
             value={date}
@@ -38,7 +36,7 @@ function EditWorkout({ workout, setWorkout }) {
             }}
           />
         </View>
-      
+        <Edit workoutId={workout.workoutId} />
       </View>
     </View>
   );
