@@ -1,13 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { getWorkoutInfo } from "../../../../database/database";
-import { FlatList, Text, View } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  deleteExercisesAndSets,
+  getWorkoutInfo,
+} from "../../../../database/database";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import WorkoutExercise from "../../Workout/Edit/WorkoutExercise";
+import { langChoice } from "../../../utility/functions/langChoice";
+import { ARABIC, ENGLISH } from "../../../utility/labels";
+import { LanguageContext } from "../../../../context/LanguageContext";
 function Edit({ workoutId }) {
+  const { language } = useContext(LanguageContext);
   const [excercises, setExcercises] = useState([]);
   // {exerciseId: {setId: set}}
   const [setsToUpdate, setSetsToUpdate] = useState({});
   // [setId]
-  const [ setsToDelete, setSetsToDelete] = useState([]);
+  const [setsToDelete, setSetsToDelete] = useState([]);
+
+  function saveEdition() {
+    deleteExercisesAndSets(exercisesToDelete, setsToDelete, workoutId);
+  }
+  const [exercisesToDelete, setExercisesToDelete] = useState([]);
   useEffect(() => {
     getWorkoutInfo(workoutId).then((data) => {
       setExcercises(data.exercises);
@@ -29,14 +41,17 @@ function Edit({ workoutId }) {
     });
   }, []);
   console.log(setsToDelete);
+  console.log(exercisesToDelete);
 
   return (
-    <View>
-      <Text>Edit</Text>
+    <View className=" p-5 h-[500]">
       <FlatList
         data={excercises}
         renderItem={({ item }) => (
           <WorkoutExercise
+            saveEdition={saveEdition}
+            setExercisesToDelete={setExercisesToDelete}
+            setExercises={setExcercises}
             exercise={item}
             setsToUpdate={setsToUpdate}
             setSetsToUpdate={setSetsToUpdate}
@@ -45,6 +60,17 @@ function Edit({ workoutId }) {
         )}
         className="  h-5"
       />
+      <TouchableOpacity
+        onPress={() => {
+          // save the editted workout
+          saveEdition();
+        }}
+        className="bg-green-400 rounded justify-center items-center mt-2 p-2 w-20 h-10"
+      >
+        <Text style={{ fontFamily: "ar" }}>
+          {langChoice(language, ENGLISH.SAVE, ARABIC.SAVE)}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }

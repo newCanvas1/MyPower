@@ -9,7 +9,6 @@ import {
 import { ARABIC, ENGLISH } from "../../../utility/labels";
 import { langChoice } from "../../../utility/functions/langChoice";
 import { LanguageContext } from "../../../../context/LanguageContext";
-import { WorkoutContext } from "../../../../context/WorkoutContext";
 import { ThemeContext } from "../../../../context/ThemeContext";
 import Feather from "@expo/vector-icons/Feather";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
@@ -172,28 +171,7 @@ function Set({ set, count, setSetsToUpdate, setsToUpdate, setSetsToDelete }) {
                   theme.set + theme.setInputBorder + " " + theme.inputValue
                 }
               />
-              <TouchableOpacity
-                onPress={() => {
-                  setSetsToUpdate((prev) => {
-                    const newSets = { ...prev };
-                    const listofSets = newSets[set.exerciseId];
-                    for (let i = 0; i < listofSets.length; i++) {
-                      if (listofSets[i].id === set.id) {
-                        setSetChecked(!listofSets[i].checked);
-                        listofSets[i].checked = !listofSets[i].checked;
-                        break;
-                      }
-                    }
-                    newSets[set.exerciseId] = listofSets;
-                    return newSets;
-                  });
-                }}
-                className={`${
-                  set.checked ? "bg-green-400" : " "
-                } rounded border shadow p-[1px]`}
-              >
-                <Feather name="check" size={20} color={theme.color} />
-              </TouchableOpacity>
+           
               {(fadeOut || isDragging) && (
                 <View className={` bg-red-400 p-1 shadow rounded`}>
                   <Feather name="x" size={20} color={theme.color} />

@@ -560,7 +560,6 @@ export const getCharts = async () => {
 
   const data = await db.getAllAsync(`SELECT * FROM charts `);
 
-
   return data;
 };
 
@@ -584,7 +583,6 @@ export const deleteChart = async (id, type) => {
 
 // exercise has a row in the charts table
 export const isExerciseInCharts = async (exerciseId, type) => {
-
   const db = await SQLite.openDatabaseAsync("databaseName");
   const data = await db.getAllAsync(
     `SELECT * FROM charts WHERE exerciseId = ${exerciseId} ${
@@ -667,4 +665,19 @@ export const getExerciseChartOfPeriod = async (exerciseId, type) => {
     y: result[date],
   }));
   return chartData;
+};
+
+export const deleteExercisesAndSets = async (
+  exercisesToDelete,
+  setsToDelete,
+  workoutId
+) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  // delete exercises
+  console.log(exercisesToDelete, workoutId);
+  for (const exerciseId of exercisesToDelete) {
+    await db.runAsync(
+      `DELETE FROM sets WHERE exerciseId = ${exerciseId} AND workoutId = ${workoutId}`
+    );
+  }
 };

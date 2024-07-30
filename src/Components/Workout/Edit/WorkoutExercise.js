@@ -1,62 +1,47 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import SetList from "./SetList";
-import { WorkoutContext } from "../../../../context/WorkoutContext";
 import { LanguageContext } from "../../../../context/LanguageContext";
 import { ARABIC, ENGLISH } from "../../../utility/labels";
 import { langChoice } from "../../../utility/functions/langChoice";
 import { ThemeContext } from "../../../../context/ThemeContext";
 import Feather from "react-native-vector-icons/Feather";
-import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
-import Tooltip from "../../General/Tooltip/Tooltip";
-function WorkoutExercise({ exercise, setsToUpdate, setSetsToUpdate , setSetsToDelete }) {
+function WorkoutExercise({
+  setExercisesToDelete,
+  exercise,
+  setExercises,
+  setsToUpdate,
+  setSetsToUpdate,
+  setSetsToDelete,
+}) {
   const { language } = useContext(LanguageContext);
   const { theme } = useContext(ThemeContext);
-  const [showTooltip, setShowTooltip] = useState(false);
-  const ref = useRef();
   return (
     <View className="flex flex-col">
       <View className={" flex-row justify-between p-2 shadow w-[100%] "}>
         <Text className={theme.textPrimary}>{exercise.name}</Text>
         <TouchableOpacity
-          ref={ref}
-          onPress={() => setShowTooltip(true)}
-          className="self-end p-1 rounded bg-gray-400 shadow items-center justify-center"
+          onPress={() => {
+            // delete the exercise
+            setExercises((prev) => {
+              const newExercises = prev.filter(
+                (e) => e.exerciseId !== exercise.exerciseId
+              );
+              return newExercises;
+            });
+            setExercisesToDelete((prev) => {
+              const newExercises = prev;
+              newExercises.push(exercise.exerciseId);
+              return newExercises;
+            });
+          }}
+          className="self-end shadow items-center justify-center"
         >
-          <Icon name="options" size={15} color={theme.color} />
+          <MaterialCommunityIcons name={"delete"} size={20} color={"red"} />
         </TouchableOpacity>
-        <Tooltip
-          tooltipRef={ref}
-          showTooltip={showTooltip}
-          setShowTooltip={setShowTooltip}
-          buttons={[
-            {
-              func: () => {
-                setExercises((prev) => {
-                  const newExercises = prev.filter((e) => e.id !== exercise.id);
-                  return newExercises;
-                });
-                setSets((prev) => {
-                  const newSets = { ...prev };
-                  newSets[exercise.exerciseId] = [];
-                  return newSets;
-                });
-              },
-              label: langChoice(language, ENGLISH.DELETE, ARABIC.DELETE),
-              color: "red",
-              icon: (
-                <MaterialCommunityIcons
-                  name={"delete"}
-                  size={15}
-                  color={"red"}
-                />
-              ),
-            },
-          ]}
-        />
       </View>
-      {setsToUpdate[exercise.exerciseId]?.length == 0 && (
+      {setsToUpdate[exercise.exerciseId]?.length !== 0 && (
         <View
           className={
             " p-2 shadow w-[80%] flex-row justify-between items-center self-end " +
@@ -81,16 +66,13 @@ function WorkoutExercise({ exercise, setsToUpdate, setSetsToUpdate , setSetsToDe
           >
             {langChoice(language, ENGLISH.REPS, ARABIC.REPS)}
           </Text>
-          <View>
-            <Feather name="check" size={20} color={theme.color} />
-          </View>
         </View>
       )}
       <SetList
         exerciseId={exercise.exerciseId}
         setsToUpdate={setsToUpdate}
         setSetsToUpdate={setSetsToUpdate}
-        setSetsToDelete = {setSetsToDelete}
+        setSetsToDelete={setSetsToDelete}
       />
 
       <TouchableOpacity

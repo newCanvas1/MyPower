@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FlatList, Text, View } from "react-native";
-import { WorkoutContext } from "../../../../context/WorkoutContext";
 import Set from "./Set";
 import AnimatedView from "../../General/AnimatedView";
 function SetList({
@@ -17,7 +16,7 @@ function SetList({
       renderItem={({ item, index }) => (
         <AnimatedView
           duration={400}
-          ÏÏ
+          
           fadeIn
           content={
             <Set
