@@ -3,6 +3,7 @@ import {
   deleteExercisesAndSets,
   getWorkoutInfo,
   insertNewEditSets,
+  updateEditedSets,
 } from "../../../../database/database";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import WorkoutExercise from "../../Workout/Edit/WorkoutExercise";
@@ -18,10 +19,12 @@ function Edit({ workoutId }) {
   const [setsToDelete, setSetsToDelete] = useState([]);
 
   function saveEdition() {
+    // delete removed sets
     deleteExercisesAndSets(exercisesToDelete, setsToDelete, workoutId);
     // insert new sets
-    insertNewEditSets(setsToUpdate,workoutId);
-
+    insertNewEditSets(setsToUpdate, workoutId);
+    // update sets
+    updateEditedSets(setsToUpdate);
   }
   const [exercisesToDelete, setExercisesToDelete] = useState([]);
   useEffect(() => {

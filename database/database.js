@@ -706,3 +706,19 @@ export const insertNewEditSets = async (setsToUpdate, workoutId) => {
     }
   }
 };
+
+export const updateEditedSets = async (setsToUpdate) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  for (const exerciseId of Object.keys(setsToUpdate)) {
+    for (const set of setsToUpdate[exerciseId]) {
+      if (set.type != "new") {
+        await db.runAsync(
+          `UPDATE sets SET reps = ?, weight = ? WHERE id = ?`,
+          `${set.reps}`,
+          `${set.weight}`,
+          `${set.id}`
+        );
+      }
+    }
+  }
+};
