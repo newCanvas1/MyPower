@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { getWorkoutDates } from "../../../../database/database";
 import { Calendar } from "react-native-calendars";
-import { WorkoutContext } from "../../../../context/WorkoutContext";
 import { DatabaseContext } from "../../../../context/DataContext";
 import { langChoice } from "../../../utility/functions/langChoice";
 import { LanguageContext } from "../../../../context/LanguageContext";
 import CustomPopover from "../../General/CustomPopover";
-import { Text, View } from "react-native";
+import {  View } from "react-native";
 import DayPopover from "./DayPopover";
 import { router } from "expo-router";
 function WorkoutsCalender() {

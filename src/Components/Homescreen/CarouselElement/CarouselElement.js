@@ -33,13 +33,13 @@ function CarouselElement() {
   }, [chartExercises]);
 
   function getIndex(params) {
-    if (currentIndex > charts.length - 1||isNaN(currentIndex)) {
+    if (currentIndex > charts.length - 1 || isNaN(currentIndex)) {
       return 0;
     }
     return currentIndex;
   }
   return (
-    <View className={"mt-4  h-[100%]"}>
+    <View className={"mt-4  h-[310] "}>
       <Carousel
         defaultIndex={getIndex()}
         width={width}

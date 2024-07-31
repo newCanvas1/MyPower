@@ -12,6 +12,7 @@ function DayPopover({ day }) {
   useEffect(() => {
     // get the workouts from that day
     getWorkoutsOfDay(day).then((workouts) => {
+      console.log(workouts,"workouts")
       setWorkouts(workouts);
     });
   }, []);
