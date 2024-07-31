@@ -500,7 +500,8 @@ export async function getWorkoutDates() {
     result[dateString] = {
       selected: true,
       marked: true,
-      selectedColor: "blue",
+      selectedColor: "#76ABAE",
+
     };
   }
   return result;

@@ -24,6 +24,8 @@ function WorkoutsCalender() {
       <Calendar
         style={{ height: 100, width: 350, alignSelf: "center" }}
         theme={{
+
+          
           calendarBackground: "transparent",
           textMonthFontFamily: langChoice(language, "en", "ar"),
           textDayFontFamily: langChoice(language, "en", "ar"),
@@ -36,6 +38,8 @@ function WorkoutsCalender() {
           textDayFontColor: "white",
           textDayFontWeight: "bold",
           textMonthFontWeight: "bold",
+          selectedDayBackgroundColor: "green",
+          
         }}
         headerStyle={{ backgroundColor: "transparent" }}
         onDayPress={(day) => {
@@ -46,6 +50,7 @@ function WorkoutsCalender() {
         }}
         hideExtraDays
         markedDates={dates}
+        
       />
       <CustomPopover
         setShowPopover={setShowWorkoutsPopover}

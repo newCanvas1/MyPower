@@ -32,7 +32,7 @@ function CarouselElement() {
     });
   }, [chartExercises]);
 
-  function getIndex(params) {
+  function getIndex() {
     if (currentIndex > charts.length - 1 || isNaN(currentIndex)) {
       return 0;
     }
