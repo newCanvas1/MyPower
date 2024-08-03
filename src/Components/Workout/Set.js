@@ -138,7 +138,7 @@ const [prevWeight, setPrevWeight] = useState(set.weight);
                     {setOrder}
                   </Text>
                   <View className="w-20 items-center ">
-                    {weight == 0 || reps == 0 ? (
+                    {prevReps == 0 || prevWeight == 0 ? (
                       <View className="bg-slate-500  w-[50%] h-1"></View>
                     ) : (
                       <Text
