@@ -19,13 +19,8 @@ function History({ exercise }) {
   const [noData, setNoData] = useState(false);
   const { updateWorkouts } = useContext(DatabaseContext);
   async function deleteRecord(exerciseId, workoutId) {
-    const noRemainingSets = await deleteExerciseFromWorkout(
-      exerciseId,
-      workoutId
-    );
-    if (noRemainingSets) {
-      updateWorkouts();
-    }
+    await deleteExerciseFromWorkout(exerciseId, workoutId);
+    updateWorkouts();
     getHistory();
   }
   async function getHistory() {
