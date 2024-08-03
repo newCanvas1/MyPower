@@ -98,6 +98,8 @@ function WorkoutExercise({ exercise }) {
             type: "regular",
             exerciseId: exercise.exerciseId,
             planId: exercise.planId,
+            difficulty:"5",
+
           };
           setSets((sets) => {
             const newSets = { ...sets };

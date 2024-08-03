@@ -28,7 +28,7 @@ export const initDatabase = async () => {
 
   await db.execAsync(`
         PRAGMA journal_mode = WAL;
-        CREATE TABLE IF NOT EXISTS sets (id INTEGER PRIMARY KEY AUTOINCREMENT,  exerciseId INTEGER, reps INTEGER,weight DOUBLE,type TEXT,planId INTEGER,workoutId INTEGER,date TEXT);
+        CREATE TABLE IF NOT EXISTS sets (id INTEGER PRIMARY KEY AUTOINCREMENT,  exerciseId INTEGER, reps INTEGER,weight DOUBLE,type TEXT,planId INTEGER,workoutId INTEGER,date TEXT,difficulty INTEGER);
         `);
   // create plans table
   await db.execAsync(`
@@ -138,19 +138,21 @@ export const insertSets = async (
   reps,
   weight,
   type,
+  difficulty,
   planId,
   workoutId
 ) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const result = await db.runAsync(
-    "INSERT INTO sets (exerciseId,reps,weight,type,planId,workoutId,date) VALUES (?,?,?,?,?,?,?)",
+    "INSERT INTO sets (exerciseId,reps,weight,type,planId,workoutId,date,difficulty) VALUES (?,?,?,?,?,?,?,?)",
     `${exerciseId}`,
     `${reps}`,
     `${weight}`,
     `${type}`,
     `${planId}`,
     `${workoutId}`,
-    `${new Date()}`
+    `${new Date()}`,
+    `${difficulty}`
   );
 
   return result;
@@ -397,6 +399,7 @@ export const getSetsOfExercise = async (exerciseId) => {
   const data = await db.getAllAsync(
     `SELECT * FROM sets WHERE exerciseId = ${exerciseId} ORDER BY workoutId DESC `
   );
+  console.log(data);
   if (data.length === 0) {
     return [];
   }
@@ -501,7 +504,6 @@ export async function getWorkoutDates() {
       selected: true,
       marked: true,
       selectedColor: "#76ABAE",
-
     };
   }
   return result;

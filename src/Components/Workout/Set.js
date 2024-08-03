@@ -20,8 +20,9 @@ function Set({ set, count }) {
   const [weight, setWeight] = useState(set.weight);
   const [setOrder] = useState(count);
   const [setChecked, setSetChecked] = useState(set?.checked);
-  const [difficulty, setDifficulty] = useState(5);
-
+  const [difficulty, setDifficulty] = useState(set?.difficulty);
+const [prevWeight, setPrevWeight] = useState(set.weight);
+  const [prevReps, setPrevReps] = useState(set.reps);
   const [isDragging, setIsDragging] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
 
@@ -51,13 +52,29 @@ function Set({ set, count }) {
         });
       }
 
-      setReps(lastSet == undefined ? 0 : lastSet.reps);
-      setWeight(lastSet == undefined ? 0 : lastSet.weight);
+      setPrevReps(lastSet == undefined ? 0 : lastSet.reps);
+      setPrevWeight(lastSet == undefined ? 0 : lastSet.weight);
+    }
+  }
+  function prepareInfo() {
+    for (const exerciseId of Object.keys(sets)) {
+      for (const foundSet of sets[exerciseId]) {
+        if (set.id == foundSet.id) {
+          console.log(foundSet.weight, foundSet.reps);
+          setWeight(foundSet.weight);
+          setReps(foundSet.reps);
+          break;
+        }
+      }
     }
   }
   useEffect(() => {
     getLastSetInfo();
   }, []);
+
+  useEffect(() => {
+    prepareInfo();
+  }, [sets]);
 
   const onGestureEvent = Animated.event(
     [
@@ -111,7 +128,7 @@ function Set({ set, count }) {
               className={`${setBackground} p-1 shadow w-[100%] flex-row justify-between items-center rounded `}
             >
               {set.checked ? (
-                <DifficultyChoice difficulty={difficulty} setDifficulty={setDifficulty} />
+                <DifficultyChoice difficulty={difficulty} setDifficulty={setDifficulty} id={set.id} setInfo={{weight,reps}} />
               ) : (
                 <>
                   <Text
@@ -128,11 +145,12 @@ function Set({ set, count }) {
                         className={theme.textPrimary}
                         style={{ fontFamily: langChoice(language, "en", "ar") }}
                       >
-                        {`${weight} kg x ${reps}`}
+                        {`${prevWeight} kg x ${prevReps}`}
                       </Text>
                     )}
                   </View>
                   <TextInput
+                  value={weight}
                     keyboardType="numeric"
                     style={{ fontFamily: langChoice(language, "en", "ar") }}
                     placeholderTextColor={theme.setPlaceholder}
@@ -160,6 +178,7 @@ function Set({ set, count }) {
                     }
                   />
                   <TextInput
+                  value={reps}
                     keyboardType="numeric"
                     style={{ fontFamily: langChoice(language, "en", "ar") }}
                     placeholderTextColor={theme.setPlaceholder}
