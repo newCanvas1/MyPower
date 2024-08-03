@@ -5,6 +5,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { langChoice } from "../../../../../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../../../../utility/labels";
 import { LanguageContext } from "../../../../../../context/LanguageContext";
+import { TouchableOpacity } from "react-native";
 function PlanOptions({ planId }) {
   const [showDifficulty, setShowDifficulty] = useState(true);
   const { language } = useContext(LanguageContext);
@@ -49,15 +50,33 @@ function PlanOptions({ planId }) {
     getPlansShowDifficultyList();
   }, []);
   return (
-    <View className={`h-[30%] w-[50%] mt-10 ${langChoice(language, "left-[-25%]", "right-[-25%]")}`}>
-      <View className={`${langChoice(language, "flex-row", "flex-row-reverse")} justify-center  p-1 `}>
+    <View
+      className={`h-[30%] w-[50%] mt-10 ${langChoice(
+        language,
+        "left-[-25%]",
+        "right-[-25%]"
+      )}`}
+    >
+      <TouchableOpacity
+        onPress={() => {
+          setShowDifficulty(!showDifficulty);
+          difficultyBoxClicked();
+        }}
+        className={`${langChoice(
+          language,
+          "flex-row",
+          "flex-row-reverse"
+        )} justify-center  p-1 `}
+      >
         <BouncyCheckbox
           isChecked={showDifficulty}
           size={20}
           fillColor="green"
           unFillColor="#FFFFFF"
           innerIconStyle={{ borderWidth: 0 }}
-          textStyle={{ fontFamily: "JosefinSans-Regular" }}
+          textStyle={{ fontFamily: "JosefinSans-Regular" 
+
+          }}
           onPress={() => {
             setShowDifficulty(!showDifficulty);
             difficultyBoxClicked();
@@ -70,7 +89,7 @@ function PlanOptions({ planId }) {
             ARABIC.SHOW_DIFFICULTY
           )}
         </Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
