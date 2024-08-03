@@ -49,8 +49,8 @@ function PlanOptions({ planId }) {
     getPlansShowDifficultyList();
   }, []);
   return (
-    <View className="h-[30%] w-[50%] mt-10">
-      <View className="flex-row justify-center  p-1 ">
+    <View className={`h-[30%] w-[50%] mt-10 ${langChoice(language, "left-[-25%]", "right-[-25%]")}`}>
+      <View className={`${langChoice(language, "flex-row", "flex-row-reverse")} justify-center  p-1 `}>
         <BouncyCheckbox
           isChecked={showDifficulty}
           size={20}
@@ -63,7 +63,7 @@ function PlanOptions({ planId }) {
             difficultyBoxClicked();
           }}
         />
-        <Text className="text-white" style={{ fontFamily: "en" }}>
+        <Text className="text-white mx-2 mt-1" style={{ fontFamily: "en" }}>
           {langChoice(
             language,
             ENGLISH.SHOW_DIFFICULTY,
