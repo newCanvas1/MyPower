@@ -10,14 +10,22 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import { langChoice } from "../../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../utility/labels";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import { DatabaseContext } from "../../../context/DataContext";
 
 function History({ exercise }) {
   const [workouts, setWorkouts] = useState([]);
   const { language } = useContext(LanguageContext);
   const { theme } = useContext(ThemeContext);
   const [noData, setNoData] = useState(false);
+  const { updateWorkouts } = useContext(DatabaseContext);
   async function deleteRecord(exerciseId, workoutId) {
-    await deleteExerciseFromWorkout(exerciseId, workoutId);
+    const noRemainingSets = await deleteExerciseFromWorkout(
+      exerciseId,
+      workoutId
+    );
+    if (noRemainingSets) {
+      updateWorkouts();
+    }
     getHistory();
   }
   async function getHistory() {

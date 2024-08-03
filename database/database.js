@@ -733,5 +733,13 @@ export const deleteExerciseFromWorkout = async (exerciseId, workoutId) => {
   await db.runAsync(
     `DELETE FROM sets WHERE exerciseId = ${exerciseId} AND workoutId = ${workoutId}`
   );
-  return true;
+  // if the workout has no sets, delete the workout
+  const sets = await db.getAllAsync(
+    `SELECT * FROM sets WHERE workoutId = ${workoutId}`
+  );
+  if (sets.length === 0) {
+    await db.runAsync(`DELETE FROM workouts WHERE workoutId = ${workoutId}`);
+    return true;
+  }
+  return false;
 };
