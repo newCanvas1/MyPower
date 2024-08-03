@@ -53,15 +53,14 @@ function Exercises() {
         <TouchableOpacity
           onPress={() => setShowAddNew(true)}
           className={
-            "self-center text-2xl absolute  right-5   border border-white rounded py-1 px-2"
+            " absolute  right-5 p-1 border border-white rounded "
           }
         >
           <Text
             style={{
               fontFamily: langChoice(language, "en", "ar"),
-              fontSize: 15,
             }}
-            className={"  " + theme.textPrimary}
+            className={" items-center justify-center " + theme.textPrimary}
           >
             {langChoice(language, ENGLISH.ADD, ARABIC.ADD)}
           </Text>

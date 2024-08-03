@@ -21,7 +21,7 @@ function Set({ set, count }) {
   const [setOrder] = useState(count);
   const [setChecked, setSetChecked] = useState(set?.checked);
   const [difficulty, setDifficulty] = useState(set?.difficulty);
-const [prevWeight, setPrevWeight] = useState(set.weight);
+  const [prevWeight, setPrevWeight] = useState(set.weight);
   const [prevReps, setPrevReps] = useState(set.reps);
   const [isDragging, setIsDragging] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
@@ -125,12 +125,20 @@ const [prevWeight, setPrevWeight] = useState(set.weight);
         >
           <Animated.View style={[{ transform: [{ translateX }] }]}>
             <View
-              className={`${setBackground} p-1 shadow w-[100%] flex-row justify-between items-center rounded `}
+              className={` flex-row justify-between items-center  `}
             >
               {set.checked ? (
-                <DifficultyChoice difficulty={difficulty} setDifficulty={setDifficulty} id={set.id} setInfo={{weight,reps}} />
+                <View className={`${setBackground} p-1 shadow rounded flex-1 mr-4`}>
+
+                  <DifficultyChoice
+                    difficulty={difficulty}
+                    setDifficulty={setDifficulty}
+                    id={set.id}
+                    setInfo={{ weight, reps }}
+                  />
+                </View>
               ) : (
-                <>
+                <View className="flex-row items-center w-[80%] justify-between">
                   <Text
                     className={theme.textPrimary}
                     style={{ fontFamily: langChoice(language, "en", "ar") }}
@@ -150,7 +158,7 @@ const [prevWeight, setPrevWeight] = useState(set.weight);
                     )}
                   </View>
                   <TextInput
-                  value={weight}
+                    value={weight}
                     keyboardType="numeric"
                     style={{ fontFamily: langChoice(language, "en", "ar") }}
                     placeholderTextColor={theme.setPlaceholder}
@@ -178,7 +186,7 @@ const [prevWeight, setPrevWeight] = useState(set.weight);
                     }
                   />
                   <TextInput
-                  value={reps}
+                    value={reps}
                     keyboardType="numeric"
                     style={{ fontFamily: langChoice(language, "en", "ar") }}
                     placeholderTextColor={theme.setPlaceholder}
@@ -205,7 +213,7 @@ const [prevWeight, setPrevWeight] = useState(set.weight);
                       theme.set + theme.setInputBorder + " " + theme.inputValue
                     }
                   />
-                </>
+                </View>
               )}
               <TouchableOpacity
                 onPress={() => {
@@ -224,8 +232,8 @@ const [prevWeight, setPrevWeight] = useState(set.weight);
                   });
                 }}
                 className={`${
-                  set.checked ? "bg-green-400" : " "
-                } rounded border shadow p-[1px]`}
+                  set.checked ? "bg-green-400" : "  bg-gray-600 border"
+                } rounded  shadow p-[1px]`}
               >
                 <Feather name="check" size={20} color={theme.color} />
               </TouchableOpacity>

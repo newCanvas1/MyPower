@@ -727,3 +727,11 @@ export const updateEditedSets = async (setsToUpdate) => {
   }
   return true;
 };
+
+export const deleteExerciseFromWorkout = async (exerciseId, workoutId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  await db.runAsync(
+    `DELETE FROM sets WHERE exerciseId = ${exerciseId} AND workoutId = ${workoutId}`
+  );
+  return true;
+};
