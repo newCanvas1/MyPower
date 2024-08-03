@@ -9,7 +9,6 @@ import { LanguageContext } from "../../../context/LanguageContext";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { langChoice } from "../../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../utility/labels";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import { DatabaseContext } from "../../../context/DataContext";
 
 function History({ exercise }) {

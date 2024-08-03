@@ -66,6 +66,7 @@ export const ARABIC = {
   NO_WORKOUTS: "لم يتم العثور على تمارين 🧑، التمارين المسجلة ستظهر هنا",
   NO_WORKOUTS_FOR_THIS_DAY: "لم يتم العثور على تمارين لهذا اليوم 🧑‍💻",
   DIFFICULTY: "الصعوبة",
+  SHOW_DIFFICULTY: "أظهر صعوبة المجموعات",
 };
 
 export const ENGLISH = {
@@ -137,4 +138,5 @@ export const ENGLISH = {
   NO_WORKOUTS: "No workouts found 🧑‍💻, start a workout to appear here",
   NO_WORKOUTS_FOR_THIS_DAY: "No workouts found for this day 🧑‍💻",
   DIFFICULTY: "Difficulty",
+  SHOW_DIFFICULTY: "Show sets difficulty",
 };

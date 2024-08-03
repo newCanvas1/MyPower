@@ -15,7 +15,7 @@ import Feather from "@expo/vector-icons/Feather";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import AnimatedView from "../General/AnimatedView";
 import DifficultyChoice from "./DifficultyChoice";
-function Set({ set, count }) {
+function Set({ set, count, showDifficulty }) {
   const [reps, setReps] = useState(set.reps);
   const [weight, setWeight] = useState(set.weight);
   const [setOrder] = useState(count);
@@ -115,7 +115,7 @@ function Set({ set, count }) {
       }
     }
   };
-
+console.log(showDifficulty);
   return (
     <AnimatedView
       content={
@@ -124,12 +124,11 @@ function Set({ set, count }) {
           onHandlerStateChange={onHandlerStateChange}
         >
           <Animated.View style={[{ transform: [{ translateX }] }]}>
-            <View
-              className={` flex-row justify-between items-center  `}
-            >
-              {set.checked ? (
-                <View className={`${setBackground} p-1 shadow rounded flex-1 mr-4`}>
-
+            <View className={` flex-row justify-between items-center  `}>
+              {set.checked && showDifficulty ? (
+                <View
+                  className={`${setBackground} p-1 shadow rounded flex-1 mr-4`}
+                >
                   <DifficultyChoice
                     difficulty={difficulty}
                     setDifficulty={setDifficulty}

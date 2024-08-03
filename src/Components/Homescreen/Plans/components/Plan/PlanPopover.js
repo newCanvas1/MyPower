@@ -11,6 +11,7 @@ import { WorkoutContext } from "../../../../../../context/WorkoutContext";
 import { ThemeContext } from "../../../../../../context/ThemeContext";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import StartButton from "./StartButton";
+import PlanOptions from "./PlanOptions";
 function PlanPopover({ planId, setShowPopover }) {
   const { getPlanExcercise, getPlan } = useContext(DatabaseContext);
   const { language } = useContext(LanguageContext);
@@ -69,6 +70,7 @@ function PlanPopover({ planId, setShowPopover }) {
         />
       </View>
       <StartButton startWorkout={startWorkout} />
+      <PlanOptions planId={planId} />
     </View>
   );
 }
