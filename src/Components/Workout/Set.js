@@ -60,7 +60,6 @@ function Set({ set, count, showDifficulty }) {
     for (const exerciseId of Object.keys(sets)) {
       for (const foundSet of sets[exerciseId]) {
         if (set.id == foundSet.id) {
-          console.log(foundSet.weight, foundSet.reps);
           setWeight(foundSet.weight);
           setReps(foundSet.reps);
           break;
@@ -115,7 +114,6 @@ function Set({ set, count, showDifficulty }) {
       }
     }
   };
-console.log(showDifficulty);
   return (
     <AnimatedView
       content={

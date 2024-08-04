@@ -399,7 +399,6 @@ export const getSetsOfExercise = async (exerciseId) => {
   const data = await db.getAllAsync(
     `SELECT * FROM sets WHERE exerciseId = ${exerciseId} ORDER BY workoutId DESC `
   );
-  console.log(data);
   if (data.length === 0) {
     return [];
   }

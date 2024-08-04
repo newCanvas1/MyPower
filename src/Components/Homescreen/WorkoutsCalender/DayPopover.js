@@ -17,8 +17,6 @@ function DayPopover({ day }) {
     });
   }, []);
   function removeFromFrontend(workoutId) {
-    console.log(workoutId)
-    console.log(workouts)
     setWorkouts((prev) => prev.filter((workout) => workout.workout.workoutId !== workoutId));
   }
 

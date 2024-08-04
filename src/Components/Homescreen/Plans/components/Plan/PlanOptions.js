@@ -40,7 +40,6 @@ function PlanOptions({ planId }) {
       if (showDifficultyList) {
         for (const plan of showDifficultyList) {
           if (plan.planId == planId) {
-            console.log(showDifficultyList);
             setShowDifficulty(plan.showDifficulty);
             break;
           }
@@ -74,9 +73,7 @@ function PlanOptions({ planId }) {
           fillColor="green"
           unFillColor="#FFFFFF"
           innerIconStyle={{ borderWidth: 0 }}
-          textStyle={{ fontFamily: "JosefinSans-Regular" 
-
-          }}
+          textStyle={{ fontFamily: "JosefinSans-Regular" }}
           onPress={() => {
             setShowDifficulty(!showDifficulty);
             difficultyBoxClicked();

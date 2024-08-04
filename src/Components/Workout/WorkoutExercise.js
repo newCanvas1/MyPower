@@ -16,6 +16,28 @@ function WorkoutExercise({ exercise }) {
   const { theme } = useContext(ThemeContext);
   const [showTooltip, setShowTooltip] = useState(false);
   const ref = useRef();
+  function addInitialSet() {
+    const initialSet = {
+      id: Math.random() * 1000,
+      reps: 0,
+      weight: 0,
+      type: "regular",
+      exerciseId: exercise.exerciseId,
+      planId: exercise.planId,
+      difficulty: "5",
+    };
+    setSets((sets) => {
+      const newSets = { ...sets };
+      newSets[exercise.exerciseId].push(initialSet);
+      return newSets;
+    });
+  }
+
+  // if the workout has no sets, add the initial set to the workout, do add the initial set only once
+  if (sets[exercise.exerciseId]?.length == 0) {
+    addInitialSet();
+  }
+
   return (
     <View className="flex flex-col">
       <View className={" flex-row justify-between p-2 shadow w-[100%] "}>
@@ -90,23 +112,7 @@ function WorkoutExercise({ exercise }) {
       <SetList exerciseId={exercise.exerciseId} />
 
       <TouchableOpacity
-        onPress={() => {
-          const initialSet = {
-            id: Math.random() * 1000,
-            reps: 0,
-            weight: 0,
-            type: "regular",
-            exerciseId: exercise.exerciseId,
-            planId: exercise.planId,
-            difficulty:"5",
-
-          };
-          setSets((sets) => {
-            const newSets = { ...sets };
-            newSets[exercise.exerciseId].push(initialSet);
-            return newSets;
-          });
-        }}
+        onPress={addInitialSet}
         className={
           "border w-full items-center p-1 rounded mt-4 self-end " +
           `border-${theme.color}`

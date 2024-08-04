@@ -91,7 +91,7 @@ function workout(props) {
         </TouchableOpacity>
       </View>
       <FlatList
-        className="mt-10 w-full "
+        className="mt-10 w-full mb-10 "
         data={exercises}
         ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
         renderItem={({ item }) => <WorkoutExercise exercise={item} />}

@@ -50,8 +50,7 @@ function Edit({ workoutId }) {
       }
     });
   }, []);
-  console.log(setsToDelete);
-  console.log(exercisesToDelete);
+
 
   return (
     <View className=" p-5 h-[500] justify-center items-center w-[100%]">

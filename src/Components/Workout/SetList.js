@@ -22,9 +22,9 @@ function SetList({ exerciseId }) {
           }
         }
       }
-    }
+    }  
     getPlansShowDifficultyList();
-  }, []);
+  }, [sets]);
   return (
     <FlatList
       className=" w-full "
