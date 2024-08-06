@@ -77,8 +77,8 @@ refreshWorkouts();
               )}
               className=" mb-16"
               ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
-              keyExtractor={(item) => item.workout.workoutId}
-            />
+              keyExtractor={(item, index) => String(index)}
+              />
           }
         />
       )}
