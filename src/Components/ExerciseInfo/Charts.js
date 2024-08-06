@@ -13,7 +13,6 @@ import {
   VictoryLabel,
 } from "victory-native";
 import { DatabaseContext } from "../../../context/DataContext";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import { ARABIC, ENGLISH } from "../../utility/labels";
 
 function Charts({ exercise, type, homescreen }) {

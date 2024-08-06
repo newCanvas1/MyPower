@@ -53,7 +53,8 @@ export const WorkoutContextProvider = ({ children }) => {
             set.type,
             set.difficulty,
             planId,
-            workoutId
+            workoutId,
+            new Date()
 
           );
         }

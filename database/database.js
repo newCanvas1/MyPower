@@ -6,6 +6,7 @@ export const initDatabase = async () => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   // drop the excercises table
   // await resetDatabase();
+
   await db.execAsync(`
     PRAGMA journal_mode = WAL;
     CREATE TABLE IF NOT EXISTS user (name TEXT, weight INTEGER, height INTEGER );
@@ -46,7 +47,13 @@ export const initDatabase = async () => {
         CREATE TABLE IF NOT EXISTS charts (id INTEGER PRIMARY KEY AUTOINCREMENT, exerciseId INTEGER, type TEXT);
         `);
 
-  prepareExercises();
+  await prepareExercises();
+  // add test plan and workout
+  try {
+    await addTestPlanAndWorkout();
+  } catch (error) {
+    console.log(error);
+  }
   console.log("Database created");
   console.log("Excercises added");
 };
@@ -140,7 +147,8 @@ export const insertSets = async (
   type,
   difficulty,
   planId,
-  workoutId
+  workoutId,
+  date
 ) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const result = await db.runAsync(
@@ -151,7 +159,7 @@ export const insertSets = async (
     `${type}`,
     `${planId}`,
     `${workoutId}`,
-    `${new Date()}`,
+    `${date}`,
     `${difficulty}`
   );
 
@@ -175,6 +183,20 @@ export const insertPlan = async (name, icon, description, color) => {
 export const deletePlanFromDatabase = async (id) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   await db.runAsync("DELETE FROM plans WHERE id = ?", `${id}`);
+  // delete its plansExercises
+  await db.runAsync("DELETE FROM PlansExercises WHERE planId = ?", `${id}`);
+  // get its workoutId and delete its sets
+  const workoutIdList = await db.getAllAsync(
+    `SELECT workoutId FROM workouts WHERE planId = ${id}`
+  );
+  for (const workoutId of workoutIdList) {
+    await db.runAsync("DELETE FROM sets WHERE workoutId = ?", `${workoutId}`);
+  }
+
+  // delete its workouts
+
+  await db.runAsync("DELETE FROM workouts WHERE planId = ?", `${id}`);
+
   return true;
 };
 export const getUserInfo = async () => {
@@ -335,7 +357,7 @@ export const getExerciseRecord = async (page, limit, exerciseId) => {
   const workoutsIdObjects = await db.getAllAsync(
     `SELECT workoutId FROM sets WHERE exerciseId = ${exerciseId} `
   );
-const workoutsIdList = workoutsIdObjects.map((workout) => workout.workoutId);
+  const workoutsIdList = workoutsIdObjects.map((workout) => workout.workoutId);
   console.log("workoutsIdList");
   console.log(workoutsIdList);
   const data = await db.getAllAsync(
@@ -645,7 +667,7 @@ export const getExerciseChartOfPeriod = async (exerciseId, type) => {
   const data = await db.getAllAsync(
     `SELECT * FROM sets WHERE exerciseId = ${exerciseId}`
   );
-  const result = {};
+  let result = {};
 
   if (type === "thisMonth") {
     const thisMonth = new Date().getMonth();
@@ -657,6 +679,8 @@ export const getExerciseChartOfPeriod = async (exerciseId, type) => {
       const date = new Date(set.date).toLocaleDateString("en-US", {
         day: "numeric",
       });
+      console.log(set.date);
+      console.log(date);
       // for sets of the same day, take the one with the highest weight
       if (result[date]) {
         if (set.weight > result[date]) {
@@ -667,6 +691,7 @@ export const getExerciseChartOfPeriod = async (exerciseId, type) => {
       }
     }
   }
+  console.log(result);
 
   if (type === "thisYear") {
     const thisYear = new Date().getFullYear();
@@ -785,4 +810,50 @@ export const deleteExerciseFromWorkout = async (exerciseId, workoutId) => {
     return true;
   }
   return false;
+};
+
+// add a test plan and workout
+export const addTestPlanAndWorkout = async () => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  // check if there is a test plan
+  const data = await db.getAllAsync(
+    `SELECT * FROM plans WHERE name = "Test Plan"`
+  );
+  if (data.length > 0) {
+    return false;
+  }
+  // add a test plan
+  const result = await db.runAsync(
+    "INSERT INTO plans (name, icon, description, color) VALUES (?,?,?,?)",
+    `Test Plan`,
+    `test`,
+    `This is a test plan`,
+    `#000000`
+  );
+  // add a planExcercise
+  await db.runAsync(
+    "INSERT INTO PlansExercises (planId, exerciseId) VALUES (?,?)",
+    `${result.lastInsertRowId}`,
+    `1`
+  );
+  // add 15 test workouts in different days and randomize its sets
+  for (let i = 0; i < 15; i++) {
+    const workoutId = await insertWorkout(
+      `${i * 30}`,
+      `This is a test workout`,
+      `2024-08-${i + 1}T20:24:01.863Z`,
+      result.lastInsertRowId
+    );
+    // add a test set
+    await insertSets(
+      `${Math.ceil(Math.random() * 10)}`,
+      `${Math.ceil(Math.random() * 13)}`,
+      `${Math.ceil(Math.random() * 60)}`,
+      `regular`,
+      Math.ceil(Math.random() * 9),
+      result.lastInsertRowId,
+      workoutId,
+      `2024-08-${i + 1}T20:24:01.863Z`
+    );
+  }
 };
