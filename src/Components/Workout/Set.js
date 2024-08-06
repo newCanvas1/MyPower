@@ -161,7 +161,7 @@ function Set({ set, count, showDifficulty }) {
                     placeholderTextColor={theme.setPlaceholder}
                     placeholder={
                       weight == 0
-                        ? langChoice(language, ENGLISH.WEIGHT, ARABIC.WEIGHT)
+                        ? "kg"
                         : weight.toString()
                     }
                     onChangeText={(text) => {
@@ -179,7 +179,7 @@ function Set({ set, count, showDifficulty }) {
                       });
                     }}
                     className={
-                      theme.set + theme.setInputBorder + " " + theme.inputValue
+                      theme.set + theme.setInputBorder + " w-12 " + theme.inputValue
                     }
                   />
                   <TextInput
@@ -207,7 +207,7 @@ function Set({ set, count, showDifficulty }) {
                       });
                     }}
                     className={
-                      theme.set + theme.setInputBorder + " " + theme.inputValue
+                      theme.set + theme.setInputBorder + " w-12 " + theme.inputValue
                     }
                   />
                 </View>

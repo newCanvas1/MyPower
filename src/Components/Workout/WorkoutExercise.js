@@ -82,7 +82,7 @@ function WorkoutExercise({ exercise }) {
       {!sets[exercise.exerciseId]?.length == 0 && (
         <View
           className={
-            " p-2 shadow w-[80%] flex-row justify-between items-center self-end " +
+            " py-2 shadow w-[82%] flex-row justify-between items-center self-end " +
             theme.textPrimary
           }
         >
