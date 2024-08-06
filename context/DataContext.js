@@ -23,6 +23,7 @@ export const DatabaseProvider = ({ children }) => {
   const [excerciseToAdd, setExcerciseToAdd] = useState([]);
   const [updateExercises, setUpdateExercises] = useState(false);
   const [chartExercises, setChartExercises] = useState([]);
+  const [refreshHistory, setRefreshHistory] = useState(true);
   useEffect(() => {
     getTable("plans").then((data) => {
       setPlans(data);
@@ -51,6 +52,11 @@ export const DatabaseProvider = ({ children }) => {
     }
     setExcerciseToAdd([]);
     setPlans([...plans, { ...plan, id: result.lastInsertRowId }]);
+  };
+
+  const getHistory = async (page, limit) => {
+    const data = await getWorkouts(page, limit);
+    return data;
   };
 
   // delete plan from database
@@ -120,8 +126,8 @@ export const DatabaseProvider = ({ children }) => {
     const data = await getPlanInfo(id);
     return data;
   };
-  const getAllWorkouts = async () => {
-    const data = await getWorkouts();
+  const getAllWorkouts = async (page, limit) => {
+    const data = await getWorkouts(page, limit);
     return data;
   };
   const deleteWorkout = async (workoutId) => {
@@ -130,7 +136,7 @@ export const DatabaseProvider = ({ children }) => {
       setWorkouts(
         workouts.filter((workout) => workout.workout.workoutId !== workoutId)
       );
-      updateWorkouts();
+    updateWorkouts();
   };
 
   function updateWorkouts() {
@@ -175,7 +181,10 @@ export const DatabaseProvider = ({ children }) => {
         updateWorkouts,
         reloadExercises,
         updateCharts,
-        chartExercises
+        chartExercises,
+        getHistory,
+        refreshHistory,
+        setRefreshHistory
       }}
     >
       {children}

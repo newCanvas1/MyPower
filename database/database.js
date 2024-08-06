@@ -292,10 +292,11 @@ export const getWorkoutInfo = async (id) => {
   return workout;
 };
 
-export const getWorkouts = async () => {
+export const getWorkouts = async (page, limit) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
+  const offset = (page - 1) * limit;
   const data = await db.getAllAsync(
-    `SELECT * FROM workouts ORDER BY date DESC`
+    `SELECT * FROM workouts ORDER BY date DESC LIMIT ${limit} OFFSET ${offset}`
   );
   const workouts = [];
 
@@ -327,6 +328,7 @@ export const getWorkouts = async () => {
 
   return workouts;
 };
+
 
 export const getMostRecentWorkout = async (planId) => {
   const db = await SQLite.openDatabaseAsync("databaseName");

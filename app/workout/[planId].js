@@ -31,7 +31,7 @@ function workout(props) {
   const { theme } = useContext(ThemeContext);
   const [stopTimer, setStopTimer] = useState(false);
   const { language } = useContext(LanguageContext);
-  const { getAllWorkouts, setWorkouts } = useContext(DatabaseContext);
+  const { getAllWorkouts, setWorkouts,setRefreshHistory } = useContext(DatabaseContext);
   const { addExercise } = useContext(WorkoutContext);
   const [showWarning, setShowWarning] = useState(false);
   const [showAddExercise, setShowAddExercise] = useState(false);
@@ -79,6 +79,7 @@ function workout(props) {
               getAllWorkouts().then((data) => {
                 setWorkouts(data);
               });
+              setRefreshHistory(true);
 
               router.back();
             }
