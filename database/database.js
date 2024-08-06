@@ -328,7 +328,49 @@ export const getWorkouts = async (page, limit) => {
 
   return workouts;
 };
+export const getExerciseRecord = async (page, limit, exerciseId) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const offset = (page - 1) * limit;
 
+  const workoutsIdObjects = await db.getAllAsync(
+    `SELECT workoutId FROM sets WHERE exerciseId = ${exerciseId} `
+  );
+const workoutsIdList = workoutsIdObjects.map((workout) => workout.workoutId);
+  console.log("workoutsIdList");
+  console.log(workoutsIdList);
+  const data = await db.getAllAsync(
+    `SELECT * FROM workouts WHERE workoutId IN (${workoutsIdList}) ORDER BY date DESC LIMIT ${limit} OFFSET ${offset}`
+  );
+  const workouts = [];
+
+  for (const workout of data) {
+    const sets = await db.getAllAsync(
+      `SELECT * FROM sets WHERE workoutId = ${workout.workoutId} `
+    );
+
+    // categorize sets by exerciseId
+    const categorizedSets = {};
+    for (const set of sets) {
+      if (categorizedSets[set.exerciseId]) {
+        categorizedSets[set.exerciseId].push(set);
+      } else {
+        categorizedSets[set.exerciseId] = [set];
+      }
+    }
+    const plan = await db.getAllAsync(
+      `SELECT * FROM plans WHERE id = ${workout.planId}`
+    );
+    const exercises = await db.getAllAsync(
+      `SELECT * FROM exercises WHERE exerciseId IN (SELECT exerciseId FROM sets)`
+    );
+    workouts.push({ workout, sets: categorizedSets, exercises, plan: plan[0] });
+  }
+
+  // order workouts by date descending
+  workouts.sort((a, b) => new Date(b.workout.date) - new Date(a.workout.date));
+
+  return workouts;
+};
 
 export const getMostRecentWorkout = async (planId) => {
   const db = await SQLite.openDatabaseAsync("databaseName");

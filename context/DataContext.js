@@ -59,6 +59,10 @@ export const DatabaseProvider = ({ children }) => {
     return data;
   };
 
+useEffect(() => {
+   console.log(workouts.length)
+  }, [workouts]);
+
   // delete plan from database
   const deletePlan = async (id) => {
     const deleted = await deletePlanFromDatabase(id);
@@ -140,9 +144,12 @@ export const DatabaseProvider = ({ children }) => {
   };
 
   function updateWorkouts() {
+    setWorkouts([]);
     getAllWorkouts().then((data) => {
       setWorkouts(data);
+
     });
+    
   }
   function reloadExercises() {
     getTable("exercises").then((data) => {

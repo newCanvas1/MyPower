@@ -16,7 +16,7 @@ export const WorkoutContextProvider = ({ children }) => {
   const [sets, setSets] = useState({});
   const [timePassed, setTimePassed] = useState(0);
   const [activeWorkout, setActiveWorkout] = useState(false);
-  const { getPlan, getPlanExcercise } = useContext(DatabaseContext);
+  const { getPlan, getPlanExcercise,updateWorkouts } = useContext(DatabaseContext);
   async function prepareSets(exercises) {
     // object keys should be the exerciseId for each exercise
     const preparedSets = {};
@@ -83,7 +83,7 @@ export const WorkoutContextProvider = ({ children }) => {
       console.log("workout saved");
       setActiveWorkout(false);
       reset();
-
+      updateWorkouts();
       return true;
     }
     return true;

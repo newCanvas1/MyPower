@@ -12,7 +12,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 function History() {
   const { theme } = useContext(ThemeContext);
   const { language } = useContext(LanguageContext);
-  const { getHistory } = useContext(DatabaseContext);
+  const { getHistory,workouts } = useContext(DatabaseContext);
   const [workoutsList, setWorkoutsList] = useState([]);
   const [page, setPage] = useState(1);
   const [limit] = useState(5);
@@ -34,6 +34,9 @@ function History() {
     fetchWorkouts(page, limit);
   }, [page]);
 
+  useEffect(() => {
+refreshWorkouts();
+  }, [workouts]);
   const refreshWorkouts = async () => {
     setPage(1); // Reset the page to 1
     setWorkoutsList([]); // Clear the current list
