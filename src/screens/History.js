@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FlatList, Text, View, Button } from "react-native";
+import { FlatList, Text, View, Button, TouchableOpacity } from "react-native";
 import { DatabaseContext } from "../../context/DataContext";
 import Workout from "../Components/History/Workout";
 import { LanguageContext } from "../../context/LanguageContext";
@@ -7,6 +7,7 @@ import { langChoice } from "../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../utility/labels";
 import { ThemeContext } from "../../context/ThemeContext";
 import AnimatedView from "../Components/General/AnimatedView";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 function History() {
   const { theme } = useContext(ThemeContext);
@@ -34,9 +35,9 @@ function History() {
   }, [page]);
 
   const refreshWorkouts = async () => {
-    setPage(1);  // Reset the page to 1
-    setWorkoutsList([]);  // Clear the current list
-    await fetchWorkouts(1, limit);  // Fetch new data
+    setPage(1); // Reset the page to 1
+    setWorkoutsList([]); // Clear the current list
+    await fetchWorkouts(1, limit); // Fetch new data
   };
 
   return (
@@ -47,10 +48,9 @@ function History() {
       >
         {langChoice(language, ENGLISH.HISTORY, ARABIC.HISTORY)}
       </Text>
-      <Button 
-        title={"Refresh"}
-        onPress={refreshWorkouts} 
-      />
+      <TouchableOpacity className="self-end w-10 h-10 justify-center items-center " onPress={refreshWorkouts}>
+        <MaterialIcons name="refresh" size={25} color="white" />
+      </TouchableOpacity>
       {workoutsList?.length === 0 && !loading ? (
         <Text
           style={{ fontFamily: "ar" }}
@@ -72,7 +72,7 @@ function History() {
               renderItem={({ item }) => (
                 <Workout key={item.workout.workoutId} item={item} />
               )}
-              className=" my-10"
+              className=" mb-16"
               ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
               keyExtractor={(item) => item.workout.workoutId}
             />
