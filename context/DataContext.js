@@ -59,8 +59,8 @@ export const DatabaseProvider = ({ children }) => {
     return data;
   };
 
-useEffect(() => {
-   console.log(workouts.length)
+  useEffect(() => {
+    console.log(workouts.length);
   }, [workouts]);
 
   // delete plan from database
@@ -147,9 +147,13 @@ useEffect(() => {
     setWorkouts([]);
     getAllWorkouts().then((data) => {
       setWorkouts(data);
-
     });
-    
+  }
+  function updatePlans() {
+    setPlans([]);
+    getTable("plans").then((data) => {
+      setPlans(data);
+    });
   }
   function reloadExercises() {
     getTable("exercises").then((data) => {
@@ -191,7 +195,8 @@ useEffect(() => {
         chartExercises,
         getHistory,
         refreshHistory,
-        setRefreshHistory
+        setRefreshHistory,
+        updatePlans,
       }}
     >
       {children}

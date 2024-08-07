@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FlatList, Text, View, Button, TouchableOpacity } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { DatabaseContext } from "../../context/DataContext";
 import Workout from "../Components/History/Workout";
 import { LanguageContext } from "../../context/LanguageContext";
@@ -12,7 +12,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 function History() {
   const { theme } = useContext(ThemeContext);
   const { language } = useContext(LanguageContext);
-  const { getHistory,workouts } = useContext(DatabaseContext);
+  const { getHistory, workouts } = useContext(DatabaseContext);
   const [workoutsList, setWorkoutsList] = useState([]);
   const [page, setPage] = useState(1);
   const [limit] = useState(5);
@@ -22,7 +22,14 @@ function History() {
     setLoading(true);
     try {
       const data = await getHistory(page, limit);
-      setWorkoutsList((prevWorkouts) => [...prevWorkouts, ...data]);
+      setWorkoutsList((prevWorkouts) => { 
+        const newWorkouts = [...prevWorkouts, ...data];
+        // remove duplicates
+        const uniqueWorkouts = [...new Set(newWorkouts.map(JSON.stringify))].map(JSON.parse);
+        return uniqueWorkouts;
+        
+      });
+
     } catch (error) {
       console.error(error);
     } finally {
@@ -35,8 +42,9 @@ function History() {
   }, [page]);
 
   useEffect(() => {
-refreshWorkouts();
+    refreshWorkouts();
   }, [workouts]);
+
   const refreshWorkouts = async () => {
     setPage(1); // Reset the page to 1
     setWorkoutsList([]); // Clear the current list
@@ -51,9 +59,6 @@ refreshWorkouts();
       >
         {langChoice(language, ENGLISH.HISTORY, ARABIC.HISTORY)}
       </Text>
-      <TouchableOpacity className="self-end w-10 h-10 justify-center items-center " onPress={refreshWorkouts}>
-        <MaterialIcons name="refresh" size={25} color="white" />
-      </TouchableOpacity>
       {workoutsList?.length === 0 && !loading ? (
         <Text
           style={{ fontFamily: "ar" }}
@@ -77,8 +82,8 @@ refreshWorkouts();
               )}
               className=" mb-16"
               ItemSeparatorComponent={() => <View style={{ height: 30 }} />}
-              keyExtractor={(item, index) => String(index)}
-              />
+              keyExtractor={(item) => item.workout.workoutId.toString()}
+            />
           }
         />
       )}

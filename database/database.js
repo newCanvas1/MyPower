@@ -50,7 +50,7 @@ export const initDatabase = async () => {
   await prepareExercises();
   // add test plan and workout
   try {
-    await addTestPlanAndWorkout();
+    // await addTestPlanAndWorkout();
   } catch (error) {
     console.log(error);
   }
