@@ -8,23 +8,46 @@ import { ARABIC, ENGLISH } from "../../../utility/labels";
 import { LanguageContext } from "../../../../context/LanguageContext";
 function DayPopover({ day }) {
   const [workouts, setWorkouts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(7);
   const { language } = useContext(LanguageContext);
+  // get the workouts from that day
+  const fetchWorkouts = async (page, limit) => {
+    try {
+      const data = await getWorkoutsOfDay(day, page, limit);
+      console.log(data.length);
+      setWorkouts((prevWorkouts) => {
+        const newWorkouts = [...prevWorkouts, ...data];
+        // remove duplicates
+        const uniqueWorkouts = [
+          ...new Set(newWorkouts.map(JSON.stringify)),
+        ].map(JSON.parse);
+        return uniqueWorkouts;
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+    }
+  };
+
   useEffect(() => {
-    // get the workouts from that day
-    getWorkoutsOfDay(day).then((workouts) => {
-      console.log(workouts,"workouts")
-      setWorkouts(workouts);
-    });
-  }, []);
+    fetchWorkouts(page, limit);
+  }, [page]);
   function removeFromFrontend(workoutId) {
-    setWorkouts((prev) => prev.filter((workout) => workout.workout.workoutId !== workoutId));
+    setWorkouts((prev) =>
+      prev.filter((workout) => workout.workout.workoutId !== workoutId)
+    );
   }
 
   return (
     <View className="h-full w-full justify-center items-center py-10">
       {workouts.length > 0 ? (
         <FlatList
-          className="h-full w-[80%]"
+          onEndReached={() => {
+            console.log("onEndReached");
+            setPage(page + 1);
+          }}
+          className="h-[200] w-[80%] "
           data={workouts}
           ItemSeparatorComponent={
             <View
@@ -33,7 +56,13 @@ function DayPopover({ day }) {
               }}
             />
           }
-          renderItem={({ item }) => <Workout key={item.id} item={item} removeFromFrontend={removeFromFrontend} />}
+          renderItem={({ item }) => (
+            <Workout
+              key={item.id}
+              item={item}
+              removeFromFrontend={removeFromFrontend}
+            />
+          )}
         />
       ) : (
         <Text

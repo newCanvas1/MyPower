@@ -574,7 +574,7 @@ export async function getWorkoutDates() {
   return result;
 }
 
-export async function getWorkoutsOfDay(day) {
+export async function getWorkoutsOfDay(day, page, limit) {
   const db = await SQLite.openDatabaseAsync("databaseName");
   // get workouts between the beginning of the day and the end of the day
 
@@ -593,7 +593,7 @@ export async function getWorkoutsOfDay(day) {
     return isBetween;
   });
 
-  const workouts = [];
+  let workouts = [];
   for (const workout of modifiesWorkouts) {
     const sets = await db.getAllAsync(
       `SELECT * FROM sets WHERE workoutId = ${workout.workoutId}`
@@ -619,6 +619,9 @@ export async function getWorkoutsOfDay(day) {
 
   // order workouts by date descending
   workouts.sort((a, b) => b.workout.date - a.workout.date);
+
+  // slice the workouts array
+  workouts = workouts.slice((page - 1) * limit, page * limit);
 
   return workouts;
 }
