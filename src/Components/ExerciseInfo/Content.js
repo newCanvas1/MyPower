@@ -29,14 +29,14 @@ function Content({ content, exercise, exerciseId }) {
       setIsThisMonth(isInCharts);
 
       const isInCharts2 = await isExerciseInCharts(exerciseId, "thisYear");
-      setIsThisYear(isInCharts2);
+      setIsThisYear(isInCharts2); 
       const isInCharts3 = await isExerciseInCharts(exerciseId, "yearly");
       setIsYearly(isInCharts3);
     }
-    getInfo();
-  }, []);
+    getInfo(); 
+  }, [content]);
 
-  const ChartButton = ({ type, check }) => {
+  const ChartButton = ({ type, check }) => {  
     return (
       <TouchableOpacity
         onPress={async () => {

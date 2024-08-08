@@ -10,6 +10,7 @@ import Feather from "react-native-vector-icons/Feather";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import Tooltip from "../General/Tooltip/Tooltip";
+import { router } from "expo-router";
 function WorkoutExercise({ exercise }) {
   const { setSets, sets, setExercises } = useContext(WorkoutContext);
   const { language } = useContext(LanguageContext);
@@ -38,10 +39,17 @@ function WorkoutExercise({ exercise }) {
     addInitialSet();
   }
 
+  function openExerciseScreen() {
+    router.push("/exercise/info/" + exercise.exerciseId);
+  }
   return (
     <View className="flex flex-col">
+      
       <View className={" flex-row justify-between p-2 shadow w-[100%] "}>
+        <TouchableOpacity className="flex-1" onPress={openExerciseScreen} >
+
         <Text className={theme.textPrimary}>{exercise.name}</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           ref={ref}
           onPress={() => setShowTooltip(true)}

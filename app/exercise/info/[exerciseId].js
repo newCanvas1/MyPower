@@ -11,13 +11,17 @@ function Exercise() {
   const { getExercise } = useContext(DatabaseContext);
 
   const [exercise, setExercise] = useState({});
-  const [content, setContent] = useState("info");
+  const [content, setContent] = useState("");
   useEffect(() => {
     async function getExerciseInfo() {
       const exercise = await getExercise(exerciseId);
       setExercise(exercise);
     }
     getExerciseInfo();
+    setTimeout(() => {
+      setContent("charts");
+
+    }, 50);
   }, []);
   return (
     <View style={{ flex: 1, alignItems: "center", marginTop: 20 }}>

@@ -9,13 +9,14 @@ function ContentSelection({ content, setContent }) {
   const { theme } = useContext(ThemeContext);
   const { language } = useContext(LanguageContext);
 
+  
   const chosenStyle =
     " w-[40%] bg-slate-500 text-white items-center h-[100%] justify-center ";
   const style =
     " w-[40%] h-[100%]    w-20 items-center justify-center "+theme.primary;
   return (
-    <View className="w-[60%] flex-row justify-around  h-12 ">
-      <TouchableOpacity
+    <View className="w-[100%] flex-row justify-center   h-12 ">
+      {/* <TouchableOpacity
         className={` ${content == "info" ? chosenStyle : style} rounded `}
         onPress={() => setContent("info")}
       >
@@ -25,7 +26,7 @@ function ContentSelection({ content, setContent }) {
         >
           {langChoice(language, ENGLISH.INFO, ARABIC.INFO)}
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity
         className={` ${content == "charts" ? chosenStyle : style}   `}
         onPress={() => setContent("charts")}
