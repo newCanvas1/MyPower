@@ -6,12 +6,14 @@ import { ThemeContext } from "../../context/ThemeContext";
 import WorkoutsCalender from "../Components/Homescreen/WorkoutsCalender/WorkoutsCalender";
 import CarouselElement from "../Components/Homescreen/CarouselElement/CarouselElement";
 import AnimatedView from "../Components/General/AnimatedView";
+import ProgressBar from "../Components/Homescreen/ProgressBar/ProgressBar";
 function Homescreen(props) {
   const { theme } = useContext(ThemeContext);
 
   return (
     <ScrollView className={theme.mainScreen}>
       <Greeting />
+      <ProgressBar />
       <AnimatedView
         content={<CarouselElement />}
         enterFromRight

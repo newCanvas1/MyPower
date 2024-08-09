@@ -7,6 +7,7 @@ import { WorkoutContextProvider } from "../context/WorkoutContext";
 import { ThemeContext, ThemeProvider } from "../context/ThemeContext";
 import { useContext } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { ProgressContextProvider } from "../context/ProgressContext";
 
 export default function Layout() {
   const StackElement = () => {
@@ -27,7 +28,10 @@ export default function Layout() {
           name="workout/[planId]"
           options={{ presentation: "modal" }}
         />
-        <Stack.Screen name="workouts/[day]" options={{ presentation: "modal" }} />
+        <Stack.Screen
+          name="workouts/[day]"
+          options={{ presentation: "modal" }}
+        />
       </Stack>
     );
   };
@@ -38,7 +42,9 @@ export default function Layout() {
           <DatabaseProvider>
             <WorkoutContextProvider>
               <ThemeProvider>
-                <StackElement />
+                <ProgressContextProvider>
+                  <StackElement />
+                </ProgressContextProvider>
               </ThemeProvider>
             </WorkoutContextProvider>
           </DatabaseProvider>

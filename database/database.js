@@ -9,7 +9,7 @@ export const initDatabase = async () => {
 
   await db.execAsync(`
     PRAGMA journal_mode = WAL;
-    CREATE TABLE IF NOT EXISTS user (name TEXT, weight INTEGER, height INTEGER );
+    CREATE TABLE IF NOT EXISTS user (name TEXT, weight INTEGER, height INTEGER,xp INTEGER );
    
     `);
 
