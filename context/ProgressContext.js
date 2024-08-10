@@ -8,6 +8,7 @@ export const ProgressContextProvider = ({ children }) => {
   const [level, setLevel] = useState(1);
   const [currentXp, setCurrentXp] = useState(0);
   const [totalXp, setTotalXp] = useState(HYPOTHETICAL_MAX);
+  const [isNewLevel, setIsNewLevel] = useState(false);
   function adjustLevel() {
     if (currentXp >= totalXp) {
       levelUp();
@@ -36,11 +37,18 @@ export const ProgressContextProvider = ({ children }) => {
     setLevel(level);
     setTotalXp(level * HYPOTHETICAL_MAX);
   }
+  function ShowLevelUp() {
+    setIsNewLevel(true);
+    setTimeout(() => {
+      setIsNewLevel(false);
+    }, 2000);
+  }
   async function levelUp() {
     await addLevel();
     await resetXp();
     reloadXp();
     getUserLevel();
+    ShowLevelUp();
   }
   useEffect(() => {
     adjustLevel();
@@ -60,6 +68,7 @@ export const ProgressContextProvider = ({ children }) => {
         setTotalXp,
         addXp,
         reloadXp,
+        isNewLevel,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Animated, View } from "react-native";
+import { Animated, View, Easing } from "react-native";
 
 const AnimatedView = ({
   content,
@@ -10,6 +10,7 @@ const AnimatedView = ({
   duration,
   wait,
   style,
+  easingFunction = Easing.inOut(Easing.quad),
 }) => {
   const opacityValue = useRef(new Animated.Value(fadeIn ? 0 : 1)).current;
   const translateXValue = useRef(new Animated.Value(0)).current;
@@ -23,6 +24,7 @@ const AnimatedView = ({
           toValue: 1,
           duration: duration,
           delay: wait,
+          easing: easingFunction, // Add easing here
           useNativeDriver: true,
         })
       );
@@ -34,6 +36,7 @@ const AnimatedView = ({
           toValue: 0,
           duration: duration,
           delay: wait,
+          easing: easingFunction, // Add easing here
           useNativeDriver: true,
         })
       );
@@ -46,6 +49,7 @@ const AnimatedView = ({
           toValue: 0,
           duration: duration,
           delay: wait,
+          easing: easingFunction, // Add easing here
           useNativeDriver: true,
         })
       );
@@ -58,6 +62,7 @@ const AnimatedView = ({
           toValue: 0,
           duration: duration,
           delay: wait,
+          easing: easingFunction, // Add easing here
           useNativeDriver: true,
         })
       );
@@ -78,7 +83,7 @@ const AnimatedView = ({
   };
 
   return (
-    <Animated.View style={[getAnimationStyle(),style] }>
+    <Animated.View style={[getAnimationStyle(), style]}>
       {content}
     </Animated.View>
   );

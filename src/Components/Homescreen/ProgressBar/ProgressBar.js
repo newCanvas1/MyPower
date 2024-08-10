@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { Text, View, Animated } from "react-native";
 import { ProgressContext } from "../../../../context/ProgressContext";
 import { TouchableOpacity } from "react-native";
+import StarFallScreen from "../../General/StarFallScreen";
 
 function ProgressBar() {
   const progressAnim = useRef(new Animated.Value(0)).current;
-  const { level, currentXp, totalXp } = useContext(ProgressContext);
+  const { level, currentXp, totalXp, isNewLevel } = useContext(ProgressContext);
   const [progress, setProgress] = useState(0);
   useEffect(() => {
-    const newProgress = ((currentXp ) / totalXp) * 100;
+    const newProgress = (currentXp / totalXp) * 100;
     setProgress(newProgress);
 
     // Animate the progress bar to the desired width (e.g., 20%)
@@ -27,6 +28,11 @@ function ProgressBar() {
       >
         lvl {level}
       </Text>
+      {isNewLevel && (
+        <View className="flex-row absolute bottom-12">
+          <StarFallScreen />
+        </View>
+      )}
       <Animated.View
         className="bg-green-500 h-full"
         style={{
@@ -45,7 +51,6 @@ function ProgressBar() {
           xp
         </Text>
       </View>
-      
     </View>
   );
 }
