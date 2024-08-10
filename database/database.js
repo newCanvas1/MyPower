@@ -887,11 +887,16 @@ export const addLevel = async () => {
   await db.runAsync("UPDATE user SET level = ?", `${oldLevel + 1}`);
 };
 
-//return true if there is any workout recorded this week
-export const isWorkoutRecordedThisWeek = async () => {
+//return true if there is any workout recorded this week except the one passed as parameter
+export const isWorkoutRecordedThisWeek = async (workoutId) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const data = await db.getAllAsync(
     `SELECT * FROM workouts WHERE date LIKE '%${new Date().getDate()}%'`
   );
-  return data.length > 0;
+  for (const workout of data) {
+    if (workout.workoutId != workoutId) {
+      return true;
+    }
+  }
+  return false;
 };

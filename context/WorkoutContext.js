@@ -20,6 +20,8 @@ export const WorkoutContextProvider = ({ children }) => {
   const [sets, setSets] = useState({});
   const [timePassed, setTimePassed] = useState(0);
   const [activeWorkout, setActiveWorkout] = useState(false);
+  const [showAfterWorkout, setShowAfterWorkout] = useState(false);
+const [numberOfSets, setNumberOfSets] = useState(0);
   const { getPlan, getPlanExcercise, updateWorkouts } =
     useContext(DatabaseContext);
   const { reloadXp } = useContext(ProgressContext);
@@ -54,7 +56,7 @@ export const WorkoutContextProvider = ({ children }) => {
       for (const set of sets[exercise.exerciseId]) {
         // insert the set into the database
         if (set.checked) {
-          numberOfSets++;
+          setNumberOfSets(numberOfSets + 1);
           await insertSets(
             exercise.exerciseId,
             set.reps,
@@ -100,6 +102,7 @@ export const WorkoutContextProvider = ({ children }) => {
       setActiveWorkout(false);
       reset();
       updateWorkouts();
+
       return true;
     }
     return true;
@@ -160,6 +163,10 @@ export const WorkoutContextProvider = ({ children }) => {
         removeSet,
         setExercises,
         addExercise,
+        setShowAfterWorkout,
+        showAfterWorkout,
+        numberOfSets,
+        setNumberOfSets
       }}
     >
       {children}

@@ -17,7 +17,7 @@ function Greeting(props) {
   useEffect(() => {
     async function getUserName() {
       const user = await getUserInfo();
-      setUserName(user.name);
+      setUserName(user?.name);
 
       // Slide in animation
       Animated.timing(position, {

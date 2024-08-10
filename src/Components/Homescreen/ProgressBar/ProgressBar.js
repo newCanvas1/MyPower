@@ -21,7 +21,7 @@ function ProgressBar() {
   }, [currentXp, level, totalXp]);
 
   return (
-    <View className="w-[80%] h-[15] border shadow rounded-full self-center flex-row">
+    <View className="w-[80%] h-[15] border shadow rounded-full self-center flex-row my-4">
       <Text
         className=" absolute text-white text-xs left-3 z-10"
         style={{ fontFamily: "en" }}

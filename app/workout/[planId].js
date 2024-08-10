@@ -27,6 +27,7 @@ function workout(props) {
     setTimePassed,
     cancel,
     userHasCheckedSets,
+    setShowAfterWorkout,
   } = useContext(WorkoutContext);
   const { theme } = useContext(ThemeContext);
   const [stopTimer, setStopTimer] = useState(false);
@@ -80,8 +81,12 @@ function workout(props) {
                 setWorkouts(data);
               });
               setRefreshHistory(true);
-
               router.back();
+setTimeout(() => {
+  console.log("after workout");
+  setShowAfterWorkout(true);
+  
+}, 300);
             }
           }}
           className="self-end justify-center bg-green-400 w-16 h-10 text-white items-center p-1 rounded"

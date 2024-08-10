@@ -67,6 +67,10 @@ export const ARABIC = {
   NO_WORKOUTS_FOR_THIS_DAY: "لم يتم العثور على تمارين لهذا اليوم 🧑‍💻",
   DIFFICULTY: "الصعوبة",
   SHOW_DIFFICULTY: "أظهر صعوبة المجموعات",
+  CONGRATS: "تهانينا 🎉",
+  SETS_COUNT: "عدد المجموعات",
+  FIRST_IN_WEEK: "أول تمرين في الأسبوع 🎉",
+  WORKOUT_FINISH_REWARD:  "اكمال التمرين",
 };
 
 export const ENGLISH = {
@@ -139,4 +143,9 @@ export const ENGLISH = {
   NO_WORKOUTS_FOR_THIS_DAY: "No workouts found for this day 🧑‍💻",
   DIFFICULTY: "Difficulty",
   SHOW_DIFFICULTY: "Show sets difficulty",
+  CONGRATS: "Congrats 🎉",
+
+  SETS_COUNT: "Sets Count",
+  FIRST_IN_WEEK: "First in Week 🎉",
+  WORKOUT_FINISH_REWARD: "Workout Completed",
 };
