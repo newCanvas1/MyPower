@@ -15,7 +15,6 @@ function DayPopover({ day }) {
   const fetchWorkouts = async (page, limit) => {
     try {
       const data = await getWorkoutsOfDay(day, page, limit);
-      console.log(data.length);
       setWorkouts((prevWorkouts) => {
         const newWorkouts = [...prevWorkouts, ...data];
         // remove duplicates
@@ -44,7 +43,6 @@ function DayPopover({ day }) {
       {workouts.length > 0 ? (
         <FlatList
           onEndReached={() => {
-            console.log("onEndReached");
             setPage(page + 1);
           }}
           className="h-[200] w-[80%] "

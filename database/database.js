@@ -359,8 +359,7 @@ export const getExerciseRecord = async (page, limit, exerciseId) => {
     `SELECT workoutId FROM sets WHERE exerciseId = ${exerciseId} `
   );
   const workoutsIdList = workoutsIdObjects.map((workout) => workout.workoutId);
-  console.log("workoutsIdList");
-  console.log(workoutsIdList);
+
   const data = await db.getAllAsync(
     `SELECT * FROM workouts WHERE workoutId IN (${workoutsIdList}) ORDER BY date DESC LIMIT ${limit} OFFSET ${offset}`
   );
@@ -683,8 +682,7 @@ export const getExerciseChartOfPeriod = async (exerciseId, type) => {
       const date = new Date(set.date).toLocaleDateString("en-US", {
         day: "numeric",
       });
-      console.log(set.date);
-      console.log(date);
+
       // for sets of the same day, take the one with the highest weight
       if (result[date]) {
         if (set.weight > result[date]) {
@@ -695,7 +693,6 @@ export const getExerciseChartOfPeriod = async (exerciseId, type) => {
       }
     }
   }
-  console.log(result);
 
   if (type === "thisYear") {
     const thisYear = new Date().getFullYear();
@@ -887,7 +884,6 @@ export const getLevel = async () => {
 export const addLevel = async () => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   const oldLevel = await getLevel();
-  console.log("oldLevel", oldLevel, "newLevel", oldLevel + 1);
   await db.runAsync("UPDATE user SET level = ?", `${oldLevel + 1}`);
 };
 
