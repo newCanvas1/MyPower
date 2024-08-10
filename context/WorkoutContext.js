@@ -5,14 +5,15 @@ import {
   getTable,
   insertSets,
   insertWorkout,
+  isWorkoutRecordedThisWeek,
   updateXp,
 } from "../database/database";
 import { ProgressContext } from "./ProgressContext";
+import { REWARDS } from "../src/utility/rewards";
 
 export const WorkoutContext = createContext();
 
 export const WorkoutContextProvider = ({ children }) => {
-  const WORKOUT_FINISH_REWARD = 10;
   const [planId, setPlanId] = useState("");
   const [plan, setPlan] = useState({});
   const [exercises, setExercises] = useState([]);
@@ -45,7 +46,7 @@ export const WorkoutContextProvider = ({ children }) => {
     setSets({});
   }
   async function saveSets(workoutId) {
-    const numberOfSets = Object.keys(sets).length;
+    let numberOfSets = 0;
     // for every exercise in the exercises array
 
     for (const exercise of exercises) {
@@ -53,6 +54,7 @@ export const WorkoutContextProvider = ({ children }) => {
       for (const set of sets[exercise.exerciseId]) {
         // insert the set into the database
         if (set.checked) {
+          numberOfSets++;
           await insertSets(
             exercise.exerciseId,
             set.reps,
@@ -66,8 +68,8 @@ export const WorkoutContextProvider = ({ children }) => {
         }
       }
     }
-    await updateXp(WORKOUT_FINISH_REWARD + numberOfSets);
-    
+    await updateXp(REWARDS.WORKOUT_FINISH_REWARD + numberOfSets);
+
     reloadXp();
   }
   function cancel() {
@@ -82,6 +84,10 @@ export const WorkoutContextProvider = ({ children }) => {
       }
     });
     if (setsAdded) {
+      const isWorkoutThisWeek = await isWorkoutRecordedThisWeek();
+      if (!isWorkoutThisWeek) {
+        updateXp(REWARDS.WEEKLY_WORKOUT_REWARD);
+      }
       const workoutId = await insertWorkout(
         timePassed,
         "notes",
