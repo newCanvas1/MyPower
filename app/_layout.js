@@ -40,13 +40,13 @@ export default function Layout() {
       <LanguageContextProvider>
         <FontContextProvider>
           <DatabaseProvider>
-            <WorkoutContextProvider>
-              <ThemeProvider>
-                <ProgressContextProvider>
+            <ProgressContextProvider>
+              <WorkoutContextProvider>
+                <ThemeProvider>
                   <StackElement />
-                </ProgressContextProvider>
-              </ThemeProvider>
-            </WorkoutContextProvider>
+                </ThemeProvider>
+              </WorkoutContextProvider>
+            </ProgressContextProvider>
           </DatabaseProvider>
         </FontContextProvider>
       </LanguageContextProvider>

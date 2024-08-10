@@ -5,18 +5,23 @@ import {
   getTable,
   insertSets,
   insertWorkout,
+  updateXp,
 } from "../database/database";
+import { ProgressContext } from "./ProgressContext";
 
 export const WorkoutContext = createContext();
 
 export const WorkoutContextProvider = ({ children }) => {
+  const WORKOUT_FINISH_REWARD = 10;
   const [planId, setPlanId] = useState("");
   const [plan, setPlan] = useState({});
   const [exercises, setExercises] = useState([]);
   const [sets, setSets] = useState({});
   const [timePassed, setTimePassed] = useState(0);
   const [activeWorkout, setActiveWorkout] = useState(false);
-  const { getPlan, getPlanExcercise,updateWorkouts } = useContext(DatabaseContext);
+  const { getPlan, getPlanExcercise, updateWorkouts } =
+    useContext(DatabaseContext);
+  const { reloadXp } = useContext(ProgressContext);
   async function prepareSets(exercises) {
     // object keys should be the exerciseId for each exercise
     const preparedSets = {};
@@ -40,7 +45,9 @@ export const WorkoutContextProvider = ({ children }) => {
     setSets({});
   }
   async function saveSets(workoutId) {
+    const numberOfSets = Object.keys(sets).length;
     // for every exercise in the exercises array
+
     for (const exercise of exercises) {
       // for every set in the set array
       for (const set of sets[exercise.exerciseId]) {
@@ -55,11 +62,13 @@ export const WorkoutContextProvider = ({ children }) => {
             planId,
             workoutId,
             new Date()
-
           );
         }
       }
     }
+    await updateXp(WORKOUT_FINISH_REWARD + numberOfSets);
+    
+    reloadXp();
   }
   function cancel() {
     setActiveWorkout(false);

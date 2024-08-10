@@ -9,7 +9,7 @@ export const initDatabase = async () => {
 
   await db.execAsync(`
     PRAGMA journal_mode = WAL;
-    CREATE TABLE IF NOT EXISTS user (name TEXT, weight INTEGER, height INTEGER,xp INTEGER );
+    CREATE TABLE IF NOT EXISTS user (name TEXT, weight INTEGER, height INTEGER,xp INTEGER,level INTEGER );
    
     `);
 
@@ -102,10 +102,11 @@ export const insertUser = async (name, weight, height) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   await db.runAsync("DELETE FROM user");
   const result = await db.runAsync(
-    "INSERT INTO user (name, weight,height) VALUES (?, ?,?)",
+    "INSERT INTO user (name, weight,height,level) VALUES (?, ?,?,?)",
     `${name}`,
     `${weight}`,
-    `${height}`
+    `${height}`,
+    `${1}`
   );
 
   return result;
@@ -859,4 +860,33 @@ export const addTestPlanAndWorkout = async () => {
       `2024-08-${i + 1}T20:24:01.863Z`
     );
   }
+};
+export const getXp = async () => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync(`SELECT * FROM user`);
+  return data[0].xp;
+};
+
+export const updateXp = async (newXp) => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const oldXp = await getXp();
+  await db.runAsync("UPDATE user SET xp = ?", `${newXp + oldXp}`);
+};
+
+export const resetXp = async () => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  await db.runAsync("UPDATE user SET xp = ?", `${0}`);
+};
+
+export const getLevel = async () => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const data = await db.getAllAsync(`SELECT * FROM user`);
+  return data[0].level;
+};
+
+export const addLevel = async () => {
+  const db = await SQLite.openDatabaseAsync("databaseName");
+  const oldLevel = await getLevel();
+  console.log("oldLevel", oldLevel, "newLevel", oldLevel + 1);
+  await db.runAsync("UPDATE user SET level = ?", `${oldLevel + 1}`);
 };
