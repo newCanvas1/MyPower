@@ -72,7 +72,9 @@ export const ARABIC = {
   SETS_COUNT: "عدد المجموعات",
   FIRST_IN_WEEK: "أول تمرين في الأسبوع 🎉",
   WORKOUT_FINISH_REWARD: "اكمال التمرين",
-  SHOW_REST_TIME: "أظهر وقت الراحة",
+  SHOW_REST_TIME: "أظهر وقت الراحة بين المجموعات",
+  REST_TIME: "وقت الراحة",
+  CLOSE: "إغلاق",
 };
 
 export const ENGLISH = {
@@ -150,5 +152,7 @@ export const ENGLISH = {
   SETS_COUNT: "Sets Count",
   FIRST_IN_WEEK: "First in Week 🎉",
   WORKOUT_FINISH_REWARD: "Workout Completed",
-  SHOW_REST_TIME: "Show rest time",
+  SHOW_REST_TIME: "Show rest time between sets",
+  REST_TIME: "Rest Time",
+  CLOSE: "Close",
 };

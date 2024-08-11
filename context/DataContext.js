@@ -14,6 +14,7 @@ import {
   deleteWorkoutFromDatabase,
   getCharts,
 } from "../database/database";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export const DatabaseContext = createContext(null);
 
 export const DatabaseProvider = ({ children }) => {
@@ -46,10 +47,41 @@ export const DatabaseProvider = ({ children }) => {
       plan.description,
       plan.color
     );
+
     // update plans
     for (const excercise of excerciseToAdd) {
       await insertPlanExcercise(result.lastInsertRowId, excercise.exerciseId);
     }
+    // get showDifficultyList and showRestTimeList from async storage
+    let showDifficultyList = await AsyncStorage.getItem("showDifficultyList");
+    showDifficultyList = JSON.parse(showDifficultyList);
+    console.log(showDifficultyList, "showDifficultyList");
+    let showRestTimeList = await AsyncStorage.getItem("showRestTime");
+    showRestTimeList = JSON.parse(showRestTimeList);
+    console.log(showRestTimeList, "showRestTimeList");
+    // add the plan to showDifficultyList
+    if (showDifficultyList != null) {
+      showDifficultyList.push({
+        planId: result.lastInsertRowId,
+        showDifficulty: true,
+      });
+      await AsyncStorage.setItem(
+        "showDifficultyList",
+        JSON.stringify(showDifficultyList)
+      );
+    }
+    // add the plan to showRestTimeList
+    if (showRestTimeList != null) {
+      showRestTimeList.push({
+        planId: result.lastInsertRowId,
+        showRestTime: true,
+      });
+      await AsyncStorage.setItem(
+        "showRestTime",
+        JSON.stringify(showRestTimeList)
+      );
+    }
+
     setExcerciseToAdd([]);
     setPlans([...plans, { ...plan, id: result.lastInsertRowId }]);
   };
@@ -59,8 +91,7 @@ export const DatabaseProvider = ({ children }) => {
     return data;
   };
 
-  useEffect(() => {
-  }, [workouts]);
+  useEffect(() => {}, [workouts]);
 
   // delete plan from database
   const deletePlan = async (id) => {

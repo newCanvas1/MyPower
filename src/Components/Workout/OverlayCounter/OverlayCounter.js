@@ -2,10 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import formatTime from "../../../utility/functions/formatTime";
 import { WorkoutContext } from "../../../../context/WorkoutContext";
+import { langChoice } from "../../../utility/functions/langChoice";
+import { ARABIC, ENGLISH } from "../../../utility/labels";
+import { LanguageContext } from "../../../../context/LanguageContext";
 
 const OverlayCounter = ({ isVisible, onClose }) => {
   const [timePassed, setTimePassed] = useState(0);
   const { overlayEndTime } = useContext(WorkoutContext);
+  const { language } = useContext(LanguageContext);
   useEffect(() => {
     let timer;
     if (isVisible) {
@@ -33,9 +37,19 @@ const OverlayCounter = ({ isVisible, onClose }) => {
       style={styles.overlay}
     >
       <View style={styles.counterContainer}>
+
+        <View className=" rounded-2xl shadow absolute h-24 opacity-25 bg-[#222831] w-full  justify-center items-center flex-row"></View>
+
         <Text style={styles.counterText}>{formatTime(timePassed)} </Text>
         <Text style={styles.counterText}>/ {formatTime(overlayEndTime)}</Text>
+      
       </View>
+      <TouchableOpacity  className="bg-red-400 absolute bottom-[20%] rounded px-2 py-1  " onPress={onClose}>
+        <Text className="text-white text-2xl mx-2" style={{ fontFamily: "en" }}>
+          {langChoice(language, ENGLISH.CLOSE, ARABIC.CLOSE)}
+        </Text>
+      </TouchableOpacity>
+      
     </TouchableOpacity>
   );
 };
@@ -52,7 +66,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   counterContainer: {
-    backgroundColor: "white",
+    backgroundColor: "#76ABAE",
     padding: 20,
     borderRadius: 10,
     alignItems: "center",
@@ -62,6 +76,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   counterText: {
+    color: "white",
+    fontFamily: "en",
     fontSize: 32,
     marginBottom: 20,
   },

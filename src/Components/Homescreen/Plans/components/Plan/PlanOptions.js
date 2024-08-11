@@ -181,7 +181,7 @@ function PlanOptions({ planId }) {
           }}
         />
 
-        <Text className="text-white mx-2 mt-1" style={{ fontFamily: "en" }}>
+        <Text className="text-white mx-4 mt-1 " style={{ fontFamily: "en" }}>
           {langChoice(language, ENGLISH.SHOW_REST_TIME, ARABIC.SHOW_REST_TIME)}
         </Text>
       </TouchableOpacity>

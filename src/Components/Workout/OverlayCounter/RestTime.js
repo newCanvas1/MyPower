@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { WorkoutContext } from "../../../../context/WorkoutContext";
+import formatTime from "../../../utility/functions/formatTime";
 
 function RestTime() {
   const { overlayEndTime, setOverlayEndTime } = useContext(WorkoutContext);
@@ -18,8 +19,8 @@ function RestTime() {
       <TouchableOpacity className={buttonStyle} onPress={deductRestTime}>
         <Text>-</Text>
       </TouchableOpacity>
-      <Text className="text-white text-2xl mx-2" style={{ fontFamily: "en" }} >
-        {overlayEndTime}
+      <Text className="text-white text-2xl mx-2" style={{ fontFamily: "en" }}>
+        {formatTime(overlayEndTime)}
       </Text>
       <TouchableOpacity className={buttonStyle} onPress={addRestTime}>
         <Text>+</Text>

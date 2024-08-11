@@ -16,8 +16,8 @@ export const WorkoutContext = createContext();
 
 export const WorkoutContextProvider = ({ children }) => {
   const [planId, setPlanId] = useState("");
-  const [showRestTime, setShowRestTime] = useState(true);
-
+  const [showRestTime, setShowRestTime] = useState(false);
+  const INITIAL_REST_TIME = 35;
   const [plan, setPlan] = useState({});
   const [exercises, setExercises] = useState([]);
   const [sets, setSets] = useState({});
@@ -26,9 +26,8 @@ export const WorkoutContextProvider = ({ children }) => {
   const [showAfterWorkout, setShowAfterWorkout] = useState(false);
   const [firstInWeek, setFirstInWeek] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
-  const [overlayEndTime, setOverlayEndTime] = useState(5);
+  const [overlayEndTime, setOverlayEndTime] = useState(INITIAL_REST_TIME);
   const [setsNumber, setSetsNumber] = useState(0);
-
   const { getPlan, getPlanExcercise, updateWorkouts } =
     useContext(DatabaseContext);
   const { reloadXp } = useContext(ProgressContext);
@@ -49,9 +48,9 @@ export const WorkoutContextProvider = ({ children }) => {
   }
 
   function startOverlay() {
-if(showRestTime){
-    setShowOverlay(true);
-}
+    if (showRestTime) {
+      setShowOverlay(true);
+    }
   }
   async function restTime() {
     let showRestTimeList = await AsyncStorage.getItem("showRestTime");
@@ -73,6 +72,9 @@ if(showRestTime){
     console.log(showRestTime);
   }, [plan]);
   function reset() {
+    setShowRestTime(false);
+    setSetsNumber(0);
+    setOverlayEndTime(INITIAL_REST_TIME);
     setTimePassed(0);
     setPlanId("");
     setPlan({});
