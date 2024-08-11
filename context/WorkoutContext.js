@@ -22,7 +22,7 @@ export const WorkoutContextProvider = ({ children }) => {
   const [activeWorkout, setActiveWorkout] = useState(false);
   const [showAfterWorkout, setShowAfterWorkout] = useState(false);
   const [firstInWeek, setFirstInWeek] = useState(false);
-  // console.log(firstInWeek,"first in week"); 
+const [setsNumber, setSetsNumber] = useState(0);
 
   const { getPlan, getPlanExcercise, updateWorkouts } =
     useContext(DatabaseContext);
@@ -73,6 +73,7 @@ export const WorkoutContextProvider = ({ children }) => {
         }
       }
     }
+    setSetsNumber(numberOfSets);
     await updateXp(REWARDS.WORKOUT_FINISH_REWARD + numberOfSets);
 
     reloadXp();
@@ -170,7 +171,9 @@ export const WorkoutContextProvider = ({ children }) => {
         setShowAfterWorkout,
         showAfterWorkout,
         firstInWeek,
-        setFirstInWeek
+        setFirstInWeek,
+        setsNumber,
+        setSetsNumber
       }}
     >
       {children}

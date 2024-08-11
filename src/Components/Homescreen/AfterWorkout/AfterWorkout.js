@@ -9,7 +9,7 @@ import Reward from "./Reward";
 import { REWARDS } from "../../../utility/rewards";
 function AfterWorkout(props) {
   const { language } = useContext(LanguageContext);
-  const { sets, firstInWeek, setFirstInWeek } = useContext(WorkoutContext);
+  const { sets, firstInWeek, setsNumber } = useContext(WorkoutContext);
   function setsCount() {
     let numberOfSets = 0;
     for (const exercise of Object.keys(sets)) {
@@ -22,15 +22,14 @@ function AfterWorkout(props) {
     return 1;
   }
   useEffect(() => {
-    console.log(firstInWeek,"first in week");
-   
+    console.log(firstInWeek, "first in week");
   }, [firstInWeek]);
 
   function Rewards() {
     const numberOfSets = setsCount();
     return (
       <View>
-         <Reward
+        <Reward
           label={langChoice(
             language,
             ENGLISH.WORKOUT_FINISH_REWARD,
@@ -51,10 +50,9 @@ function AfterWorkout(props) {
         {numberOfSets > 0 && (
           <Reward
             label={langChoice(language, ENGLISH.SETS_COUNT, ARABIC.SETS_COUNT)}
-            value={numberOfSets}
+            value={setsNumber}
           />
         )}
-       
       </View>
     );
   }
