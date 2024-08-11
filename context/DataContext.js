@@ -96,7 +96,30 @@ export const DatabaseProvider = ({ children }) => {
   // delete plan from database
   const deletePlan = async (id) => {
     const deleted = await deletePlanFromDatabase(id);
-    if (deleted) setPlans(plans.filter((plan) => plan.id !== id));
+    if (deleted) {
+      setPlans(plans.filter((plan) => plan.id !== id));
+      // delete from showDifficultyList
+      let showDifficultyList = await AsyncStorage.getItem("showDifficultyList");
+      showDifficultyList = JSON.parse(showDifficultyList);
+      showDifficultyList = showDifficultyList.filter(
+        (plan) => plan.planId !== id
+      );
+      await AsyncStorage.setItem(
+        "showDifficultyList",
+        JSON.stringify(showDifficultyList)
+      );
+      // delete from showRestTimeList
+      let showRestTimeList = await AsyncStorage.getItem("showRestTime");
+      showRestTimeList = JSON.parse(showRestTimeList);
+      showRestTimeList = showRestTimeList.filter(
+        (plan) => plan.planId !== id
+      );
+      await AsyncStorage.setItem(
+        "showRestTime",
+        JSON.stringify(showRestTimeList)
+      );
+    
+    }
     updateWorkouts();
   };
 

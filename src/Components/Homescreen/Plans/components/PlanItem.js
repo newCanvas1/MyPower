@@ -77,7 +77,8 @@ function PlanItem({ item }) {
 
   const planToolTipButtons = [
     {
-      func: () => deletePlan(item.id),
+      func: () => {deletePlan(item.id)
+      },
       label: langChoice(language, ENGLISH.DELETE, ARABIC.DELETE),
       color: "red",
       icon: <MaterialCommunityIcons name={"delete"} size={15} color={"red"} />,
