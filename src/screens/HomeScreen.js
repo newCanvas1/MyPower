@@ -43,7 +43,7 @@ function Homescreen(props) {
       <CustomPopover
         showPopover={showAfterWorkout}
         setShowPopover={setShowAfterWorkout}
-        popOverheight={0.9}
+        popOverheight={0.5}
         popOverwidth={0.9}
         content={<AfterWorkout />}
         onClose={closeRewards}
