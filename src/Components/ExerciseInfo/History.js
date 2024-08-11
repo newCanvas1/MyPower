@@ -55,7 +55,6 @@ function History({ exercise }) {
         <FlatList
           className="p-2 mb-10 h-[600]"
           onEndReached={() => {
-            console.log("reached");
             if (page == 1) {
               setWorkouts([]);
             }

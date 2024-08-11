@@ -21,7 +21,9 @@ export const WorkoutContextProvider = ({ children }) => {
   const [timePassed, setTimePassed] = useState(0);
   const [activeWorkout, setActiveWorkout] = useState(false);
   const [showAfterWorkout, setShowAfterWorkout] = useState(false);
-const [numberOfSets, setNumberOfSets] = useState(0);
+  const [firstInWeek, setFirstInWeek] = useState(false);
+  // console.log(firstInWeek,"first in week"); 
+
   const { getPlan, getPlanExcercise, updateWorkouts } =
     useContext(DatabaseContext);
   const { reloadXp } = useContext(ProgressContext);
@@ -46,6 +48,7 @@ const [numberOfSets, setNumberOfSets] = useState(0);
     setPlan({});
     setExercises([]);
     setSets({});
+
   }
   async function saveSets(workoutId) {
     let numberOfSets = 0;
@@ -56,7 +59,7 @@ const [numberOfSets, setNumberOfSets] = useState(0);
       for (const set of sets[exercise.exerciseId]) {
         // insert the set into the database
         if (set.checked) {
-          setNumberOfSets(numberOfSets + 1);
+          numberOfSets++;
           await insertSets(
             exercise.exerciseId,
             set.reps,
@@ -86,22 +89,23 @@ const [numberOfSets, setNumberOfSets] = useState(0);
       }
     });
     if (setsAdded) {
-      const isWorkoutThisWeek = await isWorkoutRecordedThisWeek();
-      if (!isWorkoutThisWeek) {
-        updateXp(REWARDS.WEEKLY_WORKOUT_REWARD);
-      }
       const workoutId = await insertWorkout(
         timePassed,
         "notes",
         new Date(),
         planId
       );
+      const isWorkoutThisWeek = await isWorkoutRecordedThisWeek(workoutId);
+      if (!isWorkoutThisWeek) {
+        await updateXp(REWARDS.WEEKLY_WORKOUT_REWARD);
+
+        setFirstInWeek(true);
+      }
       await saveSets(workoutId);
       setTimePassed(0);
-      console.log("workout saved");
       setActiveWorkout(false);
       reset();
-      updateWorkouts();
+      updateWorkouts(); 
 
       return true;
     }
@@ -138,7 +142,7 @@ const [numberOfSets, setNumberOfSets] = useState(0);
         await prepareSets(data);
         setPlan(plan);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
 
@@ -165,8 +169,8 @@ const [numberOfSets, setNumberOfSets] = useState(0);
         addExercise,
         setShowAfterWorkout,
         showAfterWorkout,
-        numberOfSets,
-        setNumberOfSets
+        firstInWeek,
+        setFirstInWeek
       }}
     >
       {children}

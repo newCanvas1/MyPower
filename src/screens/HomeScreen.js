@@ -12,7 +12,7 @@ import AfterWorkout from "../Components/Homescreen/AfterWorkout/AfterWorkout";
 import { WorkoutContext } from "../../context/WorkoutContext";
 function Homescreen(props) {
   const { theme } = useContext(ThemeContext);
-  const { setShowAfterWorkout, showAfterWorkout } = useContext(WorkoutContext);
+  const { setShowAfterWorkout, showAfterWorkout,setFirstInWeek } = useContext(WorkoutContext);
   return (
     <ScrollView className={theme.mainScreen}>
       <Greeting />
@@ -38,6 +38,10 @@ function Homescreen(props) {
         popOverheight={0.9}
         popOverwidth={0.9}
         content={<AfterWorkout />}
+        onClose={() => {
+          setFirstInWeek(false);
+          console.log("closed");
+        }}
       />
     </ScrollView>
   );

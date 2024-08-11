@@ -5,7 +5,7 @@ import getBestSet from "../src/utility/functions/getBestSet";
 export const initDatabase = async () => {
   const db = await SQLite.openDatabaseAsync("databaseName");
   // drop the excercises table
-  // await resetDatabase();
+  // await resetDatabase(); 
 
   await db.execAsync(`
     PRAGMA journal_mode = WAL;
@@ -52,7 +52,7 @@ export const initDatabase = async () => {
   try {
     // await addTestPlanAndWorkout();
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
   console.log("Database created");
   console.log("Excercises added");
@@ -866,6 +866,7 @@ export const getXp = async () => {
 
 export const updateXp = async (newXp) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
+  console.log(newXp);
   const oldXp = await getXp();
   await db.runAsync("UPDATE user SET xp = ?", `${newXp + oldXp}`);
 };
@@ -893,10 +894,19 @@ export const isWorkoutRecordedThisWeek = async (workoutId) => {
   const data = await db.getAllAsync(
     `SELECT * FROM workouts WHERE date LIKE '%${new Date().getDate()}%'`
   );
+  if (data.length == 0) {
+    return false;
+  }
+  console.log(data.length);
+
   for (const workout of data) {
+    console.log(workout,workout.workoutId != workoutId);
     if (workout.workoutId != workoutId) {
+
       return true;
     }
   }
+  console.log("not this week");
+
   return false;
 };

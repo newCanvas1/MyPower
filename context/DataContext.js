@@ -60,13 +60,13 @@ export const DatabaseProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log(workouts.length);
   }, [workouts]);
 
   // delete plan from database
   const deletePlan = async (id) => {
     const deleted = await deletePlanFromDatabase(id);
     if (deleted) setPlans(plans.filter((plan) => plan.id !== id));
+    updateWorkouts();
   };
 
   // add excercise to database

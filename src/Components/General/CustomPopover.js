@@ -9,15 +9,23 @@ function CustomPopover({
   content,
   popOverheight,
   popOverwidth,
+  onClose,
 }) {
   const { height, width } = Dimensions.get("screen");
   const { theme } = useContext(ThemeContext);
+  function closePopover() {
+    setShowPopover(false);
+    if (onClose) {
+      console.log("closed");
+      onClose();
+    }
+  }
   return (
     <Popover
-    animationConfig={{ duration: 100 }}
+      animationConfig={{ duration: 100 }}
       popoverStyle={{ borderRadius: 50 }}
       isVisible={showPopover}
-      onRequestClose={() => setShowPopover(false)}
+      onRequestClose={closePopover}
     >
       <View
         className={theme.popoverScreen}
@@ -31,7 +39,7 @@ function CustomPopover({
           className={
             "bg-red-500 shadow w-12 h-16 absolute top-[-25] z-50 items-center  justify-end self-start rounded-xl flex-col  "
           }
-          onPress={() => setShowPopover(false)}
+          onPress={closePopover}
         >
           <Text className="text-2xl left-[5]">X</Text>
         </TouchableOpacity>

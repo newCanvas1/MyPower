@@ -1,19 +1,33 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Text, View } from "react-native";
 import { langChoice } from "../../../utility/functions/langChoice";
 import { LanguageContext } from "../../../../context/LanguageContext";
 import { ARABIC, ENGLISH } from "../../../utility/labels";
 import ProgressBar from "../ProgressBar/ProgressBar";
-import { isWorkoutRecordedThisWeek } from "../../../../database/database";
 import { WorkoutContext } from "../../../../context/WorkoutContext";
 import Reward from "./Reward";
 import { REWARDS } from "../../../utility/rewards";
 function AfterWorkout(props) {
   const { language } = useContext(LanguageContext);
-  const {  numberOfSets, setNumberOfSets } = useContext(WorkoutContext);
+  const { sets, firstInWeek, setFirstInWeek } = useContext(WorkoutContext);
+  function setsCount() {
+    let numberOfSets = 0;
+    for (const exercise of Object.keys(sets)) {
+      for (const set of sets[exercise]) {
+        if (set.checked) {
+          numberOfSets++;
+        }
+      }
+    }
+    return 1;
+  }
+  useEffect(() => {
+    console.log(firstInWeek,"first in week");
+   
+  }, [firstInWeek]);
 
   function Rewards() {
-    const isFirstInWeek = !isWorkoutRecordedThisWeek();
+    const numberOfSets = setsCount();
     return (
       <View>
          <Reward
@@ -24,7 +38,7 @@ function AfterWorkout(props) {
           )}
           value={REWARDS.WORKOUT_FINISH_REWARD}
         />
-        {isFirstInWeek && (
+        {firstInWeek && (
           <Reward
             label={langChoice(
               language,

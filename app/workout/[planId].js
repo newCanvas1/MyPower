@@ -32,7 +32,8 @@ function workout(props) {
   const { theme } = useContext(ThemeContext);
   const [stopTimer, setStopTimer] = useState(false);
   const { language } = useContext(LanguageContext);
-  const { getAllWorkouts, setWorkouts,setRefreshHistory } = useContext(DatabaseContext);
+  const { getAllWorkouts, setWorkouts, setRefreshHistory } =
+    useContext(DatabaseContext);
   const { addExercise } = useContext(WorkoutContext);
   const [showWarning, setShowWarning] = useState(false);
   const [showAddExercise, setShowAddExercise] = useState(false);
@@ -82,11 +83,10 @@ function workout(props) {
               });
               setRefreshHistory(true);
               router.back();
-setTimeout(() => {
-  console.log("after workout");
-  setShowAfterWorkout(true);
-  
-}, 300);
+              setTimeout(() => {
+                console.log("after workout");
+                setShowAfterWorkout(true);
+              }, 300);
             }
           }}
           className="self-end justify-center bg-green-400 w-16 h-10 text-white items-center p-1 rounded"
