@@ -68,6 +68,7 @@ export const ARABIC = {
   DIFFICULTY: "الصعوبة",
   SHOW_DIFFICULTY: "أظهر صعوبة المجموعات",
   CONGRATS: "تهانينا 🎉",
+  GOOD_WORK: "أحسنت  🎉",
   SETS_COUNT: "عدد المجموعات",
   FIRST_IN_WEEK: "أول تمرين في الأسبوع 🎉",
   WORKOUT_FINISH_REWARD:  "اكمال التمرين",
@@ -144,7 +145,7 @@ export const ENGLISH = {
   DIFFICULTY: "Difficulty",
   SHOW_DIFFICULTY: "Show sets difficulty",
   CONGRATS: "Congrats 🎉",
-
+  GOOD_WORK: "Good Work 🎉",
   SETS_COUNT: "Sets Count",
   FIRST_IN_WEEK: "First in Week 🎉",
   WORKOUT_FINISH_REWARD: "Workout Completed",

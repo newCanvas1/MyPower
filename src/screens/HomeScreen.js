@@ -3,7 +3,6 @@ import Greeting from "../Components/Homescreen/Greeting";
 import Plans from "../Components/Homescreen/Plans/Plans";
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
-import WorkoutsCalender from "../Components/Homescreen/WorkoutsCalender/WorkoutsCalender";
 import CarouselElement from "../Components/Homescreen/CarouselElement/CarouselElement";
 import AnimatedView from "../Components/General/AnimatedView";
 import ProgressBar from "../Components/Homescreen/ProgressBar/ProgressBar";
@@ -12,7 +11,16 @@ import AfterWorkout from "../Components/Homescreen/AfterWorkout/AfterWorkout";
 import { WorkoutContext } from "../../context/WorkoutContext";
 function Homescreen(props) {
   const { theme } = useContext(ThemeContext);
-  const { setShowAfterWorkout, showAfterWorkout,setFirstInWeek,setSetsNumber } = useContext(WorkoutContext);
+  const {
+    setShowAfterWorkout,
+    showAfterWorkout,
+    setFirstInWeek,
+    setSetsNumber,
+  } = useContext(WorkoutContext);
+  function closeRewards() {
+    setFirstInWeek(false);
+    setSetsNumber(0);
+  }
   return (
     <ScrollView className={theme.mainScreen}>
       <Greeting />
@@ -38,11 +46,7 @@ function Homescreen(props) {
         popOverheight={0.9}
         popOverwidth={0.9}
         content={<AfterWorkout />}
-        onClose={() => {
-          setFirstInWeek(false);
-          setSetsNumber(0);
-          console.log("closed");
-        }}
+        onClose={closeRewards}
       />
     </ScrollView>
   );

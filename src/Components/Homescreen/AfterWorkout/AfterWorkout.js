@@ -59,7 +59,7 @@ function AfterWorkout(props) {
   return (
     <View className="flex-col justify-center items-center pt-28">
       <Text className=" text-white text-2xl" style={{ fontFamily: "en" }}>
-        {langChoice(language, ENGLISH.CONGRATS, ARABIC.CONGRATS)}
+        {langChoice(language, ENGLISH.GOOD_WORK, ARABIC.GOOD_WORK)}
       </Text>
       <ProgressBar />
       <Rewards />
