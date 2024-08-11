@@ -18,6 +18,7 @@ import { DatabaseContext } from "../../context/DataContext";
 import CustomPopover from "../../src/Components/General/CustomPopover";
 import Warning from "../../src/Components/Workout/Warning";
 import ExercisesAddList from "../../src/Components/Homescreen/Plans/components/Excercise/ExercisesAddList.js";
+import OverlayCounter from "../../src/Components/Workout/OverlayCounter/OverlayCounter.js";
 function workout(props) {
   const {
     exercises,
@@ -34,7 +35,8 @@ function workout(props) {
   const { language } = useContext(LanguageContext);
   const { getAllWorkouts, setWorkouts, setRefreshHistory } =
     useContext(DatabaseContext);
-  const { addExercise } = useContext(WorkoutContext);
+  const { addExercise, showOverlay, setShowOverlay } =
+    useContext(WorkoutContext);
   const [showWarning, setShowWarning] = useState(false);
   const [showAddExercise, setShowAddExercise] = useState(false);
   const [type, setType] = useState("");
@@ -150,6 +152,14 @@ function workout(props) {
             <ExercisesAddList add={add} />
           </View>
         }
+      />
+      <OverlayCounter
+        isVisible={showOverlay}
+        onClose={() => {
+          setShowOverlay(false);
+        }}
+        startTime={20}
+        endTime={30}
       />
     </View>
   );

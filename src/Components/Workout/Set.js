@@ -27,7 +27,7 @@ function Set({ set, count, showDifficulty }) {
   const [fadeOut, setFadeOut] = useState(false);
 
   const { language } = useContext(LanguageContext);
-  const { removeSet, setSets, sets } = useContext(WorkoutContext);
+  const { removeSet, setSets, sets, startOverlay } = useContext(WorkoutContext);
   const { theme } = useContext(ThemeContext);
 
   const setBackground = setChecked ? "bg-green-400 opacity-60" : " ";
@@ -159,11 +159,7 @@ function Set({ set, count, showDifficulty }) {
                     keyboardType="numeric"
                     style={{ fontFamily: langChoice(language, "en", "ar") }}
                     placeholderTextColor={theme.setPlaceholder}
-                    placeholder={
-                      weight == 0
-                        ? "kg"
-                        : weight.toString()
-                    }
+                    placeholder={weight == 0 ? "kg" : weight.toString()}
                     onChangeText={(text) => {
                       setSets((prev) => {
                         const newSets = { ...prev };
@@ -179,7 +175,10 @@ function Set({ set, count, showDifficulty }) {
                       });
                     }}
                     className={
-                      theme.set + theme.setInputBorder + " w-12 " + theme.inputValue
+                      theme.set +
+                      theme.setInputBorder +
+                      " w-12 " +
+                      theme.inputValue
                     }
                   />
                   <TextInput
@@ -207,13 +206,19 @@ function Set({ set, count, showDifficulty }) {
                       });
                     }}
                     className={
-                      theme.set + theme.setInputBorder + " w-12 " + theme.inputValue
+                      theme.set +
+                      theme.setInputBorder +
+                      " w-12 " +
+                      theme.inputValue
                     }
                   />
                 </View>
               )}
               <TouchableOpacity
                 onPress={() => {
+                  if (!set.checked) {
+                    startOverlay(30);
+                  }
                   setSets((prev) => {
                     const newSets = { ...prev };
                     const listofSets = newSets[set.exerciseId];

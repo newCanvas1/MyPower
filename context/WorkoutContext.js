@@ -22,7 +22,9 @@ export const WorkoutContextProvider = ({ children }) => {
   const [activeWorkout, setActiveWorkout] = useState(false);
   const [showAfterWorkout, setShowAfterWorkout] = useState(false);
   const [firstInWeek, setFirstInWeek] = useState(false);
-const [setsNumber, setSetsNumber] = useState(0);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [overlayEndTime, setOverlayEndTime] = useState(0);
+  const [setsNumber, setSetsNumber] = useState(0);
 
   const { getPlan, getPlanExcercise, updateWorkouts } =
     useContext(DatabaseContext);
@@ -42,13 +44,17 @@ const [setsNumber, setSetsNumber] = useState(0);
     }
     setSets(preparedSets);
   }
+
+  function startOverlay(endTime) {
+    setShowOverlay(true);
+    setOverlayEndTime(endTime);
+  }
   function reset() {
     setTimePassed(0);
     setPlanId("");
     setPlan({});
     setExercises([]);
     setSets({});
-
   }
   async function saveSets(workoutId) {
     let numberOfSets = 0;
@@ -106,7 +112,7 @@ const [setsNumber, setSetsNumber] = useState(0);
       setTimePassed(0);
       setActiveWorkout(false);
       reset();
-      updateWorkouts(); 
+      updateWorkouts();
 
       return true;
     }
@@ -173,7 +179,12 @@ const [setsNumber, setSetsNumber] = useState(0);
         firstInWeek,
         setFirstInWeek,
         setsNumber,
-        setSetsNumber
+        setSetsNumber,
+        startOverlay,
+        setOverlayEndTime,
+        showOverlay,
+        setShowOverlay,
+        overlayEndTime,
       }}
     >
       {children}
