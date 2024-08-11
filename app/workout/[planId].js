@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   SafeAreaView,
@@ -19,6 +19,8 @@ import CustomPopover from "../../src/Components/General/CustomPopover";
 import Warning from "../../src/Components/Workout/Warning";
 import ExercisesAddList from "../../src/Components/Homescreen/Plans/components/Excercise/ExercisesAddList.js";
 import OverlayCounter from "../../src/Components/Workout/OverlayCounter/OverlayCounter.js";
+import RestTime from "../../src/Components/Workout/OverlayCounter/RestTime.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 function workout(props) {
   const {
     exercises,
@@ -33,8 +35,13 @@ function workout(props) {
   const { theme } = useContext(ThemeContext);
   const [stopTimer, setStopTimer] = useState(false);
   const { language } = useContext(LanguageContext);
-  const { getAllWorkouts, setWorkouts, setRefreshHistory } =
-    useContext(DatabaseContext);
+  const {
+    getAllWorkouts,
+    setWorkouts,
+    setRefreshHistory,
+    showRestTime,
+    setShowRestTime,
+  } = useContext(DatabaseContext);
   const { addExercise, showOverlay, setShowOverlay } =
     useContext(WorkoutContext);
   const [showWarning, setShowWarning] = useState(false);
@@ -51,6 +58,8 @@ function workout(props) {
   function add(exercise) {
     addExercise(exercise);
   }
+ 
+
   return (
     <View
       className={
@@ -59,44 +68,50 @@ function workout(props) {
       }
     >
       <View className="h-1 w-10 mb-10 bg-slate-500 rounded"></View>
-      <View className="flex-row justify-between w-[100%] items-center">
-        <View className="flex flex-col">
-          <Text className={"text-2xl self-start " + theme.textPrimary}>
-            {plan.name}
-          </Text>
-          <WorkoutTimeCounter
-            stopTimer={stopTimer}
-            timePassed={timePassed}
-            setTimePassed={setTimePassed}
-          />
+      <View className="flex-row justify-between w-[100%]  items-center">
+        <View className=" flex-co w-full">
+          <View className="flex-row  justify-between">
+            <Text className={"text-2xl self-start " + theme.textPrimary}>
+              {plan.name}
+            </Text>
+            {showRestTime && <RestTime />}
+          </View>
+
+          <View className="flex-row justify-between w-[100%] items-center">
+            <WorkoutTimeCounter
+              stopTimer={stopTimer}
+              timePassed={timePassed}
+              setTimePassed={setTimePassed}
+            />
+            <TouchableOpacity
+              onPress={async () => {
+                if (!userHasCheckedSets()) {
+                  setType("noSets");
+                  warning();
+                  return;
+                }
+                setStopTimer(!stopTimer);
+                const saved = await save(timePassed);
+                if (saved) {
+                  getAllWorkouts().then((data) => {
+                    setWorkouts(data);
+                  });
+                  setRefreshHistory(true);
+                  router.back();
+                  setTimeout(() => {
+                    console.log("after workout");
+                    setShowAfterWorkout(true);
+                  }, 300);
+                }
+              }}
+              className="self-end justify-center bg-green-400 w-16 h-10 text-white items-center p-1 rounded"
+            >
+              <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
+                {langChoice(language, ENGLISH.FINISH, ARABIC.FINISH)}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <TouchableOpacity
-          onPress={async () => {
-            if (!userHasCheckedSets()) {
-              setType("noSets");
-              warning();
-              return;
-            }
-            setStopTimer(!stopTimer);
-            const saved = await save(timePassed);
-            if (saved) {
-              getAllWorkouts().then((data) => {
-                setWorkouts(data);
-              });
-              setRefreshHistory(true);
-              router.back();
-              setTimeout(() => {
-                console.log("after workout");
-                setShowAfterWorkout(true);
-              }, 300);
-            }
-          }}
-          className="self-end justify-center bg-green-400 w-16 h-10 text-white items-center p-1 rounded"
-        >
-          <Text style={{ fontFamily: langChoice(language, "en", "ar") }}>
-            {langChoice(language, ENGLISH.FINISH, ARABIC.FINISH)}
-          </Text>
-        </TouchableOpacity>
       </View>
       <FlatList
         className="mt-10 w-full mb-10 "
@@ -158,8 +173,6 @@ function workout(props) {
         onClose={() => {
           setShowOverlay(false);
         }}
-        startTime={20}
-        endTime={30}
       />
     </View>
   );

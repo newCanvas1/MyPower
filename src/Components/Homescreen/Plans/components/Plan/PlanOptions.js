@@ -8,6 +8,7 @@ import { LanguageContext } from "../../../../../../context/LanguageContext";
 import { TouchableOpacity } from "react-native";
 function PlanOptions({ planId }) {
   const [showDifficulty, setShowDifficulty] = useState(true);
+  const [showRestTime, setShowRestTime] = useState(true);
   const { language } = useContext(LanguageContext);
   async function difficultyBoxClicked() {
     // get plansShowDifficultyList list from async storage
@@ -31,6 +32,44 @@ function PlanOptions({ planId }) {
       JSON.stringify([{ planId: planId, showDifficulty: !showDifficulty }])
     );
   }
+  async function restTimeBoxClicked() {
+    // get plansShowDifficultyList list from async storage
+    let showRestTimeList = await AsyncStorage.getItem("showRestTime");
+    showRestTimeList = JSON.parse(showRestTimeList);
+    if (showRestTimeList != null) {
+      // if the planId exist
+      for (const plan of showRestTimeList) {
+        if (plan.planId == planId) {
+          plan.showRestTime = !showRestTime;
+          await AsyncStorage.setItem(
+            "showRestTime",
+            JSON.stringify(showRestTimeList)
+          );
+          return;
+        }
+      }
+      showRestTimeList.push({
+        planId: planId,
+        showRestTime: false,
+      });
+      await AsyncStorage.setItem(
+        "showRestTime",
+        JSON.stringify(showRestTimeList)
+      );
+    } else {
+      showRestTimeList = [];
+      console.log("no showRestTimeList");
+      showRestTimeList.push({
+        planId: planId,
+        showRestTime: false,
+      });
+      console.log(showRestTimeList, "showRestTimeList");
+      await AsyncStorage.setItem(
+        "showRestTime",
+        JSON.stringify(showRestTimeList)
+      );
+    }
+  }
   useEffect(() => {
     // get plansShowDifficultyList list from async storage
     async function getPlansShowDifficultyList() {
@@ -46,7 +85,21 @@ function PlanOptions({ planId }) {
         }
       }
     }
+    async function getPlansShowRestTimeList() {
+      let showRestTimeList = await AsyncStorage.getItem("showRestTime");
+      showRestTimeList = JSON.parse(showRestTimeList);
+
+      if (showRestTimeList) {
+        for (const plan of showRestTimeList) {
+          if (plan.planId == planId) {
+            setShowRestTime(plan.showRestTime);
+            break;
+          }
+        }
+      }
+    }
     getPlansShowDifficultyList();
+    getPlansShowRestTimeList();
   }, []);
   return (
     <View
@@ -79,12 +132,41 @@ function PlanOptions({ planId }) {
             difficultyBoxClicked();
           }}
         />
+
         <Text className="text-white mx-2 mt-1" style={{ fontFamily: "en" }}>
           {langChoice(
             language,
             ENGLISH.SHOW_DIFFICULTY,
             ARABIC.SHOW_DIFFICULTY
           )}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          setShowRestTime(!showRestTime);
+          restTimeBoxClicked();
+        }}
+        className={`${langChoice(
+          language,
+          "flex-row",
+          "flex-row-reverse"
+        )} justify-center  p-1 `}
+      >
+        <BouncyCheckbox
+          isChecked={showRestTime}
+          size={20}
+          fillColor="green"
+          unFillColor="#FFFFFF"
+          innerIconStyle={{ borderWidth: 0 }}
+          textStyle={{ fontFamily: "JosefinSans-Regular" }}
+          onPress={() => {
+            setShowRestTime(!showRestTime);
+            restTimeBoxClicked();
+          }}
+        />
+
+        <Text className="text-white mx-2 mt-1" style={{ fontFamily: "en" }}>
+          {langChoice(language, ENGLISH.SHOW_REST_TIME, ARABIC.SHOW_REST_TIME)}
         </Text>
       </TouchableOpacity>
     </View>

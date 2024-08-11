@@ -27,7 +27,7 @@ function Set({ set, count, showDifficulty }) {
   const [fadeOut, setFadeOut] = useState(false);
 
   const { language } = useContext(LanguageContext);
-  const { removeSet, setSets, sets, startOverlay } = useContext(WorkoutContext);
+  const { removeSet, setSets, sets, startOverlay,showOverlay } = useContext(WorkoutContext);
   const { theme } = useContext(ThemeContext);
 
   const setBackground = setChecked ? "bg-green-400 opacity-60" : " ";
@@ -217,7 +217,7 @@ function Set({ set, count, showDifficulty }) {
               <TouchableOpacity
                 onPress={() => {
                   if (!set.checked) {
-                    startOverlay(30);
+                    startOverlay();
                   }
                   setSets((prev) => {
                     const newSets = { ...prev };

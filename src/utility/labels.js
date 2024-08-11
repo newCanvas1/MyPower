@@ -71,7 +71,8 @@ export const ARABIC = {
   GOOD_WORK: "أحسنت  🎉",
   SETS_COUNT: "عدد المجموعات",
   FIRST_IN_WEEK: "أول تمرين في الأسبوع 🎉",
-  WORKOUT_FINISH_REWARD:  "اكمال التمرين",
+  WORKOUT_FINISH_REWARD: "اكمال التمرين",
+  SHOW_REST_TIME: "أظهر وقت الراحة",
 };
 
 export const ENGLISH = {
@@ -149,4 +150,5 @@ export const ENGLISH = {
   SETS_COUNT: "Sets Count",
   FIRST_IN_WEEK: "First in Week 🎉",
   WORKOUT_FINISH_REWARD: "Workout Completed",
+  SHOW_REST_TIME: "Show rest time",
 };

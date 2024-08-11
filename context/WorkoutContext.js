@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { DatabaseContext } from "./DataContext";
 import {
   getSetsOfExercise,
@@ -10,11 +10,14 @@ import {
 } from "../database/database";
 import { ProgressContext } from "./ProgressContext";
 import { REWARDS } from "../src/utility/rewards";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const WorkoutContext = createContext();
 
 export const WorkoutContextProvider = ({ children }) => {
   const [planId, setPlanId] = useState("");
+  const [showRestTime, setShowRestTime] = useState(true);
+
   const [plan, setPlan] = useState({});
   const [exercises, setExercises] = useState([]);
   const [sets, setSets] = useState({});
@@ -23,7 +26,7 @@ export const WorkoutContextProvider = ({ children }) => {
   const [showAfterWorkout, setShowAfterWorkout] = useState(false);
   const [firstInWeek, setFirstInWeek] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
-  const [overlayEndTime, setOverlayEndTime] = useState(0);
+  const [overlayEndTime, setOverlayEndTime] = useState(5);
   const [setsNumber, setSetsNumber] = useState(0);
 
   const { getPlan, getPlanExcercise, updateWorkouts } =
@@ -45,10 +48,30 @@ export const WorkoutContextProvider = ({ children }) => {
     setSets(preparedSets);
   }
 
-  function startOverlay(endTime) {
+  function startOverlay() {
+if(showRestTime){
     setShowOverlay(true);
-    setOverlayEndTime(endTime);
+}
   }
+  async function restTime() {
+    let showRestTimeList = await AsyncStorage.getItem("showRestTime");
+    showRestTimeList = JSON.parse(showRestTimeList);
+    console.log(showRestTimeList, "showRestTimeList");
+    if (showRestTimeList != null) {
+      // console.log(showRestTimeList[0].showRestTime, "showRestTimeList");
+      for (let i = 0; i < showRestTimeList.length; i++) {
+        if (showRestTimeList[i].planId == plan.id) {
+          console.log(showRestTimeList[i].showRestTime, "showRestTimeList");
+          setShowRestTime(showRestTimeList[i].showRestTime);
+          break;
+        }
+      }
+    }
+  }
+  useMemo(() => {
+    restTime();
+    console.log(showRestTime);
+  }, [plan]);
   function reset() {
     setTimePassed(0);
     setPlanId("");
@@ -185,6 +208,8 @@ export const WorkoutContextProvider = ({ children }) => {
         showOverlay,
         setShowOverlay,
         overlayEndTime,
+        showRestTime,
+        setShowRestTime,
       }}
     >
       {children}

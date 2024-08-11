@@ -3,13 +3,13 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import formatTime from "../../../utility/functions/formatTime";
 import { WorkoutContext } from "../../../../context/WorkoutContext";
 
-const OverlayCounter = ({ isVisible, onClose, startTime }) => {
+const OverlayCounter = ({ isVisible, onClose }) => {
   const [timePassed, setTimePassed] = useState(0);
-  const { overlayEndTime, setOverlayEndTime } = useContext(WorkoutContext);
+  const { overlayEndTime } = useContext(WorkoutContext);
   useEffect(() => {
     let timer;
     if (isVisible) {
-      setTimePassed(startTime); // Reset the counter when the overlay becomes visible
+      setTimePassed(0); // Reset the counter when the overlay becomes visible
       timer = setInterval(() => {
         setTimePassed((prevTime) => prevTime + 1);
       }, 1000);
@@ -20,19 +20,21 @@ const OverlayCounter = ({ isVisible, onClose, startTime }) => {
   }, [isVisible]);
 
   useEffect(() => {
-    if (timePassed >= overlayEndTime) {
-      setOverlayEndTime(0);
+    if (timePassed > overlayEndTime) {
       onClose();
     }
   }, [timePassed]);
   if (!isVisible) return null;
 
   return (
-    <TouchableOpacity activeOpacity={1}  onPress={onClose} style={styles.overlay}>
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={onClose}
+      style={styles.overlay}
+    >
       <View style={styles.counterContainer}>
         <Text style={styles.counterText}>{formatTime(timePassed)} </Text>
         <Text style={styles.counterText}>/ {formatTime(overlayEndTime)}</Text>
-
       </View>
     </TouchableOpacity>
   );
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     width: "80%",
-    height:"80%",
+    height: "80%",
     flexDirection: "row",
     justifyContent: "center",
   },
