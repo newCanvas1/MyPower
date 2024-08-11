@@ -12,25 +12,41 @@ function PlanOptions({ planId }) {
   const { language } = useContext(LanguageContext);
   async function difficultyBoxClicked() {
     // get plansShowDifficultyList list from async storage
-    let showDifficultyList = await AsyncStorage.getItem("showDifficulty");
+    let showDifficultyList = await AsyncStorage.getItem("showDifficultyList");
     showDifficultyList = JSON.parse(showDifficultyList);
+    console.log(showDifficultyList, "showDifficultyList");
     if (showDifficultyList != null) {
-      const newShowDifficultyList = showDifficultyList?.map((plan) => {
+      for (const plan of showDifficultyList) {
         if (plan.planId == planId) {
-          return { planId: planId, showDifficulty: !showDifficulty };
-        } else {
-          return plan;
+          plan.showDifficulty = !showDifficulty;
+          await AsyncStorage.setItem(
+            "showDifficultyList",
+            JSON.stringify(showDifficultyList)
+          );
+          return;
         }
+      }
+      showDifficultyList.push({
+        planId: planId,
+        showDifficulty: false,
       });
       await AsyncStorage.setItem(
-        "showDifficulty",
-        JSON.stringify(newShowDifficultyList)
+        "showDifficultyList",
+        JSON.stringify(showDifficultyList)
+      );
+    } else {
+      showDifficultyList = [];
+      console.log("no showDifficultyList");
+      showDifficultyList.push({
+        planId: planId,
+        showDifficulty: false,
+      });
+      console.log(showDifficultyList, "showDifficultyList");
+      await AsyncStorage.setItem(
+        "showDifficultyList",
+        JSON.stringify(showDifficultyList)
       );
     }
-    await AsyncStorage.setItem(
-      "showDifficulty",
-      JSON.stringify([{ planId: planId, showDifficulty: !showDifficulty }])
-    );
   }
   async function restTimeBoxClicked() {
     // get plansShowDifficultyList list from async storage
@@ -73,9 +89,9 @@ function PlanOptions({ planId }) {
   useEffect(() => {
     // get plansShowDifficultyList list from async storage
     async function getPlansShowDifficultyList() {
-      let showDifficultyList = await AsyncStorage.getItem("showDifficulty");
+      let showDifficultyList = await AsyncStorage.getItem("showDifficultyList");
       showDifficultyList = JSON.parse(showDifficultyList);
-
+      console.log(showDifficultyList, "showDifficultyList");
       if (showDifficultyList) {
         for (const plan of showDifficultyList) {
           if (plan.planId == planId) {

@@ -11,12 +11,13 @@ function SetList({ exerciseId }) {
   useEffect(() => {
     // get plansShowDifficultyList list from async storage
     async function getPlansShowDifficultyList() {
-      let showDifficultyList = await AsyncStorage.getItem("showDifficulty");
+      let showDifficultyList = await AsyncStorage.getItem("showDifficultyList");
       showDifficultyList = JSON.parse(showDifficultyList);
 
       if (showDifficultyList) {
         for (const plan of showDifficultyList) {
           if (plan.planId == planId) {
+            console.log(plan.showDifficulty, "showDifficulty");
             setShowDifficulty(plan.showDifficulty);
             break;
           }
