@@ -1,4 +1,3 @@
-import { View, Text, StyleSheet } from "react-native";
 import Homescreen from "../../src/screens/HomeScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { resetDatabase } from "../../database/database";

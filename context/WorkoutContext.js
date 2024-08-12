@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { DatabaseContext } from "./DataContext";
 import {
   getSetsOfExercise,
-  getTable,
   insertSets,
   insertWorkout,
   isWorkoutRecordedThisWeek,
@@ -106,7 +105,7 @@ export const WorkoutContextProvider = ({ children }) => {
   function reset() {
     setNextSet(null);
     setShowRestTime(false);
-    setSetsNumber(0);
+
     setOverlayEndTime(INITIAL_REST_TIME);
     setTimePassed(0);
     setPlanId("");

@@ -1,5 +1,5 @@
 import { useFonts } from "expo-font";
-import { createContext, useContext, useEffect, useLayoutEffect } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { LanguageContext } from "./LanguageContext";
 
 const FontContext = createContext(null);
