@@ -5,8 +5,8 @@ import { darkTheme, lightTheme } from "../src/styles/theme";
 export const ThemeContext = createContext(null);
 
 export const ThemeProvider = ({ children }) => {
-  const [mode, setMode] = useState("light");
-  const [theme, setTheme] = useState(lightTheme);
+  const [mode, setMode] = useState("dark");
+  const [theme, setTheme] = useState(darkTheme);
 
   const toggleTheme = async () => {
     if (mode === "light") {
@@ -30,8 +30,8 @@ export const ThemeProvider = ({ children }) => {
           setTheme(lightTheme);
         }
       } else {
-        setMode("light");
-        setTheme(lightTheme);
+        setMode("dark");
+        setTheme(darkTheme);
       }
     }
     getMode();

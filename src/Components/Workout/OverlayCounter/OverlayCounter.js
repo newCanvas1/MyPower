@@ -37,19 +37,32 @@ const OverlayCounter = ({ isVisible, onClose }) => {
       style={styles.overlay}
     >
       <View style={styles.counterContainer}>
+        <View className="flex-col justify-center items-center w-full">
+          <Text
+            className="text-white text-2xl mx-2 mb-5"
+            style={{ fontFamily: "en" }}
+          >
+            {langChoice(language, ENGLISH.REST_TIME, ARABIC.REST_TIME)}
+          </Text>
 
-        <View className=" rounded-2xl shadow absolute h-24 opacity-25 bg-[#222831] w-full  justify-center items-center flex-row"></View>
-
-        <Text style={styles.counterText}>{formatTime(timePassed)} </Text>
-        <Text style={styles.counterText}>/ {formatTime(overlayEndTime)}</Text>
-      
+          <View className=" rounded-2xl shadow  h-32  w-full  justify-center items-center flex-row">
+            <View className="bg-[#222831] w-full absolute h-36 rounded-xl opacity-25  "></View>
+            <Text style={styles.counterText}>{formatTime(timePassed)} </Text>
+            <Text style={styles.counterText}>
+              / {formatTime(overlayEndTime)}
+            </Text>
+          </View>
+        </View>
       </View>
-      <TouchableOpacity  className="bg-red-400 absolute bottom-[20%] rounded px-2 py-1  " onPress={onClose}>
+
+      <TouchableOpacity
+        className="bg-red-400 absolute bottom-[20%] rounded px-2 py-1  "
+        onPress={onClose}
+      >
         <Text className="text-white text-2xl mx-2" style={{ fontFamily: "en" }}>
           {langChoice(language, ENGLISH.CLOSE, ARABIC.CLOSE)}
         </Text>
       </TouchableOpacity>
-      
     </TouchableOpacity>
   );
 };
@@ -79,7 +92,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "en",
     fontSize: 32,
-    marginBottom: 20,
   },
   closeButton: {
     position: "absolute",

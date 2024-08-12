@@ -57,7 +57,7 @@ export const initDatabase = async () => {
   console.log("Database created");
   console.log("Excercises added");
 };
-async function resetDatabase() {
+export async function resetDatabase() {
   const db = await SQLite.openDatabaseAsync("databaseName");
   await db.execAsync(`
         PRAGMA journal_mode = WAL;

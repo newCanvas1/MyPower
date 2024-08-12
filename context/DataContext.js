@@ -56,7 +56,7 @@ export const DatabaseProvider = ({ children }) => {
     let showDifficultyList = await AsyncStorage.getItem("showDifficultyList");
     showDifficultyList = JSON.parse(showDifficultyList);
     console.log(showDifficultyList, "showDifficultyList");
-    let showRestTimeList = await AsyncStorage.getItem("showRestTime");
+    let showRestTimeList = await AsyncStorage.getItem("showRestTimeList");
     showRestTimeList = JSON.parse(showRestTimeList);
     console.log(showRestTimeList, "showRestTimeList");
     // add the plan to showDifficultyList
@@ -70,6 +70,18 @@ export const DatabaseProvider = ({ children }) => {
         JSON.stringify(showDifficultyList)
       );
     }
+    else {
+      showDifficultyList = [
+        {
+          planId: result.lastInsertRowId,
+          showDifficulty: true,
+        },
+      ];
+      await AsyncStorage.setItem(
+        "showDifficultyList",
+        JSON.stringify(showDifficultyList)
+      );
+    }
     // add the plan to showRestTimeList
     if (showRestTimeList != null) {
       showRestTimeList.push({
@@ -77,7 +89,19 @@ export const DatabaseProvider = ({ children }) => {
         showRestTime: true,
       });
       await AsyncStorage.setItem(
-        "showRestTime",
+        "showRestTimeList",
+        JSON.stringify(showRestTimeList)
+      );
+    }
+    else {
+      showRestTimeList = [
+        {
+          planId: result.lastInsertRowId,
+          showRestTime: true,
+        },
+      ];
+      await AsyncStorage.setItem(
+        "showRestTimeList",
         JSON.stringify(showRestTimeList)
       );
     }
