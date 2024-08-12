@@ -15,6 +15,9 @@ import Feather from "@expo/vector-icons/Feather";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 import AnimatedView from "../General/AnimatedView";
 import DifficultyChoice from "./DifficultyChoice";
+import { Audio } from "expo-av";
+import { SoundsContext } from "../../../context/SoundsContext";
+import { SOUNDS } from "../../utility/sounds";
 function Set({ set, count, showDifficulty }) {
   const [reps, setReps] = useState(set.reps);
   const [weight, setWeight] = useState(set.weight);
@@ -29,10 +32,28 @@ function Set({ set, count, showDifficulty }) {
   const { language } = useContext(LanguageContext);
   const { removeSet, setSets, sets, startOverlay } = useContext(WorkoutContext);
   const { theme } = useContext(ThemeContext);
-
+  const { playSound } = useContext(SoundsContext);
   const setBackground = setChecked ? "bg-green-400 opacity-60" : " ";
   const translateX = React.useRef(new Animated.Value(0)).current;
-
+  function confirmSet() {
+    if (!set.checked) {
+      playSound(SOUNDS.SET_CONFIRMED);
+      startOverlay(set.id);
+    }
+    setSets((prev) => {
+      const newSets = { ...prev };
+      const listofSets = newSets[set.exerciseId];
+      for (let i = 0; i < listofSets.length; i++) {
+        if (listofSets[i].id === set.id) {
+          setSetChecked(!listofSets[i].checked);
+          listofSets[i].checked = !listofSets[i].checked;
+          break;
+        }
+      }
+      newSets[set.exerciseId] = listofSets;
+      return newSets;
+    });
+  }
   function getLastSetInfo() {
     if (set.weight == 0 || set.reps == 0) {
       const lastSet = sets[set.exerciseId][sets[set.exerciseId].length - 2];
@@ -215,24 +236,7 @@ function Set({ set, count, showDifficulty }) {
                 </View>
               )}
               <TouchableOpacity
-                onPress={() => {
-                  if (!set.checked) {
-                    startOverlay(set.id);
-                  }
-                  setSets((prev) => {
-                    const newSets = { ...prev };
-                    const listofSets = newSets[set.exerciseId];
-                    for (let i = 0; i < listofSets.length; i++) {
-                      if (listofSets[i].id === set.id) {
-                        setSetChecked(!listofSets[i].checked);
-                        listofSets[i].checked = !listofSets[i].checked;
-                        break;
-                      }
-                    }
-                    newSets[set.exerciseId] = listofSets;
-                    return newSets;
-                  });
-                }}
+                onPress={confirmSet}
                 className={`${
                   set.checked ? "bg-green-400" : "  bg-gray-600 border"
                 } rounded  shadow p-[1px]`}

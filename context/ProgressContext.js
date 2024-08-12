@@ -1,6 +1,7 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { addLevel, getLevel, getXp, resetXp } from "../database/database";
-
+import { SoundsContext } from "./SoundsContext";
+import { SOUNDS } from "../src/utility/sounds";
 export const ProgressContext = createContext();
 
 export const ProgressContextProvider = ({ children }) => {
@@ -9,6 +10,7 @@ export const ProgressContextProvider = ({ children }) => {
   const [currentXp, setCurrentXp] = useState(0);
   const [totalXp, setTotalXp] = useState(HYPOTHETICAL_MAX);
   const [isNewLevel, setIsNewLevel] = useState(false);
+  const { playSound } = useContext(SoundsContext);
   function adjustLevel() {
     if (currentXp >= totalXp) {
       levelUp();
@@ -44,6 +46,9 @@ export const ProgressContextProvider = ({ children }) => {
     }, 2000);
   }
   async function levelUp() {
+    setTimeout(() => {
+      playSound(SOUNDS.LEVEL_UP);
+    }, 400);
     await addLevel();
     await resetXp();
     reloadXp();

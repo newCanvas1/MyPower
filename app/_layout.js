@@ -8,6 +8,7 @@ import { ThemeContext, ThemeProvider } from "../context/ThemeContext";
 import { useContext } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ProgressContextProvider } from "../context/ProgressContext";
+import { SoundsProvider } from "../context/SoundsContext";
 
 export default function Layout() {
   const StackElement = () => {
@@ -37,19 +38,21 @@ export default function Layout() {
   };
   return (
     <GestureHandlerRootView>
-      <LanguageContextProvider>
-        <FontContextProvider>
-          <DatabaseProvider>
-            <ProgressContextProvider>
-              <WorkoutContextProvider>
-                <ThemeProvider>
-                  <StackElement />
-                </ThemeProvider>
-              </WorkoutContextProvider>
-            </ProgressContextProvider>
-          </DatabaseProvider>
-        </FontContextProvider>
-      </LanguageContextProvider>
+      <SoundsProvider>
+        <LanguageContextProvider>
+          <FontContextProvider>
+            <DatabaseProvider>
+              <ProgressContextProvider>
+                <WorkoutContextProvider>
+                  <ThemeProvider>
+                    <StackElement />
+                  </ThemeProvider>
+                </WorkoutContextProvider>
+              </ProgressContextProvider>
+            </DatabaseProvider>
+          </FontContextProvider>
+        </LanguageContextProvider>
+      </SoundsProvider>
     </GestureHandlerRootView>
   );
 }
