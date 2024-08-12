@@ -75,6 +75,7 @@ export const ARABIC = {
   SHOW_REST_TIME: "أظهر وقت الراحة بين المجموعات",
   REST_TIME: "وقت الراحة",
   CLOSE: "إغلاق",
+  NEXT_SET: "المجموعة التالية",
 };
 
 export const ENGLISH = {
@@ -155,4 +156,5 @@ export const ENGLISH = {
   SHOW_REST_TIME: "Show rest time between sets",
   REST_TIME: "Rest Time",
   CLOSE: "Close",
+  NEXT_SET: "Next Set",
 };

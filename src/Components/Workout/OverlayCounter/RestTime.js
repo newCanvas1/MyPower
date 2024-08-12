@@ -4,7 +4,8 @@ import { WorkoutContext } from "../../../../context/WorkoutContext";
 import formatTime from "../../../utility/functions/formatTime";
 
 function RestTime() {
-  const { overlayEndTime, setOverlayEndTime } = useContext(WorkoutContext);
+  const { overlayEndTime, setOverlayEndTime } =
+    useContext(WorkoutContext);
   const buttonStyle = " bg-sky-300 rounded px-2 py-1 ";
   function addRestTime() {
     setOverlayEndTime(overlayEndTime + 5);
@@ -13,6 +14,7 @@ function RestTime() {
     if (overlayEndTime == 5) return;
     setOverlayEndTime(overlayEndTime - 5);
   }
+
 
   return (
     <View className=" flex-row items-center">

@@ -55,10 +55,8 @@ export const DatabaseProvider = ({ children }) => {
     // get showDifficultyList and showRestTimeList from async storage
     let showDifficultyList = await AsyncStorage.getItem("showDifficultyList");
     showDifficultyList = JSON.parse(showDifficultyList);
-    console.log(showDifficultyList, "showDifficultyList");
     let showRestTimeList = await AsyncStorage.getItem("showRestTimeList");
     showRestTimeList = JSON.parse(showRestTimeList);
-    console.log(showRestTimeList, "showRestTimeList");
     // add the plan to showDifficultyList
     if (showDifficultyList != null) {
       showDifficultyList.push({

@@ -14,7 +14,6 @@ function PlanOptions({ planId }) {
     // get plansShowDifficultyList list from async storage
     let showDifficultyList = await AsyncStorage.getItem("showDifficultyList");
     showDifficultyList = JSON.parse(showDifficultyList);
-    console.log(showDifficultyList, "showDifficultyList");
     if (showDifficultyList != null) {
       for (const plan of showDifficultyList) {
         if (plan.planId == planId) {
@@ -36,12 +35,10 @@ function PlanOptions({ planId }) {
       );
     } else {
       showDifficultyList = [];
-      console.log("no showDifficultyList");
       showDifficultyList.push({
         planId: planId,
         showDifficulty: false,
       });
-      console.log(showDifficultyList, "showDifficultyList");
       await AsyncStorage.setItem(
         "showDifficultyList",
         JSON.stringify(showDifficultyList)
@@ -74,12 +71,10 @@ function PlanOptions({ planId }) {
       );
     } else {
       showRestTimeList = [];
-      console.log("no showRestTimeList");
       showRestTimeList.push({
         planId: planId,
         showRestTime: false,
       });
-      console.log(showRestTimeList, "showRestTimeList");
       await AsyncStorage.setItem(
         "showRestTime",
         JSON.stringify(showRestTimeList)
@@ -91,7 +86,6 @@ function PlanOptions({ planId }) {
     async function getPlansShowDifficultyList() {
       let showDifficultyList = await AsyncStorage.getItem("showDifficultyList");
       showDifficultyList = JSON.parse(showDifficultyList);
-      console.log(showDifficultyList, "showDifficultyList");
       if (showDifficultyList) {
         for (const plan of showDifficultyList) {
           if (plan.planId == planId) {

@@ -16,6 +16,7 @@ export const WorkoutContext = createContext();
 
 export const WorkoutContextProvider = ({ children }) => {
   const [planId, setPlanId] = useState("");
+  const [nextSet, setNextSet] = useState(null);
   const [showRestTime, setShowRestTime] = useState(false);
   const INITIAL_REST_TIME = 35;
   const [plan, setPlan] = useState({});
@@ -47,20 +48,50 @@ export const WorkoutContextProvider = ({ children }) => {
     setSets(preparedSets);
   }
 
-  function startOverlay() {
+  function getNextSet(id) {
+    let nextSet = null;
+
+    // Iterate through each exercise
+    const exercises = Object.keys(sets);
+    for (let i = 0; i < exercises.length; i++) {
+      const exercise = exercises[i];
+
+      // Iterate through each set within the exercise
+      for (let j = 0; j < sets[exercise].length; j++) {
+        if (sets[exercise][j].id == id) {
+          // If it's not the last set in the current exercise, return the next set
+          if (j != sets[exercise].length - 1) {
+            return sets[exercise][j + 1];
+          }
+
+          // If it's the last set in the current exercise, check the next exercise
+          if (i != exercises.length - 1) {
+            const nextExercise = exercises[i + 1];
+            return sets[nextExercise][0];
+          }
+
+          // If there's no next set, return null
+          return null;
+        }
+      }
+    }
+
+    return nextSet;
+  }
+
+  function startOverlay(exerciseId) {
     if (showRestTime) {
+      const nextSet = getNextSet(exerciseId);
+      setNextSet(nextSet);
       setShowOverlay(true);
     }
   }
   async function restTime() {
-    let showRestTimeList = await AsyncStorage.getItem("showRestTimeList" );
+    let showRestTimeList = await AsyncStorage.getItem("showRestTimeList");
     showRestTimeList = JSON.parse(showRestTimeList);
-    console.log(showRestTimeList, "showRestTimeList");
     if (showRestTimeList != null) {
-      // console.log(showRestTimeList[0].showRestTime, "showRestTimeList");
       for (let i = 0; i < showRestTimeList.length; i++) {
         if (showRestTimeList[i].planId == plan.id) {
-          console.log(showRestTimeList[i].showRestTime, "showRestTimeList");
           setShowRestTime(showRestTimeList[i].showRestTime);
           break;
         }
@@ -69,9 +100,9 @@ export const WorkoutContextProvider = ({ children }) => {
   }
   useMemo(() => {
     restTime();
-    console.log(showRestTime);
   }, [plan]);
   function reset() {
+    setNextSet(null);
     setShowRestTime(false);
     setSetsNumber(0);
     setOverlayEndTime(INITIAL_REST_TIME);
@@ -164,6 +195,9 @@ export const WorkoutContextProvider = ({ children }) => {
     setExercises([...exercises, exercise]);
     setSets({ ...sets, [exercise.exerciseId]: [] });
   }
+  useEffect(() => {
+    // console.log(sets);
+  }, [sets]);
 
   useEffect(() => {
     async function getInfo(id) {
@@ -212,6 +246,7 @@ export const WorkoutContextProvider = ({ children }) => {
         overlayEndTime,
         showRestTime,
         setShowRestTime,
+        nextSet,
       }}
     >
       {children}

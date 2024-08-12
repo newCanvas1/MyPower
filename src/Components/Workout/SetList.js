@@ -17,7 +17,6 @@ function SetList({ exerciseId }) {
       if (showDifficultyList) {
         for (const plan of showDifficultyList) {
           if (plan.planId == planId) {
-            console.log(plan.showDifficulty, "showDifficulty");
             setShowDifficulty(plan.showDifficulty);
             break;
           }

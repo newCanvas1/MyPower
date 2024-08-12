@@ -16,7 +16,6 @@ function CustomPopover({
   function closePopover() {
     setShowPopover(false);
     if (onClose) {
-      console.log("closed");
       onClose();
     }
   }

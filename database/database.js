@@ -866,7 +866,6 @@ export const getXp = async () => {
 
 export const updateXp = async (newXp) => {
   const db = await SQLite.openDatabaseAsync("databaseName");
-  console.log(newXp);
   const oldXp = await getXp();
   await db.runAsync("UPDATE user SET xp = ?", `${newXp + oldXp}`);
 };
@@ -897,16 +896,13 @@ export const isWorkoutRecordedThisWeek = async (workoutId) => {
   if (data.length == 0) {
     return false;
   }
-  console.log(data.length);
 
   for (const workout of data) {
-    console.log(workout,workout.workoutId != workoutId);
     if (workout.workoutId != workoutId) {
 
       return true;
     }
   }
-  console.log("not this week");
 
   return false;
 };

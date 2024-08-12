@@ -22,7 +22,6 @@ function AfterWorkout(props) {
     return 1;
   }
   useEffect(() => {
-    console.log(firstInWeek, "first in week");
   }, [firstInWeek]);
 
   function Rewards() {

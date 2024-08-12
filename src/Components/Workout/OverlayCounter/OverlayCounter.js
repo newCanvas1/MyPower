@@ -5,10 +5,11 @@ import { WorkoutContext } from "../../../../context/WorkoutContext";
 import { langChoice } from "../../../utility/functions/langChoice";
 import { ARABIC, ENGLISH } from "../../../utility/labels";
 import { LanguageContext } from "../../../../context/LanguageContext";
+import NextSet from "./NextSet";
 
 const OverlayCounter = ({ isVisible, onClose }) => {
   const [timePassed, setTimePassed] = useState(0);
-  const { overlayEndTime } = useContext(WorkoutContext);
+  const { overlayEndTime, nextSet } = useContext(WorkoutContext);
   const { language } = useContext(LanguageContext);
   useEffect(() => {
     let timer;
@@ -53,6 +54,7 @@ const OverlayCounter = ({ isVisible, onClose }) => {
             </Text>
           </View>
         </View>
+        <NextSet nextSet={nextSet} />
       </View>
 
       <TouchableOpacity
@@ -85,7 +87,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "80%",
     height: "80%",
-    flexDirection: "row",
+    flexDirection: "col",
     justifyContent: "center",
   },
   counterText: {
