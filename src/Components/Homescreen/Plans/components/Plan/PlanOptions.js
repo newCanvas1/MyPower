@@ -47,7 +47,7 @@ function PlanOptions({ planId }) {
   }
   async function restTimeBoxClicked() {
     // get plansShowDifficultyList list from async storage
-    let showRestTimeList = await AsyncStorage.getItem("showRestTime");
+    let showRestTimeList = await AsyncStorage.getItem("showRestTimeList");
     showRestTimeList = JSON.parse(showRestTimeList);
     if (showRestTimeList != null) {
       // if the planId exist
@@ -55,7 +55,7 @@ function PlanOptions({ planId }) {
         if (plan.planId == planId) {
           plan.showRestTime = !showRestTime;
           await AsyncStorage.setItem(
-            "showRestTime",
+            "showRestTimeList",
             JSON.stringify(showRestTimeList)
           );
           return;
@@ -66,7 +66,7 @@ function PlanOptions({ planId }) {
         showRestTime: false,
       });
       await AsyncStorage.setItem(
-        "showRestTime",
+        "showRestTimeList",
         JSON.stringify(showRestTimeList)
       );
     } else {
@@ -76,7 +76,7 @@ function PlanOptions({ planId }) {
         showRestTime: false,
       });
       await AsyncStorage.setItem(
-        "showRestTime",
+        "showRestTimeList",
         JSON.stringify(showRestTimeList)
       );
     }
@@ -96,9 +96,9 @@ function PlanOptions({ planId }) {
       }
     }
     async function getPlansShowRestTimeList() {
-      let showRestTimeList = await AsyncStorage.getItem("showRestTime");
+      let showRestTimeList = await AsyncStorage.getItem("showRestTimeList");
       showRestTimeList = JSON.parse(showRestTimeList);
-
+console.log(showRestTimeList);
       if (showRestTimeList) {
         for (const plan of showRestTimeList) {
           if (plan.planId == planId) {

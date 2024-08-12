@@ -7,6 +7,7 @@ import { LanguageContext } from "../../../../context/LanguageContext";
 function NextSet({ nextSet }) {
   const isThereRepsAndWeight = nextSet?.reps != 0 && nextSet?.weight != 0;
   const { language } = useContext(LanguageContext);
+  const unit = "kg";
 
   return (
     nextSet &&
@@ -25,13 +26,13 @@ function NextSet({ nextSet }) {
             className="text-white text-xl mx-2"
             style={{ fontFamily: "en" }}
           >
-            {langChoice(language, ENGLISH.WEIGHT, ARABIC.WEIGHT)}
+            {langChoice(language, ENGLISH.REPS, ARABIC.REPS)} 
           </Text>
           <Text
             className="text-white text-xl mx-2"
             style={{ fontFamily: "en" }}
           >
-            {langChoice(language, ENGLISH.REPS, ARABIC.REPS)}
+            {langChoice(language, ENGLISH.WEIGHT, ARABIC.WEIGHT)}
           </Text>
         </View>
         <View className="flex-row justify-between w-full px-3">
@@ -42,10 +43,10 @@ function NextSet({ nextSet }) {
             {nextSet.reps}
           </Text>
           <Text
-            className="text-white text-2xl mx-2"
+            className="text-white text-2xl "
             style={{ fontFamily: "en" }}
           >
-            {nextSet.weight}
+            {nextSet.weight} {unit}
           </Text>
         </View>
       </View>

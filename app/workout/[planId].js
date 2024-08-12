@@ -20,7 +20,6 @@ import Warning from "../../src/Components/Workout/Warning";
 import ExercisesAddList from "../../src/Components/Homescreen/Plans/components/Excercise/ExercisesAddList.js";
 import OverlayCounter from "../../src/Components/Workout/OverlayCounter/OverlayCounter.js";
 import RestTime from "../../src/Components/Workout/OverlayCounter/RestTime.js";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 function workout(props) {
   const {
     exercises,

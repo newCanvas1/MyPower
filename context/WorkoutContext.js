@@ -89,9 +89,11 @@ export const WorkoutContextProvider = ({ children }) => {
   async function restTime() {
     let showRestTimeList = await AsyncStorage.getItem("showRestTimeList");
     showRestTimeList = JSON.parse(showRestTimeList);
+    console.log(showRestTimeList);
     if (showRestTimeList != null) {
       for (let i = 0; i < showRestTimeList.length; i++) {
         if (showRestTimeList[i].planId == plan.id) {
+          console.log(showRestTimeList[i].showRestTime);
           setShowRestTime(showRestTimeList[i].showRestTime);
           break;
         }
